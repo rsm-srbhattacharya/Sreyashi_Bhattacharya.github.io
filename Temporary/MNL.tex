@@ -1,0 +1,561 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={From Logistic Regression to Bayesian Multinomial Logistic Regression: A Comprehensive Overview},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{From Logistic Regression to Bayesian Multinomial Logistic
+Regression: A Comprehensive Overview}
+\author{}
+\date{2025-03-01}
+
+\begin{document}
+\maketitle
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\section{Introduction}\label{introduction}
+
+Logistic regression is a fundamental statistical method used to model
+categorical response variables. It plays a crucial role in various
+fields, including \textbf{economics, medicine, and social sciences}. The
+method estimates the probability of a binary outcome given a set of
+predictors. However, when the response variable contains \textbf{more
+than two categories}, a natural extension is \textbf{Multinomial
+Logistic Regression (MNL)}.
+
+While \textbf{frequentist approaches} using Maximum Likelihood
+Estimation (MLE) provide a standard method for estimating MNL
+parameters, they suffer from limitations, such as:
+
+\begin{itemize}
+\tightlist
+\item
+  Sensitivity to \textbf{multicollinearity}
+\item
+  Lack of \textbf{uncertainty quantification}
+\item
+  Inability to incorporate \textbf{prior knowledge}
+\end{itemize}
+
+To address these challenges, \textbf{Bayesian Multinomial Logistic
+Regression (BMLR)} incorporates \textbf{prior distributions} and
+\textbf{posterior inference} to enhance model estimation, making it more
+flexible and robust, especially for \textbf{small sample sizes} and
+\textbf{high-dimensional data}.
+
+This paper systematically explores the progression from \textbf{binary
+logistic regression} to \textbf{multinomial logistic regression},
+culminating in \textbf{Bayesian MNL}, covering:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Theoretical foundations\\
+\item
+  Estimation techniques\\
+\item
+  Computational challenges\\
+\item
+  Recent advancements, including \textbf{data augmentation methods},
+  \textbf{hierarchical modeling}, and \textbf{variational inference}
+\end{enumerate}
+
+\section{Logistic Regression}\label{logistic-regression}
+
+\subsection{Binary Logistic
+Regression}\label{binary-logistic-regression}
+
+Binary logistic regression is a statistical model that estimates the
+probability of a binary outcome:
+
+{[} P(Y = 1 \textbar{} X) =
+\frac{e^{\beta_0 + \beta_1 X_1 + \dots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \dots + \beta_p X_p}}
+{]}
+
+where: - ( X\_1, X\_2, \dots, X\_p ) are predictor variables, - (
+\beta\_0, \beta\_1, \dots, \beta\_p ) are coefficients estimated using
+\textbf{Maximum Likelihood Estimation (MLE)}.
+
+\subsubsection{Example: Predicting Loan
+Approval}\label{example-predicting-loan-approval}
+
+Consider a dataset where we want to predict whether a \textbf{loan
+application is approved} (( Y = 1 )) or \textbf{denied} (( Y = 0 ))
+based on \textbf{credit score} (( X\_1 )) and \textbf{income level} ((
+X\_2 )):
+
+{[} \log \left( \frac{P(\text{Loan Approved})}{P(\text{Loan Denied})}
+\right) = \beta\_0 + \beta\_1 (\text{Credit Score}) + \beta\_2
+(\text{Income}) {]}
+
+The coefficients (( \beta\_1, \beta\_2 )) indicate how credit score and
+income affect the odds of approval.
+
+\subsection{Limitations of Binary Logistic
+Regression}\label{limitations-of-binary-logistic-regression}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Restrictive Binary Outcome}: Can only model two categories.
+\item
+  \textbf{Linearity Assumption}: Assumes a \textbf{linear} relationship
+  between log-odds and predictors.
+\item
+  \textbf{Independence Assumption}: Each observation is assumed to be
+  \textbf{independent} of others.
+\end{itemize}
+
+To overcome these, we extend \textbf{logistic regression} to handle
+multiple categories.
+
+\section{Multinomial Logistic Regression
+(MNL)}\label{multinomial-logistic-regression-mnl}
+
+Multinomial logistic regression is used when the response variable has
+\textbf{three or more unordered categories}. It generalizes binary
+logistic regression by modeling the probability of each category.
+
+For an observation ( i ) with outcome ( j ):
+
+{[} P(Y\_i = j \textbar{} X\_i) =
+\frac{e^{X_i \beta_j}}{\sum_{k=1}^{J} e^{X_i \beta_k}} {]}
+
+where: - ( J ) is the total number of categories. - One category (e.g.,
+the last category) is used as the \textbf{reference category} with (
+\beta\_J = 0 ).
+
+\subsubsection{Example: Predicting Transport Mode
+Choice}\label{example-predicting-transport-mode-choice}
+
+Suppose we want to model a person's choice of \textbf{transportation
+mode} (( Y )) based on income and distance traveled. The possible
+choices are:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Car} (( Y = 1 ))
+\item
+  \textbf{Bus} (( Y = 2 ))
+\item
+  \textbf{Bicycle} (( Y = 3 ))
+\end{itemize}
+
+The MNL model can be written as:
+
+{[} \log \left( \frac{P(Y = \text{Bus})}{P(Y = \text{Car})} \right) =
+\beta\_0 + \beta\_1 (\text{Income}) + \beta\_2 (\text{Distance}) {]}
+
+{[} \log \left( \frac{P(Y = \text{Bicycle})}{P(Y = \text{Car})} \right)
+= \gamma\_0 + \gamma\_1 (\text{Income}) + \gamma\_2 (\text{Distance})
+{]}
+
+\subsubsection{Assumptions of MNL}\label{assumptions-of-mnl}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Independence of Irrelevant Alternatives (IIA)}: Adding a new
+  category should not affect the relative odds between existing choices.
+\item
+  \textbf{Absence of Multicollinearity}: Predictor variables should not
+  be highly correlated.
+\item
+  \textbf{Large Sample Size Requirement}: MLE requires \textbf{large
+  samples} to provide stable estimates.
+\end{itemize}
+
+While \textbf{frequentist approaches} using \textbf{Maximum Likelihood
+Estimation (MLE)} provide a standard method for estimating MNL
+parameters, they suffer from limitations, such as:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sensitivity to multicollinearity}\\
+\item
+  \textbf{Lack of uncertainty quantification}\\
+\item
+  \textbf{Inability to incorporate prior knowledge}\\
+\item
+  \textbf{Computational inefficiencies in high-dimensional settings}
+\end{itemize}
+
+Bayesian Multinomial Logistic Regression (BMLR) addresses these
+challenges by introducing \textbf{prior distributions} over parameters
+and estimating posterior distributions using \textbf{Bayes' theorem}.
+This approach allows for:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Better uncertainty quantification} through posterior
+  distributions.\\
+\item
+  \textbf{Regularization} via informative or shrinkage priors.\\
+\item
+  \textbf{Improved inference in small-sample and high-dimensional
+  settings}.\\
+\item
+  \textbf{Flexibility to incorporate hierarchical structures} and domain
+  expertise.
+\end{enumerate}
+
+In this paper, we will explore: - \textbf{Theoretical foundations} of
+Bayesian inference in MNL. - \textbf{Common prior distributions} for
+Bayesian MNL. - \textbf{Computational challenges} and solutions. -
+\textbf{Recent advancements}, including \textbf{data augmentation,
+Markov Chain Monte Carlo (MCMC), and variational inference}.
+
+\section{Bayesian Multinomial Logistic Regression
+(BMLR)}\label{bayesian-multinomial-logistic-regression-bmlr}
+
+\subsection{Bayesian Framework}\label{bayesian-framework}
+
+Bayesian inference updates our belief about the model parameters (
+\beta ) given observed data ( (X, Y) ). This is done through
+\textbf{Bayes' theorem}:
+
+{[} P(\beta \textbar{} X, Y) \propto P(Y \textbar{} X, \beta) P(\beta)
+{]}
+
+where:\\
+- ( P(Y \textbar{} X, \beta) ) is the \textbf{likelihood function},
+which represents the probability of observing the data given parameters
+( \beta ).\\
+- ( P(\beta) ) is the \textbf{prior distribution}, which encodes prior
+beliefs about the parameter values.
+
+\subsubsection{Likelihood Function}\label{likelihood-function}
+
+For multinomial logistic regression, the probability of an observation (
+i ) falling into category ( j ) is:
+
+{[} P(Y\_i = j \textbar{} X\_i) =
+\frac{e^{X_i \beta_j}}{\sum_{k=1}^{J} e^{X_i \beta_k}} {]}
+
+where: - ( J ) is the number of categories. - ( \beta\_j ) represents
+the coefficient vector for category ( j ). - One category (e.g., ( J ))
+is set as the \textbf{reference category}, and its coefficient vector is
+constrained to ( 0 ) for identifiability.
+
+Using the likelihood function for a dataset with ( n ) observations, the
+joint likelihood is:
+
+{[} L(\beta) = \prod\emph{\{i=1\}\^{}\{n\} \prod}\{j=1\}\^{}\{J\} P(Y\_i
+= j \textbar{} X\_i)\^{}\{I(Y\_i = j)\} {]}
+
+where ( I(Y\_i = j) ) is an indicator function that equals 1 if
+observation ( i ) falls into category ( j ).
+
+\subsection{\texorpdfstring{Common Priors for (
+\beta )}{Common Priors for ( )}}\label{common-priors-for}
+
+Selecting an appropriate \textbf{prior distribution} for ( \beta ) is
+crucial in Bayesian analysis. Common choices include:
+
+\subsubsection{\texorpdfstring{1. \textbf{Normal Prior
+(Gaussian)}}{1. Normal Prior (Gaussian)}}\label{normal-prior-gaussian}
+
+A common choice is the \textbf{Gaussian prior}, which assumes:
+
+{[} \beta\_j \sim N(0, \sigma\^{}2 I) {]}
+
+where: - ( I ) is the identity matrix. - ( \sigma\^{}2 ) controls the
+\textbf{spread} of the prior distribution.
+
+\textbf{Advantages:} - Ensures numerical stability. - Regularizes
+estimates by shrinking large coefficients.
+
+\textbf{Disadvantages:} - Does not enforce sparsity (i.e., all
+coefficients remain nonzero).
+
+\subsubsection{\texorpdfstring{2. \textbf{Laplace Prior
+(Lasso)}}{2. Laplace Prior (Lasso)}}\label{laplace-prior-lasso}
+
+A \textbf{Laplace (double-exponential) prior} induces sparsity:
+
+{[} \beta\_j \sim \text{Laplace}(0, b) {]}
+
+which encourages many coefficients to be exactly \textbf{zero}, making
+it useful for \textbf{high-dimensional settings}.
+
+\textbf{Advantages:} - Performs \textbf{automatic variable selection}. -
+Helps prevent \textbf{overfitting}.
+
+\textbf{Disadvantages:} - Computationally expensive to sample in some
+cases.
+
+\subsubsection{\texorpdfstring{3. \textbf{Horseshoe Prior (Global-Local
+Shrinkage)}}{3. Horseshoe Prior (Global-Local Shrinkage)}}\label{horseshoe-prior-global-local-shrinkage}
+
+For \textbf{high-dimensional problems}, the \textbf{horseshoe prior} is
+often preferred:
+
+{[} \beta\_j \sim N(0, \lambda\_j\^{}2 \tau\^{}2) {]}
+
+where: - ( \lambda\_j ) is a \textbf{local shrinkage parameter}. - (
+\tau ) is a \textbf{global shrinkage parameter}.
+
+\textbf{Advantages:} - Strongly shrinks \textbf{irrelevant features}
+while preserving \textbf{large coefficients}. - Suitable for
+\textbf{high-dimensional Bayesian modeling}.
+
+\textbf{Disadvantages:} - More complex to implement than standard
+priors.
+
+\subsection{Computational Methods for Bayesian
+MNL}\label{computational-methods-for-bayesian-mnl}
+
+Unlike frequentist MNL, Bayesian MNL does not have a closed-form
+solution. \textbf{Posterior inference} is computationally challenging
+and requires \textbf{sampling-based or optimization-based
+approximations}.
+
+\subsubsection{\texorpdfstring{1. \textbf{Markov Chain Monte Carlo
+(MCMC)}}{1. Markov Chain Monte Carlo (MCMC)}}\label{markov-chain-monte-carlo-mcmc}
+
+MCMC is a class of algorithms used to sample from the posterior
+distribution. Common MCMC techniques include:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Metropolis-Hastings}: A general-purpose method, but
+  inefficient for high-dimensional problems.
+\item
+  \textbf{Gibbs Sampling}: Sequentially samples parameters from their
+  conditional distributions.
+\item
+  \textbf{Hamiltonian Monte Carlo (HMC)}: Uses gradient-based sampling
+  to improve efficiency.
+\end{itemize}
+
+\textbf{Example:}\\
+Suppose we have a dataset with three classes: \textbf{Low, Medium, High
+Income}. The MCMC algorithm will iteratively sample posterior
+distributions for ( \beta ) based on the observed data and priors.
+
+\subsubsection{\texorpdfstring{2. \textbf{Polya-Gamma Data
+Augmentation}}{2. Polya-Gamma Data Augmentation}}\label{polya-gamma-data-augmentation}
+
+\textbf{Polya-Gamma augmentation} (Polson et al., 2013) simplifies
+Bayesian logistic regression by introducing \textbf{latent variables}.
+It transforms the \textbf{logistic likelihood} into a conditionally
+Gaussian form, allowing for \textbf{efficient Gibbs sampling}.
+
+\textbf{Key Benefits:} - \textbf{Simplifies posterior sampling.} -
+\textbf{Improves mixing in MCMC methods.} - \textbf{Computationally
+efficient for large datasets.}
+
+\subsubsection{\texorpdfstring{3. \textbf{Variational Inference
+(VI)}}{3. Variational Inference (VI)}}\label{variational-inference-vi}
+
+Variational inference (VI) approximates the posterior by finding a
+simpler distribution ( q(\beta) ) that minimizes the
+\textbf{Kullback-Leibler (KL) divergence}:
+
+{[} q(\beta) \approx P(\beta \textbar{} X, Y) {]}
+
+\textbf{Advantages of VI:} - \textbf{Faster than MCMC.} -
+\textbf{Scalable to large datasets.} - \textbf{Works well in
+high-dimensional settings.}
+
+\textbf{Disadvantages:} - Provides \textbf{approximations} rather than
+exact posterior samples. - Requires careful selection of
+\textbf{variational families}.
+
+\section{Applications of Bayesian
+MNL}\label{applications-of-bayesian-mnl}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Customer Choice Modeling}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Understanding \textbf{consumer preferences} in marketing.\\
+  \item
+    Predicting \textbf{product purchases} across multiple categories.
+  \end{itemize}
+\item
+  \textbf{Healthcare \& Epidemiology}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Predicting disease risk} across multiple conditions.\\
+  \item
+    Classifying \textbf{patient outcomes} based on medical data.
+  \end{itemize}
+\item
+  \textbf{Natural Language Processing (NLP)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Text classification} (e.g., sentiment analysis).\\
+  \item
+    \textbf{Topic modeling} for categorizing documents.
+  \end{itemize}
+\end{enumerate}
+
+\section{Conclusion}\label{conclusion}
+
+Bayesian Multinomial Logistic Regression (BMLR) \textbf{improves upon
+frequentist MNL} by: - \textbf{Providing uncertainty quantification} via
+posterior distributions. - \textbf{Enhancing regularization} through
+priors. - \textbf{Handling high-dimensional and hierarchical data
+efficiently}.
+
+While Bayesian MNL poses \textbf{computational challenges}, recent
+advancements in \textbf{MCMC, Polya-Gamma augmentation, and variational
+inference} have made it increasingly practical for modern statistical
+modeling.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+
+
+\end{document}
