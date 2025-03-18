@@ -1,0 +1,121 @@
+setwd("/mnt/c/Users/sreya/OneDrive/Desktop/USA/TA- MGT 100")
+getwd()
+library(tidyverse)
+library(mlogit)
+
+
+cust_dat <- read_csv("smartphone_customer_data.csv")
+
+load("mnl_datasets (1).RData")
+load("mnl_performance_functions.RData")
+
+#Question 1
+#You are asked to calculate the brand shares for customers who purchased a smartphone 1 year ago and 2 years ago. The data is filtered by years_ago, and brand shares are computed for both time points.
+#Once you've calculated the brand shares, report the delta_share (difference in brand share) between these two time points for the brand with the largest increase.
+
+
+
+# brand/product shares
+brand_shares1 <- cust_dat %>% filter(years_ago == 1) %>% count(brand) %>% mutate(n1=n, shr1 = n / sum(n)) %>% select(-n)
+brand_shares2 <- cust_dat %>% filter(years_ago == 2) %>% count(brand) %>% mutate(n2=n, shr2 = n / sum(n)) %>% select(-n)
+
+brand_shares1
+brand_shares2
+
+brand_shares <- merge(brand_shares1, brand_shares2, by="brand")
+brand_shares %>% mutate(delta_share = shr1 - shr2)
+# ANS Huawei
+library(mlogit)
+
+#Question 2
+#You have fit a multinomial logit model for cohort 2 with apple and samsung as predictors of smartphone choice. After fitting the model, you calculate the estimated market shares for each brand based on the model coefficients.
+#After fitting the multinomial logit model and calculating the estimated market shares, you compare these shares to the actual market shares observed in the dataset.
+
+#Question: How do the estimated market shares from the model compare to the actual market shares for the apple brand?
+  
+#A) The estimated market share for apple is higher than the actual market share.
+#B) The estimated market share for apple is lower than the actual market share.
+#C) The estimated market share for apple is nearly identical to the actual market share.***
+#D) The estimated market share for apple is significantly different from the actual market share.
+
+
+# brand-intercept-only model
+out2 <- mlogit(choice ~ apple + samsung | 0, data=mdat2)
+summary(out2)
+# print the coefficients
+coef(out2)
+
+# print the brand market shares estimated from the model
+coefs2 <- c(huawei = 0, coef(out2))
+shares2 <- exp(coefs2) / sum(exp(coefs2)) # <-- formula from bottom of slide 14
+#Question 3: What is Apple's market share? (Answer in percentage. upto 2 decimal places i.e, if your output is 0.8229 you should enter 82.29)
+#Ans: 43.2
+round(shares2, 3)
+
+# print the actual brand market shares
+brand_shares
+
+
+
+#Again, for cohort 2, 
+#You fit a multinomial logit (MNL) model , using product-specific intercepts (phone_id) and the price variable. 
+
+#Question 4: What does the price coefficient suggest in this model?
+  
+#A) Price has a strong positive impact on product choice.
+#B) Price has a strong negative impact on product choice.
+#C) Price does not significantly affect product choice.***
+#D) The effect of price is significant, but the direction is unclear
+
+
+out <- mlogit(choice ~ phone_id + price | 0, data = mdat2)
+
+
+
+summary(out)
+
+#After fitting a multinomial logit (MNL) model for cohort 2, you calculate the brand hit rate using a custom function
+
+#Question 5: The brand hit rate implies, the model correctly predicts the brand choice in _42.6___% of cases
+
+brand_hit_rate(mdat2, out)
+
+
+#Now you plot how histograms of choice probabilities for A1 change when phone discounts change and notice
+#this homogeneous demand model shows no correspondence between customers' predicted
+# choice shares and discount response. 
+
+# You enrich this model to add heterogeneity
+#and construct a model with both segment-specific and individual-specific heterogeneity
+#choice ~ apple:segment + samsung:segment + 
+#  price:segment + screen_size:segment + 
+#  price:total_minutes:segment
+
+
+
+#Question 6
+#Which customer segment is the most sensitive to changes in price based on the provided coefficients?
+  
+#A) Segment 1 is the most price-sensitive because it has the most negative price coefficient.
+#B) Segment 2 is the most price-sensitive because it has the smallest standard error.
+#C) Segment 3 is the most price-sensitive because it has the highest z-value.
+#D) Segment 1 is the least price-sensitive because it has the largest (most negative) price coefficient.
+out_f <- mlogit(choice ~ apple:segment + samsung:segment + 
+                 price:segment + screen_size:segment + 
+                 price:total_minutes:segment | 0, data=mdat2)
+summary(out_f)
+
+
+#Question 7
+#You are tasked with determining the optimal price for a new product. You ask them to consider using conjoint analysis instead of Van Westendorp's Price Sensitivity Meter. What would you say?
+
+#A) Conjoint analysis can model the impact of different product features on price sensitivity, allowing for a more comprehensive understanding of consumer preferences.
+
+#B) Conjoint analysis directly asks consumers to specify the optimal price, providing clear and straightforward pricing recommendations.
+
+#C) Conjoint analysis avoids the need for competitor analysis, focusing solely on the product's price.
+
+#D) Conjoint analysis is quicker to implement than Van Westendorp's Price Sensitivity Meter, providing faster results.
+
+
+  

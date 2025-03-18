@@ -1,0 +1,300 @@
+---
+title: "Gumbel and Logistic Distributions: Exploring Extremes"
+theme: jolla
+categories: [statistics, probability, python]
+image: 
+---
+
+## Introduction
+
+Probability distributions help us model real-world phenomena, from predicting extreme weather events to binary classification problems in machine learning. Two closely related but distinct distributions—the **Gumbel distribution** and the **Logistic distribution**—have interesting properties that make them useful in different scenarios.
+
+## Overview  
+
+This post will:  
+- Explain the Gumbel and Logistic distributions  
+- Discuss their real-world applications  
+- Explore their mathematical connection  
+- Introduce generalized forms of these distributions based on recent research  
+- Visualize the distributions using Python  
+
+## The Gumbel Distribution
+
+The **Gumbel distribution** is an **Extreme Value Distribution** that models the probability of extreme values occurring in a dataset. It is particularly useful for predicting extreme events such as floods, heatwaves, and stock market crashes.
+
+### Probability Density Function (PDF)
+
+The Gumbel distribution is defined by the probability density function:
+
+$$
+f(x) = \frac{1}{\beta} e^{- \left( \frac{x - \mu}{\beta} + e^{- \frac{x - \mu}{\beta}} \right)}
+$$
+
+where:
+- \( \mu \) (location parameter) determines where the peak of the distribution occurs.
+- \( \beta \) (scale parameter) controls the spread of the distribution.
+
+### Cumulative Distribution Function (CDF)
+
+The cumulative distribution function (CDF) of a Gumbel-distributed variable is:
+
+$$
+F(x) = e^{-e^{-(x-\mu)/\beta}}
+$$
+
+which describes the probability that \( X \) takes on a value less than or equal to \( x \).
+
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import gumbel_r, logistic
+```
+
+```{python}
+
+# Define parameters
+mu, beta = 0, 1  # Gumbel distribution parameters
+
+# Generate x values
+x = np.linspace(-6, 6, 1000)
+
+# Compute PDFs and CDFs
+gumbel_pdf = gumbel_r.pdf(x, loc=mu, scale=beta)
+gumbel_cdf = gumbel_r.cdf(x, loc=mu, scale=beta)
+
+# Plot Gumbel PDF
+plt.figure(figsize=(8, 5))
+plt.plot(x, gumbel_pdf, label="Gumbel PDF", linestyle="dashed", color="blue")
+plt.title("Gumbel Distribution - Probability Density Function")
+plt.xlabel("x")
+plt.ylabel("Density")
+plt.legend()
+plt.grid()
+plt.show()
+
+# Plot Gumbel CDF
+plt.figure(figsize=(8, 5))
+plt.plot(x, gumbel_cdf, label="Gumbel CDF", linestyle="dashed", color="blue")
+plt.title("Gumbel Distribution - Cumulative Distribution Function")
+plt.xlabel("x")
+plt.ylabel("Cumulative Probability")
+plt.legend()
+plt.grid()
+plt.show()
+```
+
+### Understanding \mu and \beta in the Gumbel Distribution
+
+- \mu shifts the distribution left or right.
+- \beta controls how spread out or concentrated the distribution is.
+- The mode (most probable value) is exactly at \mu.
+- The mean is given by:
+
+  $$
+  E[X] = \mu + \beta \gamma
+  $$
+
+  where \( \gamma \approx 0.5772 \) is the **Euler-Mascheroni constant**.
+
+To estimate these parameters from data:
+- \( \mu \) is estimated as \( \bar{x} - \beta \gamma \).
+- \( \beta \) is estimated using the sample standard deviation:
+
+  $$
+  \beta \approx \frac{s}{\pi / \sqrt{6}}
+  $$
+
+### Real-Life Example
+
+Imagine a climate scientist predicting the **maximum annual temperature** in a city over the next 50 years. Since the interest is in **extreme temperatures**, a distribution that focuses on the right tail of the data—like the Gumbel distribution—is needed.
+
+## The Logistic Distribution
+
+The **Logistic distribution** is similar to the normal distribution but has **heavier tails**, meaning that extreme values occur more frequently than they would in a normal distribution.
+
+### Probability Density Function (PDF)
+
+The logistic distribution is given by:
+
+$$
+f(x) = \frac{e^{- \frac{x - \mu}{s}}}{s \left(1 + e^{- \frac{x - \mu}{s}}\right)^2}
+$$
+
+where:
+- \( \mu \) (location parameter) determines the center of the distribution.
+- \( s \) (scale parameter) controls the spread.
+
+### Cumulative Distribution Function (CDF)
+
+The cumulative distribution function (CDF) is:
+
+$$
+F(x) = \frac{1}{1 + e^{-(x - \mu)/s}}
+$$
+
+which resembles the **sigmoid function** commonly used in logistic regression.
+
+```{python}
+```
+
+
+```{python}
+#| layout-ncol: 2
+
+mu,s = 0,1  # Logistic distribution parameters
+
+logistic_pdf = logistic.pdf(x, loc=mu, scale=s)
+logistic_cdf = logistic.cdf(x, loc=mu, scale=s)
+
+# Plot Logistic PDF
+plt.figure(figsize=(8, 5))
+plt.plot(x, logistic_pdf, label="Logistic PDF", linestyle="solid", color="red")
+plt.title("Logistic Distribution - Probability Density Function")
+plt.xlabel("x")
+plt.ylabel("Density")
+plt.legend()
+plt.grid()
+plt.show()
+
+# Plot Logistic CDF
+plt.figure(figsize=(8, 5))
+plt.plot(x, logistic_cdf, label="Logistic CDF", linestyle="solid", color="red")
+plt.title("Logistic Distribution - Cumulative Distribution Function")
+plt.xlabel("x")
+plt.ylabel("Cumulative Probability")
+plt.legend()
+plt.grid()
+plt.show()
+```
+### Understanding \( \mu \) and \( s \) in the Logistic Distribution
+
+- \( \mu \) shifts the entire distribution left or right.
+- \( s \) determines how spread out the distribution is.
+- The mean and median are both equal to \( \mu \).
+- The standard deviation is:
+
+  $$
+  \sigma = \frac{s\pi}{\sqrt{3}}
+  $$
+
+To estimate these parameters from data:
+- \( \mu \) is simply the **sample mean** \( \bar{x} \).
+- \( s \) is estimated using:
+
+  $$
+  s \approx \frac{s_X \sqrt{3}}{\pi}
+  $$
+
+### Real-Life Example
+
+One key application of the logistic distribution is in **logistic regression**, which is used in medical research to model the probability of diseases, such as heart disease, based on risk factors.
+
+## Mathematical Relationship: Difference of Two Gumbel Variables
+
+### Definition
+
+It turns out that the **difference of two independent Gumbel-distributed variables** follows a **Logistic distribution**:
+
+\[
+D = X_1 - X_2 \sim \text{Logistic}(\mu_1 - \mu_2, \beta)
+\]
+
+where:
+
+$$
+X_1 \sim \text{Gumbel}(\mu_1, \beta), \quad X_2 \sim \text{Gumbel}(\mu_2, \beta)
+$$
+
+### Deep dive 
+
+1. Express the two Gumbel-distributed variables:
+
+   $$
+   X_1 = \mu_1 + \beta Z_1, \quad X_2 = \mu_2 + \beta Z_2
+   $$
+
+   where $Z_1$ and $Z_2$ are **i.i.d. standard Gumbel-distributed variables**.
+
+2. Compute the difference:
+
+   $$
+   D = X_1 - X_2
+   $$
+
+   Expanding:
+
+   $$
+   D = (\mu_1 + \beta Z_1) - (\mu_2 + \beta Z_2)
+   $$
+
+   Simplifying:
+
+   $$
+   D = (\mu_1 - \mu_2) + \beta (Z_1 - Z_2)
+   $$
+
+3. Since **\Z_1 - Z_2 follows a standard Logistic(0,1) distribution**, we conclude:
+
+   $$
+   D \sim \text{Logistic}(\mu_1 - \mu_2, \beta)
+   $$
+
+## Python Simulation
+
+Let's verify this numerically:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import logistic
+
+# Define parameters
+mu1, mu2 = 10, 5  
+beta = 2  
+size = 100000  
+
+# Generate two independent Gumbel-distributed variables
+X1 = np.random.gumbel(mu1, beta, size)
+X2 = np.random.gumbel(mu2, beta, size)
+
+# Compute the difference
+D = X1 - X2
+
+# Fit a logistic distribution to the data
+loc, scale = logistic.fit(D)
+
+# Generate values for plotting
+x = np.linspace(min(D), max(D), 1000)
+pdf_logistic = logistic.pdf(x, loc=loc, scale=scale)
+
+# Plot histogram and logistic fit
+plt.figure(figsize=(10, 6))
+plt.hist(D, bins=100, density=True, alpha=0.6, label="Empirical Difference Distribution")
+plt.plot(x, pdf_logistic, 'r-', label=f"Fitted Logistic Distribution\n(μ={loc:.2f}, β={scale:.2f})")
+plt.xlabel("Difference (X1 - X2)")
+plt.ylabel("Density")
+plt.title("Difference of Two Independent Gumbel-Distributed Variables")
+plt.legend()
+plt.show()
+```
+
+
+- The **Gumbel distribution** is used to model **extreme events** (e.g., highest temperature in a year).
+- If we have **two such extreme events from different locations or sources**, their **difference** behaves like a **logistic distribution**.
+
+Imagine two cities, City A and City B, where we record the hottest temperature each year. If we **subtract** the maximum temperatures of City A from City B, the result is a logistic distribution.
+
+## Generalized Forms of Gumbel and Logistic Distributions
+
+Recent research by **Aljarrah, Famoye, and Lee (2020)** introduced a **Generalized Logistic Distribution** that combines properties of both logistic and Gumbel distributions.
+[Read the full paper here](https://jsdajournal.springeropen.com/articles/10.1186/s40488-020-00107-8)
+
+### Why is this Important?
+
+1. The generalized logistic distribution can model **both symmetric and skewed data**.
+2. It provides better fits for real-world skewed datasets compared to standard logistic or Gumbel distributions.
+3. The research extends this into a **Generalized Logistic Regression Model**, which includes:
+   - **Logistic-log-logistic regression**
+   - **Weibull-extreme value regression**
+   - **Log-Fréchet regression**

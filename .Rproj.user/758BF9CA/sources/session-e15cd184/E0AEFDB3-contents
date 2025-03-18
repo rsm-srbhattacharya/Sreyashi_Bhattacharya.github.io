@@ -1,0 +1,42 @@
+project:
+  type: website
+  output-dir: docs
+
+execute:
+  freeze: auto
+
+website:
+  title: "Sreyashi Bhattacharya"
+  navbar:
+    background: "#536878"  # Slate blue shade for professional look
+    search: false
+    left:
+      - href: index.qmd
+        icon: person-circle
+        text: "About"
+      - href: resume.qmd
+        icon: file-earmark-check
+        text: "Resume"
+      - href: data-analysis.qmd
+        icon: bar-chart
+        text: "Data Analysis"
+      - href: statistics.qmd
+        icon: calculator
+        text: "Statistics"
+      - href: RA_post.qmd
+        icon: graph-up
+        text: "Research Assistantship"
+
+format:
+  html:
+    theme: minty
+    css: styles.css  
+    toc: true
+    search: false
+    fontcolor: "#2C3E50"  # Deep navy for professional contrast
+    linkcolor: "#008080"  # Teal for links
+    mainfont: "IBM Plex Sans"
+    fontsize: 18px
+    linestretch: 1.6
+    text-rendering: optimizeLegibility
+    math: mathjax

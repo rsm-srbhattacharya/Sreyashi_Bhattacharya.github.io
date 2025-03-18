@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.506">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sreyashi Bhattacharya - XGBoost using SageMaker</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Sreyashi Bhattacharya</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> <i class="bi bi-person-circle" role="img">
+</i> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resume.html"> <i class="bi bi-file-earmark-check" role="img">
+</i> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data-analysis.html"> <i class="bi bi-bar-chart" role="img">
+</i> 
+<span class="menu-text">Data Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./statistics.html"> <i class="bi bi-calculator" role="img">
+</i> 
+<span class="menu-text">Statistics</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#classification-on-amazon-sagemaker" id="toc-classification-on-amazon-sagemaker" class="nav-link active" data-scroll-target="#classification-on-amazon-sagemaker">Classification on Amazon SageMaker</a>
+  <ul class="collapse">
+  <li><a href="#get-amazon-iam-execution-role-instance-region" id="toc-get-amazon-iam-execution-role-instance-region" class="nav-link" data-scroll-target="#get-amazon-iam-execution-role-instance-region">1. Get Amazon IAM execution role &amp; instance region</a></li>
+  <li><a href="#read-data-using-pandas-and-select-features" id="toc-read-data-using-pandas-and-select-features" class="nav-link" data-scroll-target="#read-data-using-pandas-and-select-features">2. Read data using pandas and select features</a></li>
+  <li><a href="#description-of-columns" id="toc-description-of-columns" class="nav-link" data-scroll-target="#description-of-columns">Description of Columns</a></li>
+  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing">3. Data processing</a></li>
+  <li><a href="#splitting-data-and-converting-to-csv" id="toc-splitting-data-and-converting-to-csv" class="nav-link" data-scroll-target="#splitting-data-and-converting-to-csv">4. Splitting data and converting to CSV</a></li>
+  <li><a href="#write-prepared-data-to-files." id="toc-write-prepared-data-to-files." class="nav-link" data-scroll-target="#write-prepared-data-to-files.">Write prepared data to files.</a></li>
+  <li><a href="#save-processed-data-to-s3" id="toc-save-processed-data-to-s3" class="nav-link" data-scroll-target="#save-processed-data-to-s3">5. Save processed data to S3</a></li>
+  <li><a href="#create-channels-for-train-and-validation-data-to-feed-to-model" id="toc-create-channels-for-train-and-validation-data-to-feed-to-model" class="nav-link" data-scroll-target="#create-channels-for-train-and-validation-data-to-feed-to-model">6. Create channels for train and validation data to feed to model</a></li>
+  <li><a href="#create-the-xgboost-model" id="toc-create-the-xgboost-model" class="nav-link" data-scroll-target="#create-the-xgboost-model">7. Create the XGBoost model</a></li>
+  <li><a href="#create-an-estimator-using-sagemaker.estimator.estimator." id="toc-create-an-estimator-using-sagemaker.estimator.estimator." class="nav-link" data-scroll-target="#create-an-estimator-using-sagemaker.estimator.estimator.">Create an Estimator using sagemaker.estimator.Estimator.</a></li>
+  <li><a href="#set-model-hyperparameters--" id="toc-set-model-hyperparameters--" class="nav-link" data-scroll-target="#set-model-hyperparameters--">8. Set model hyperparameters -</a></li>
+  <li><a href="#train-model-using-train-and-validation-data-channels" id="toc-train-model-using-train-and-validation-data-channels" class="nav-link" data-scroll-target="#train-model-using-train-and-validation-data-channels">Train model using train and validation data channels</a></li>
+  <li><a href="#real-time-inference" id="toc-real-time-inference" class="nav-link" data-scroll-target="#real-time-inference">Real-time Inference</a></li>
+  <li><a href="#hyperparameter-tuning" id="toc-hyperparameter-tuning" class="nav-link" data-scroll-target="#hyperparameter-tuning">16. Hyperparameter tuning</a></li>
+  <li><a href="#best-hyperparameters" id="toc-best-hyperparameters" class="nav-link" data-scroll-target="#best-hyperparameters">17. Best hyperparameters</a></li>
+  <li><a href="#real-time-inference-after-hyperparamter-tuning" id="toc-real-time-inference-after-hyperparamter-tuning" class="nav-link" data-scroll-target="#real-time-inference-after-hyperparamter-tuning">18. Real-time inference after Hyperparamter tuning</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">XGBoost using SageMaker</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="classification-on-amazon-sagemaker" class="level2">
+<h2 class="anchored" data-anchor-id="classification-on-amazon-sagemaker">Classification on Amazon SageMaker</h2>
+<p>Perform a classification task on the given dataset.<br> Using the features given, you will train a XGBoost decision tree model to predict a given person’s salary (the <code>WAGP</code> column) - which will be categorized into multiple bins.<br></p>
+<hr>
+<section id="tasks" class="level4">
+<h4 class="anchored" data-anchor-id="tasks">Tasks:</h4>
+<ul>
+<li>Perform Exploratory Data Analysis on the given dataset</li>
+<li>Save preprocessed datasets to Amazon S3</li>
+<li>Use the Amazon Sagemaker platform to train an XGBoost model</li>
+<li>Evaluate the model on the test set using real-time inference</li>
+<li>Perform hyperparameter tuning on the XGBoost model</li>
+</ul>
+</section>
+<section id="get-amazon-iam-execution-role-instance-region" class="level3">
+<h3 class="anchored" data-anchor-id="get-amazon-iam-execution-role-instance-region">1. Get Amazon IAM execution role &amp; instance region</h3>
+<p>Make sure to create an S3 bucket or re-use the ones from prior exercises</p>
+<div id="df2d81c6-e7fb-4349-9e09-057087e82a99" class="cell" data-tags="[]" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ALL YOUR IMPORTS HERE</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sagemaker</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sagemaker <span class="im">import</span> get_execution_role</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Get and store the IAM executon role, SageMaker Session, instance region &amp; the SageMaker client in the cell below.</p>
+<section id="expected-output-print-the-instance-region" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output-print-the-instance-region"><strong>Expected output:</strong> Print the instance region</h4>
+<div id="1245f5ac-a175-409a-8ad9-eb8aa112e7ae" class="cell" data-cell_id="8281449d-df80-4172-aec1-abe6efd366e6" data-tags="[]" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define IAM role- this will be necessary when defining your model</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>iam_role <span class="op">=</span> get_execution_role()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set SageMaker session handle</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sess <span class="op">=</span> sagemaker.Session()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the region of the instance </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>my_region <span class="op">=</span> sess.boto_session.region_name</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>us-west-2</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="read-data-using-pandas-and-select-features" class="level3">
+<h3 class="anchored" data-anchor-id="read-data-using-pandas-and-select-features">2. Read data using pandas and select features</h3>
+<section id="read-data-from-the-given-s3-bucket-path-into-a-pandas-dataframe" class="level4">
+<h4 class="anchored" data-anchor-id="read-data-from-the-given-s3-bucket-path-into-a-pandas-dataframe">Read data from the given s3 bucket path into a pandas dataframe</h4>
+</section>
+<section id="expected-output-first-five-rows-of-the-dataframe" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output-first-five-rows-of-the-dataframe"><strong>Expected output</strong>: First five rows of the dataframe</h4>
+<div id="bf7b0aa0-3271-4ecc-9e5a-b5b3c7b32f77" class="cell" data-tags="[]" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> <span class="st">"mgta466-w24"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>prefix <span class="op">=</span> <span class="st">"data"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Using bucket '</span> <span class="op">+</span> bucket)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using bucket mgta466-w24</code></pre>
+</div>
+</div>
+<div id="a456ec3a-23e3-4160-9e7b-0cd9b822a67f" class="cell" data-cell_id="03e7fd9d-1c99-47c0-83bc-4f3f892d328c" data-tags="[]">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> zipfile</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">"s3://mgta466-w24/data/person_records_merged_discretized.csv.zip"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>data_fname <span class="op">=</span> <span class="st">"s3://</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(bucket, prefix ,<span class="st">"person_records_merged_discretized.csv.zip"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>val_df <span class="op">=</span> pd.read_csv(data_fname)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>val_df.copy()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="description-of-columns" class="level3">
+<h3 class="anchored" data-anchor-id="description-of-columns">Description of Columns</h3>
+<p>There are lots of columns in the original dataset. However, we’ll only use the following columns whose descriptions are given below:</p>
+<p>WAGP_CAT - Discretized wages or salary income past 12 months</p>
+<p>AGEP - Age</p>
+<p>COW - Class of worker</p>
+<p>JWMNP - Travel time to work</p>
+<p>JWTR - Means of transportation to work</p>
+<p>MAR - Marital status</p>
+<p>PERNP - Total person’s earnings</p>
+<p>NWAV - Available for work</p>
+<p>NWLA - On layoff from work</p>
+<p>NWLK - Looking for work</p>
+<p>NWAB - Temporary absence from work</p>
+<p>SCHL - Educational attainment</p>
+<p>WKW - Weeks worked during past 12 months</p>
+<section id="feature-selection---select-the-features-in-the-columns-listed-above" class="level4">
+<h4 class="anchored" data-anchor-id="feature-selection---select-the-features-in-the-columns-listed-above">2.2 Feature selection - Select the features in the columns listed above</h4>
+<p>Note: Make sure <code>WAGP_CAT</code> column is the first column. XGBoost expects labels to be in the first column</p>
+</section>
+<section id="expected-output-first-five-rows-of-the-dataframe-after-feature-selection" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output-first-five-rows-of-the-dataframe-after-feature-selection"><strong>Expected output</strong>: First five rows of the dataframe after feature selection</h4>
+<div id="10f40b8a-6d97-44dc-9ef0-c0542156a7d3" class="cell" data-cell_id="73b7dada-57a2-4116-ad94-3e43095d70cf" data-tags="[]" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting only the specified columns</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>selected_columns <span class="op">=</span> [<span class="st">'WAGP_CAT'</span>, <span class="st">'AGEP'</span>, <span class="st">'COW'</span>, <span class="st">'JWMNP'</span>, <span class="st">'JWTR'</span>, <span class="st">'MAR'</span>, <span class="st">'PERNP'</span>, <span class="st">'NWAV'</span>, <span class="st">'NWLA'</span>, <span class="st">'NWLK'</span>, <span class="st">'NWAB'</span>, <span class="st">'SCHL'</span>, <span class="st">'WKW'</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span> df[selected_columns]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   WAGP_CAT  AGEP  COW  JWMNP  JWTR  MAR    PERNP  NWAV  NWLA  NWLK  NWAB  \
+0         0    19  NaN    NaN   NaN    5      0.0   5.0   2.0   2.0   2.0   
+1         1    55  1.0   30.0   1.0    1  52000.0   5.0   3.0   3.0   3.0   
+2         0    56  6.0    NaN  11.0    1  99000.0   5.0   3.0   3.0   3.0   
+3         0    21  NaN    NaN   NaN    5      0.0   5.0   2.0   2.0   2.0   
+4         0    21  NaN    NaN   NaN    5      0.0   5.0   2.0   2.0   2.0   
+
+   SCHL  WKW  
+0  19.0  NaN  
+1  20.0  1.0  
+2  16.0  1.0  
+3  19.0  NaN  
+4  19.0  NaN  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-processing" class="level3">
+<h3 class="anchored" data-anchor-id="data-processing">3. Data processing</h3>
+<section id="remove-highly-correlated-column" class="level4">
+<h4 class="anchored" data-anchor-id="remove-highly-correlated-column">3.1 Remove highly correlated column</h4>
+<div id="6851ec41-e70e-4164-a596-5deeefc2f05a" class="cell" data-tags="[]" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.corr()[<span class="st">'WAGP_CAT'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>WAGP_CAT    1.000000
+AGEP       -0.023210
+COW        -0.044870
+JWMNP       0.121411
+JWTR       -0.049439
+MAR        -0.166626
+PERNP       0.791990
+NWAV        0.108792
+NWLA        0.305329
+NWLK        0.298288
+NWAB        0.292421
+SCHL        0.273946
+WKW        -0.302723
+Name: WAGP_CAT, dtype: float64</code></pre>
+</div>
+</div>
+<p>As seen from the correlation valus, column <code>PERNP</code> is highly correlated with the wage and must be removed</p>
+</section>
+<section id="expected-output---columns-of-the-dataframe-after-removing-pernp" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---columns-of-the-dataframe-after-removing-pernp"><strong>Expected output</strong> - Columns of the dataframe after removing <code>PERNP</code></h4>
+<div id="2c693f88-20c5-49ca-b59a-f6a5d7f906a6" class="cell" data-cell_id="06bfa735-d577-427e-bbff-92d6abd6b460" data-tags="[]" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the 'PERNP' column</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>selected_columns.remove(<span class="st">'PERNP'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting the remaining columns</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[selected_columns]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing the columns of the selected DataFrame</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['WAGP_CAT', 'AGEP', 'COW', 'JWMNP', 'JWTR', 'MAR', 'NWAV', 'NWLA',
+       'NWLK', 'NWAB', 'SCHL', 'WKW'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</section>
+<section id="dropping-nas" class="level4">
+<h4 class="anchored" data-anchor-id="dropping-nas">3.2. Dropping NAs</h4>
+<p>Drop rows with any nulls in any of the columns</p>
+</section>
+<section id="expected-output---number-of-rows-in-the-cleaned-dataframe" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---number-of-rows-in-the-cleaned-dataframe"><strong>Expected output</strong> - Number of rows in the cleaned dataframe</h4>
+<div id="12442557-aec0-4352-ade0-06c58fd472a2" class="cell" data-cell_id="6c341b65-4190-4afa-8e92-d665923888ed" data-tags="[]" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df.shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>1248427</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="splitting-data-and-converting-to-csv" class="level3">
+<h3 class="anchored" data-anchor-id="splitting-data-and-converting-to-csv">4. Splitting data and converting to CSV</h3>
+<p>Split the dataset into train, validation, and test sets using sklearn’s <code>train_test_split</code>. Look up the API definition of <code>train_test_split</code> to see what values you need to pass</p>
+<p>First, split the dataframe into two parts - <code>train_data</code> and <code>val_data</code> with an 70:30 ratio, and then split the <code>train_data</code> into <code>train_data</code> and <code>test_data</code> in a 85:15 ratio.</p>
+<p>Use the following parameters for train_test_split: * <code>random_state = 466</code> * <code>shuffle = True</code> * <code>train_size = 0.7</code>, <code>test_size = 0.3</code> for the first split * <code>train_size = 0.85</code>, <code>test_size = 0.15</code> for the second split</p>
+<p><strong>IMPORTANT</strong> - Use <code>random_state=466</code> as one the parameters of the <code>train_test_split</code> function to maintain consistency across submissions</p>
+<section id="expected-output---size-of-train-validation-and-test-data-in-a-tuple-format---length-of-train-length-of-validation-length-of-test" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---size-of-train-validation-and-test-data-in-a-tuple-format---length-of-train-length-of-validation-length-of-test"><strong>Expected output</strong> - Size of train, validation and test data in a tuple format - (length of train, length of validation, length of test)</h4>
+<div id="65443fc3-61c5-4ad8-92f9-3e023e30a896" class="cell" data-cell_id="4a55c5c5-5254-4dd7-a430-daa8ab22a890" data-tags="[]" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> <span class="dv">466</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting the dataframe into train_data and val_data with a 70:30 ratio</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>train_data, val_data <span class="op">=</span> train_test_split(df, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">466</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting the train_data into train_data and test_data with an 85:15 ratio</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>train_data, test_data <span class="op">=</span> train_test_split(train_data, test_size<span class="op">=</span><span class="fl">0.15</span>, random_state<span class="op">=</span><span class="dv">466</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Getting the sizes of train, validation, and test data</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>train_size <span class="op">=</span> <span class="bu">len</span>(train_data)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>val_size <span class="op">=</span> <span class="bu">len</span>(val_data)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>test_size <span class="op">=</span> <span class="bu">len</span>(test_data)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((train_size, val_size, test_size))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(742813, 374529, 131085)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="write-prepared-data-to-files." class="level3">
+<h3 class="anchored" data-anchor-id="write-prepared-data-to-files.">Write prepared data to files.</h3>
+<p>Write the <code>train_data</code>, <code>val_data</code>, and <code>test_data</code> to csv files using the <code>.to_csv()</code> method</p>
+<p>Use <code>index = False</code> as the parameters as shown in the demo.</p>
+<p><strong>NOTE:</strong> Use <code>header = False</code> as another parameter for <code>train_data</code> and <code>val_data</code>, while for <code>test_data</code> use <code>header = True</code></p>
+<div id="4de7f7a9-78e8-457d-b208-95b1bce4de3d" class="cell" data-cell_id="473f7db4-34da-4aba-9c2e-00c464b2de23" data-tags="[]" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Write prepared data to files</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>train_data.to_csv(<span class="st">'train_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>, header<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>val_data.to_csv(<span class="st">'val_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>, header<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>test_data.to_csv(<span class="st">'test_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>, header<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="save-processed-data-to-s3" class="level3">
+<h3 class="anchored" data-anchor-id="save-processed-data-to-s3">5. Save processed data to S3</h3>
+<p>This step is needed for using XGBoost with Amazon Sagemaker. Send data to S3. SageMaker will read training data from S3. The example for training data is given, you need do the same for validation and test data</p>
+<section id="expected-output---path-of-train-validation-and-test-data-in-aws-s3-in-tuple-format---train_path-val_path-test_path" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---path-of-train-validation-and-test-data-in-aws-s3-in-tuple-format---train_path-val_path-test_path"><strong>Expected output</strong> - Path of train, validation and test data in AWS S3 in tuple format - (train_path, val_path, test_path)</h4>
+<div id="353b1fe1-2534-46e9-9b5e-da0f1008f1be" class="cell" data-tags="[]" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> <span class="st">'sb-aws-bucket-mgt'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9f14e2cd-7d12-4d0e-9b39-13d4451e4490" class="cell" data-cell_id="d9b13f27-ce26-446e-9154-b9d13669645a" data-tags="[]" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>prefix <span class="op">=</span> <span class="st">"data"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>key_prefix <span class="op">=</span> prefix <span class="op">+</span> <span class="st">"/model_data"</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>train_path <span class="op">=</span> sess.upload_data(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    path<span class="op">=</span><span class="st">'train_data.csv'</span>, bucket<span class="op">=</span>bucket,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    key_prefix<span class="op">=</span>key_prefix)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>val_path <span class="op">=</span> sess.upload_data(</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    path<span class="op">=</span><span class="st">"val_data.csv"</span>, bucket<span class="op">=</span>bucket, key_prefix<span class="op">=</span>key_prefix)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>test_path <span class="op">=</span> sess.upload_data(</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    path<span class="op">=</span><span class="st">"test_data.csv"</span>, bucket<span class="op">=</span>bucket, key_prefix<span class="op">=</span>key_prefix)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((train_path,val_path,test_path))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>('s3://sb-aws-bucket-mgt/data/model_data/train_data.csv', 's3://sb-aws-bucket-mgt/data/model_data/val_data.csv', 's3://sb-aws-bucket-mgt/data/model_data/test_data.csv')</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="create-channels-for-train-and-validation-data-to-feed-to-model" class="level3">
+<h3 class="anchored" data-anchor-id="create-channels-for-train-and-validation-data-to-feed-to-model">6. Create channels for train and validation data to feed to model</h3>
+<ol type="1">
+<li>Set up data channels for the training, validation, and test data as shown in the demo</li>
+<li>Set the output location for the model</li>
+</ol>
+<p>You’ll have to use the <a href="https://sagemaker.readthedocs.io/en/stable/api/utility/inputs.html#sagemaker.inputs.TrainingInput"><code>TrainingInput</code></a> function and pass the <code>s3_data</code> and <code>content_type</code> parameters</p>
+<section id="expected-output---config-of-traininginput-created-for-training-data" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---config-of-traininginput-created-for-training-data"><strong>Expected output</strong> - <a href="https://sagemaker.readthedocs.io/en/stable/api/utility/inputs.html#sagemaker.inputs.TrainingInput.config"><code>config</code></a> of <code>TrainingInput</code> created for training data</h4>
+<p>Refer - https://sagemaker.readthedocs.io/en/stable/api/utility/inputs.html#sagemaker.inputs.TrainingInput.config</p>
+<div id="cc85e109-615c-4a1f-a1e3-14d9c21bcf80" class="cell" data-cell_id="61ac8651-8cec-47e8-b033-d55e214671df" data-tags="[]" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>s3_input_train <span class="op">=</span> sagemaker.inputs.TrainingInput(s3_data<span class="op">=</span>train_path, content_type<span class="op">=</span><span class="st">'csv'</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>s3_input_val <span class="op">=</span> sagemaker.inputs.TrainingInput(s3_data<span class="op">=</span>val_path, content_type<span class="op">=</span><span class="st">'csv'</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>s3_input_test <span class="op">=</span> sagemaker.inputs.TrainingInput(s3_data<span class="op">=</span>test_path, content_type<span class="op">=</span><span class="st">'csv'</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set model output location</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>output_location <span class="op">=</span> <span class="st">"s3://</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">/model"</span>.<span class="bu">format</span>(bucket,prefix)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((s3_input_train.config))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'DataSource': {'S3DataSource': {'S3DataType': 'S3Prefix', 'S3Uri': 's3://sb-aws-bucket-mgt/data/model_data/train_data.csv', 'S3DataDistributionType': 'FullyReplicated'}}, 'ContentType': 'csv'}</code></pre>
+</div>
+</div>
+</section>
+<section id="expected-output---models-output-location-in-aws-s3" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---models-output-location-in-aws-s3"><strong>Expected output</strong> - Model’s output location in AWS S3</h4>
+<p>NOTE - Output format should be <code>s3://&lt;bucket-name&gt;/&lt;path-to-model-folder&gt;</code></p>
+<div id="d45caac8-351d-43f3-ab45-c1e59dda7d16" class="cell" data-cell_id="da941cef-fcfa-4c6b-9c71-b28b5b8a42f2" data-tags="[]" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>output_location</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>'s3://sb-aws-bucket-mgt/data/model'</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="create-the-xgboost-model" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-xgboost-model">7. Create the XGBoost model</h3>
+<div id="3672c680-7f4f-4980-8af5-a1adaa3fd32b" class="cell" data-tags="[]" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CODE FOR XGB IMAGE</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sagemaker.amazon.amazon_estimator <span class="im">import</span> image_uris</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>xgb_image <span class="op">=</span> image_uris.retrieve(framework<span class="op">=</span><span class="st">"xgboost"</span>, region<span class="op">=</span>my_region, version<span class="op">=</span><span class="st">'latest'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-an-estimator-using-sagemaker.estimator.estimator." class="level3">
+<h3 class="anchored" data-anchor-id="create-an-estimator-using-sagemaker.estimator.estimator.">Create an Estimator using sagemaker.estimator.Estimator.</h3>
+<section id="expected-output---output_path-of-the-xgb-estimator.-note-that-this-output-should-the-same-as-the-model-output-path-above" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---output_path-of-the-xgb-estimator.-note-that-this-output-should-the-same-as-the-model-output-path-above"><strong>Expected output</strong> - <code>output_path</code> of the xgb Estimator. Note that this output should the same as the model output path above</h4>
+<div id="94088367-4838-45e8-a669-bad81964793a" class="cell" data-cell_id="e572123a-91aa-435e-8439-b0661002bb02" data-tags="[]" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DO NOT DELETE THIS CELL</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="op">=</span> sagemaker.estimator.Estimator(xgb_image,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                                          iam_role, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                                          instance_count<span class="op">=</span><span class="dv">1</span>, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                                          instance_type<span class="op">=</span><span class="st">'ml.m5.xlarge'</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                                          output_path<span class="op">=</span>output_location,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                                          sagemaker_session<span class="op">=</span>sess)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="set-model-hyperparameters--" class="level3">
+<h3 class="anchored" data-anchor-id="set-model-hyperparameters--">8. Set model hyperparameters -</h3>
+<p>Set the hyperparameters for the model. You’ll have to use the <code>set_hyperparameters()</code> method. Refer to the demo for how it’s done. The wages have been discretized into 3 bins so the number of classes for our classification problem is 3</p>
+<p>Read the below references for more information: * https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost_hyperparameters.html * https://github.com/dmlc/xgboost/blob/master/doc/parameter.rst#learning-task-parameters</p>
+<p>Use the following values for the parameters: * <code>num_class = 3</code> * <code>max_depth = 1</code> * <code>min_child_weight = 2</code> * <code>early_stopping_rounds=5</code> * <code>objective='multi:softmax'</code> * <code>num_round=100</code></p>
+<section id="expected-output---hyperparameters-of-the-xgb-estimator-in-python-dict-format" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---hyperparameters-of-the-xgb-estimator-in-python-dict-format"><strong>Expected output</strong> - Hyperparameters of the xgb Estimator in Python <code>dict</code> format</h4>
+<div id="6459e0e6-4535-4bb8-bac8-575c0f480dc5" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>xgb_model.set_hyperparameters(num_class <span class="op">=</span> <span class="dv">3</span>,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    max_depth <span class="op">=</span> <span class="dv">1</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    min_child_weight <span class="op">=</span> <span class="dv">2</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    early_stopping_rounds<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    objective<span class="op">=</span><span class="st">'multi:softmax'</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    num_round<span class="op">=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2d153ff4-ed5f-4fec-954e-b7e7e764c127" class="cell" data-cell_id="bd0122d9-991c-4fb8-8734-d02ce355ffef" data-tags="[]" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a> <span class="co">#Hyperparameters of the xgb Estimator in Python dict format</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>xgb_model.hyperparameters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>{'num_class': 3,
+ 'max_depth': 1,
+ 'min_child_weight': 2,
+ 'early_stopping_rounds': 5,
+ 'objective': 'multi:softmax',
+ 'num_round': 100}</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="train-model-using-train-and-validation-data-channels" class="level3">
+<h3 class="anchored" data-anchor-id="train-model-using-train-and-validation-data-channels">Train model using train and validation data channels</h3>
+<p>Use the <code>.fit()</code> method to fit the model using the training and validation data channels. Execute the XGBoost training job.</p>
+<p>NOTE: This step may take several minutes. <br> Also, add parameter <code>logs = False</code> to the fit function to avoid printing extra info logs. These are different than the training logs that the fit function will automatically generate.</p>
+<section id="expected-output---training-log.-note-that-you-only-have-to-call-.fit-on-the-xgb-estimator-with-the-required-parameters-and-the-logs-will-be-automatically-generated" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---training-log.-note-that-you-only-have-to-call-.fit-on-the-xgb-estimator-with-the-required-parameters-and-the-logs-will-be-automatically-generated"><strong>Expected output</strong> - Training log. Note that you only have to call <code>.fit</code> on the xgb Estimator, with the required parameters, and the logs will be automatically generated</h4>
+<div id="7fff555b-09e7-4493-a55b-1aa5c1a62095" class="cell" data-cell_id="bad95f63-5bb0-4c87-8750-e148325d623e" data-tags="[]" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Record the start time</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>xgb_model.fit({<span class="st">'train'</span>: s3_input_train, <span class="st">'validation'</span>: s3_input_val}, logs <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:sagemaker:Creating training-job with name: xgboost-2024-03-20-01-45-07-319</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+2024-03-20 01:45:07 Starting - Starting the training job....
+2024-03-20 01:45:36 Starting - Preparing the instances for training......
+2024-03-20 01:46:09 Downloading - Downloading input data....
+2024-03-20 01:46:34 Downloading - Downloading the training image.....
+2024-03-20 01:47:05 Training - Training image download completed. Training in progress...
+2024-03-20 01:47:20 Uploading - Uploading generated training model.
+2024-03-20 01:47:31 Completed - Training job completed</code></pre>
+</div>
+</div>
+<div id="bd293b9d-51c5-44c2-8a4f-baa8feab2e3e" class="cell" data-tags="[]" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Wall time:"</span>,(end_time<span class="op">-</span>start_time)<span class="op">/</span><span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Wall time: 2.4540852944056195</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="real-time-inference" class="level3">
+<h3 class="anchored" data-anchor-id="real-time-inference">Real-time Inference</h3>
+<section id="deploy-endpoint-for-inference" class="level4">
+<h4 class="anchored" data-anchor-id="deploy-endpoint-for-inference">10.1 Deploy endpoint for inference</h4>
+<ol type="1">
+<li>Deploy the model that you fit in the previous step as an endpoint for real-time inference</li>
+<li>Delete the endpoint after performing inference in the inference notebook</li>
+</ol>
+<p>Use the <code>.deploy()</code> method to deploy the model and create an endpoint for real-time inference as shown in the demo.</p>
+<p>Use the following values for the parameters: * <code>initial_instance_count = 1</code> * <code>serializer = sagemaker.serializers.CSVSerializer()</code> * <code>instance_type = 'ml.m5.xlarge'</code></p>
+<p><strong>NOTE</strong>: This step may take several minutes</p>
+<p><strong>Go to the inference notebook to perform the inference after deploying the model in this step</strong></p>
+</section>
+<section id="expected-output---print-the-name-of-the-deployed-endpoint" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---print-the-name-of-the-deployed-endpoint"><strong>Expected Output -</strong> Print the name of the deployed endpoint</h4>
+<div id="5fef7ed5-0dc5-4ea4-bcd3-46ed4d47f1f1" class="cell" data-cell_id="c84ed4ec-0fc1-4c46-b709-b178f177f381" data-tags="[]" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>model_predictor <span class="op">=</span> xgb_model.deploy(initial_instance_count<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                    instance_type<span class="op">=</span><span class="st">'ml.m5.xlarge'</span>, serializer <span class="op">=</span> sagemaker.serializers.CSVSerializer())</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>model_predictor.endpoint_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:sagemaker:Creating model with name: xgboost-2024-03-20-01-47-34-585
+INFO:sagemaker:Creating endpoint-config with name xgboost-2024-03-20-01-47-34-585
+INFO:sagemaker:Creating endpoint with name xgboost-2024-03-20-01-47-34-585</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-----!</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>'xgboost-2024-03-20-01-47-34-585'</code></pre>
+</div>
+</div>
+</section>
+<section id="delete-endpoint" class="level4">
+<h4 class="anchored" data-anchor-id="delete-endpoint">10.2 Delete endpoint</h4>
+<p><strong>NOTE</strong>: There is a limit on the number of active endpoints</p>
+</section>
+<section id="expected-output---delete-endpoint-logs.-note-that-these-will-be-automatically-generated-once-you-delete-the-endpoints." class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---delete-endpoint-logs.-note-that-these-will-be-automatically-generated-once-you-delete-the-endpoints."><strong>Expected Output -</strong> Delete endpoint logs. Note that these will be automatically generated once you delete the endpoints.</h4>
+<div id="be7cccd9-3e78-45aa-b728-77c61652a90e" class="cell" data-cell_id="efa8b8c7-03eb-448a-9a47-c7ce8c8b1e46" data-tags="[]" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>model_predictor.delete_endpoint()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:sagemaker:Deleting endpoint configuration with name: xgboost-2024-03-20-01-47-34-585
+INFO:sagemaker:Deleting endpoint with name: xgboost-2024-03-20-01-47-34-585</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="hyperparameter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameter-tuning">16. Hyperparameter tuning</h3>
+<p>Read through the following links for more information: * https://sagemaker.readthedocs.io/en/stable/api/training/tuner.html * https://aws.amazon.com/blogs/machine-learning/amazon-sagemaker-automatic-model-tuning-now-supports-random-search-and-hyperparameter-scaling/</p>
+<p>We’ll perform hyperparameter tuning on two hyperparameters:</p>
+<ol type="1">
+<li>min_child_weight: 1 to 10</li>
+<li>max_depth: 2 to 10</li>
+</ol>
+<p>We’ll use a <code>Random</code> search strategy. The code has been given for you, assuming the XGBoost estimator is stored in the variable <code>xgb</code>.</p>
+<p><code>max_parallel_jobs</code> is set to 2 so that too many instances are not created for Hyperparamter tuning</p>
+<div id="3f9acde5-f978-417f-984f-6ae7cea15e2f" class="cell" data-tags="[]" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sagemaker.tuner <span class="im">import</span> HyperparameterTuner, IntegerParameter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Define the hyperparameters to tune in the dictionary <code>hyperparameter_ranges</code></p>
+<div id="8e4529a7-6d5c-4c8b-ac75-e25dbba8fb78" class="cell" data-tags="[]" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>xgb_model.hyperparameters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>{'num_class': 3,
+ 'max_depth': 1,
+ 'min_child_weight': 2,
+ 'early_stopping_rounds': 5,
+ 'objective': 'multi:softmax',
+ 'num_round': 100}</code></pre>
+</div>
+</div>
+<div id="830b6e23-5b02-4d6d-848d-cc45804a2f6e" class="cell" data-tags="[]" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>hyperparameter_ranges <span class="op">=</span> {</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: IntegerParameter(<span class="dv">2</span>, <span class="dv">10</span>),</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_child_weight'</span>:IntegerParameter(<span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>     }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2f27d74c-6c23-46c2-8e7c-2dfc5960fd2a" class="cell" data-tags="[]" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> HyperparameterTuner(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    estimator<span class="op">=</span>xgb_model,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    hyperparameter_ranges<span class="op">=</span>hyperparameter_ranges,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    base_tuning_job_name<span class="op">=</span><span class="st">'XGBoost-Tuner'</span>,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    objective_type<span class="op">=</span><span class="st">'Minimize'</span>,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    objective_metric_name<span class="op">=</span><span class="st">'validation:merror'</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    max_jobs<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    max_parallel_jobs<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    strategy<span class="op">=</span><span class="st">'Random'</span>,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    random_seed<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that we have created the Optimizer. We need to call <code>.fit()</code> on it to start the tuning job.</p>
+<p>Refer to the demo and see how to call <code>fit()</code> and pass the appropriate data channels.</p>
+<section id="expected-output---tuning-log.-note-that-you-only-have-to-call-.fit-on-the-optimizer-with-the-required-parameters-and-the-logs-will-be-automatically-generated" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---tuning-log.-note-that-you-only-have-to-call-.fit-on-the-optimizer-with-the-required-parameters-and-the-logs-will-be-automatically-generated"><strong>Expected output</strong> - Tuning log. Note that you only have to call <code>.fit</code> on the optimizer, with the required parameters, and the logs will be automatically generated</h4>
+<div id="92cd00ac-f736-47c9-b745-8cfa493041fc" class="cell" data-cell_id="2b55602c-bf69-4345-87bb-ec88b79679ce" data-tags="[]" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#%%time</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>optimizer.fit({<span class="st">'train'</span>: s3_input_train, <span class="st">'validation'</span>: s3_input_val}, logs <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:sagemaker:Creating hyperparameter tuning job with name: XGBoost-Tuner-240320-0212</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>.................................................!</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="best-hyperparameters" class="level3">
+<h3 class="anchored" data-anchor-id="best-hyperparameters">17. Best hyperparameters</h3>
+<section id="expected-output---hyperparameters-of-the-best_estimator-of-the-hyperparametertuner-in-pythons-dictionarydict-format" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---hyperparameters-of-the-best_estimator-of-the-hyperparametertuner-in-pythons-dictionarydict-format"><strong>Expected output</strong> - Hyperparameters of the <code>best_estimator</code> of the <code>HyperparameterTuner</code> in Python’s dictionary(<code>dict</code>) format</h4>
+<div id="6cf94c1c-da1a-419e-acc4-a1816275e8b4" class="cell" data-cell_id="cecbaf0a-b859-4593-b299-534e3e6fe894" data-tags="[]" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>optimizer.best_estimator().hyperparameters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+2024-03-20 02:15:46 Starting - Preparing the instances for training
+2024-03-20 02:15:46 Downloading - Downloading the training image
+2024-03-20 02:15:46 Training - Training image download completed. Training in progress.
+2024-03-20 02:15:46 Uploading - Uploading generated training model
+2024-03-20 02:15:46 Completed - Resource reused by training job: XGBoost-Tuner-240320-0212-004-806ca846</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="54">
+<pre><code>{'_tuning_objective_metric': 'validation:merror',
+ 'early_stopping_rounds': '5',
+ 'max_depth': '9',
+ 'min_child_weight': '2',
+ 'num_class': '3',
+ 'num_round': '100',
+ 'objective': 'multi:softmax'}</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="real-time-inference-after-hyperparamter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="real-time-inference-after-hyperparamter-tuning">18. Real-time inference after Hyperparamter tuning</h3>
+<section id="deploy-the-tuned-model-as-an-endpoint" class="level4">
+<h4 class="anchored" data-anchor-id="deploy-the-tuned-model-as-an-endpoint">18.1 Deploy the tuned model as an endpoint</h4>
+<p><strong>NOTE</strong>: This step may take several minutes</p>
+<ol type="1">
+<li>Deploy the tuned model with the best parameters that you got in the previous steps as an endpoint for real-time inference</li>
+<li>Delete the endpoint after performing inference in the inference notebook</li>
+</ol>
+<p>Use the <code>.deploy()</code> method to deploy the model and create an endpoint for real-time inference as shown in the demo.</p>
+<p>Use the following values for the parameters: * <code>initial_instance_count = 1</code> * <code>serializer = sagemaker.serializers.CSVSerializer()</code> * <code>instance_type = 'ml.m5.xlarge'</code></p>
+<p><strong>NOTE</strong>: This step may take several minutes</p>
+</section>
+<section id="expected-output---print-the-name-of-the-deployed-endpoint-1" class="level4">
+<h4 class="anchored" data-anchor-id="expected-output---print-the-name-of-the-deployed-endpoint-1"><strong>Expected Output -</strong> Print the name of the deployed endpoint</h4>
+<div id="f68bae70-f62c-450c-805f-f74a9f403443" class="cell" data-cell_id="0b9ffb68-99d0-4dae-83ad-edf8fb391b18" data-tags="[]" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#%%time</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>tuned_model_predictor <span class="op">=</span> optimizer.deploy(initial_instance_count<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>                    instance_type<span class="op">=</span><span class="st">'ml.m5.xlarge'</span>, serializer <span class="op">=</span> sagemaker.serializers.CSVSerializer())</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>tuned_model_predictor.endpoint_name</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+2024-03-20 02:15:46 Starting - Preparing the instances for training
+2024-03-20 02:15:46 Downloading - Downloading the training image
+2024-03-20 02:15:46 Training - Training image download completed. Training in progress.
+2024-03-20 02:15:46 Uploading - Uploading generated training model
+2024-03-20 02:15:46 Completed - Resource reused by training job: XGBoost-Tuner-240320-0212-004-806ca846
+----!</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:sagemaker:Creating model with name: XGBoost-Tuner-2024-03-20-02-22-23-756
+INFO:sagemaker:Creating endpoint-config with name XGBoost-Tuner-240320-0212-002-2b47cacb
+INFO:sagemaker:Creating endpoint with name XGBoost-Tuner-240320-0212-002-2b47cacb</code></pre>
+</div>
+</div>
+<div id="8e6ae45b-e801-4231-af47-f9c3fbd3d3f1" class="cell" data-cell_id="011a5d03-141a-460c-9f43-e1437d0c6563" data-tags="[]" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>tuned_model_predictor.delete_endpoint()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:sagemaker:Deleting endpoint configuration with name: XGBoost-Tuner-240320-0212-002-2b47cacb
+INFO:sagemaker:Deleting endpoint with name: XGBoost-Tuner-240320-0212-002-2b47cacb</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

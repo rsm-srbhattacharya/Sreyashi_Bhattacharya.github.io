@@ -1,0 +1,377 @@
+## Class 6
+
+# Today we extend the MNL model from last week to include heterogeneity.
+
+
+
+library(tidyverse)
+library(mlogit)
+
+# import datasets
+
+# import customer data
+cust_dat <- read_csv("../data/smartphone_customer_data.csv", show_col_types=F)
+n <- nrow(cust_dat)                                      #
+
+# import phone attributes
+phone_dat <- read_csv("../data/phone_dat.csv", show_col_types=F)
+
+# import datasets formatted for mlogit estimation
+load("../data/mnl_datasets.RData")
+
+# import hit rate and likelihood ratio index functions
+load("../data/mnl_performance_functions.RData")
+
+# For the rest of this script, we'll focus on the customer that bought phones
+# last year (ie, where the "years_ago" variable equals 1).
+
+
+# new graphic function
+
+# Define a function to plot probability of choosing a particular phone, 
+# faceted by discounts.
+
+# We'll focus on one phone at a time, starting with phone A1
+
+# This graphic will show individual customer heterogeneity in predicted market shares
+
+# On each x axis, we'll have the customer-specific predicted choice probability 
+# of the phone chosen to be plotted. Facets are used to group customers together
+# that saw the same prices (ie, same phones on discount).
+
+# Then we'll draw a histogram of how many customers are predicted to 
+#     have each choice probability. This will be boring for the homogeneous model
+#     then it will get more interesting with heterogeneity
+
+# We'll show how these histograms differ when different phones are offered on discount,
+# by calling the function for different phones one at a time.
+
+myplot <- function(data, model, phone) {
+  disc_levs <- c("A1", "A2", "S1", "S2", "H1", "H2", "")
+  
+  preds <- as_tibble(predict(model, newdata=data))
+  colnames(preds) <- disc_levs[1:6]
+  
+  temp <- cust_dat |> 
+    filter(years_ago == 1) |> 
+    mutate(discount = factor(discount, levels = disc_levs)) |> 
+    mutate(discount = fct_recode(discount, "None"="")) |> 
+    mutate(pr = preds[[phone]]) |> 
+    select(discount, pr)
+  
+  p <- temp |> filter(discount != "None") |> 
+    ggplot(aes(x=pr)) + 
+    geom_histogram(aes(fill=discount), binwidth = 0.01) + 
+    facet_wrap(. ~ discount) + 
+    xlab(paste("Probability a customer chooses phone", phone)) + 
+    ylab("Count of customers") + 
+    ggtitle(paste0("Pr(choose ",phone,") by customer")) + 
+    labs(fill = "Discounted Phone") +
+    theme_bw() 
+  
+  print(p)
+  return(invisible(NULL))
+}
+
+
+# Calculate market shares 
+
+# We did this last class, but it's helpful to have these as reference points
+
+brand_shares <- cust_dat  |>  
+  filter(years_ago == 2) |> 
+  count(brand) |> 
+  mutate(shr = n / sum(n))
+
+brand_shares
+
+product_shares <- cust_dat |> 
+  filter(years_ago == 2) |> 
+  count(phone_id) |> 
+  mutate(shr = n / sum(n))
+
+product_shares
+
+
+# Fit homogeneous model from last week
+
+out4 <- mlogit(choice ~ phone_id + price | 0, data=mdat2)
+
+summary(out4)
+
+brand_hit_rate(mdat2, out4)
+product_hit_rate(mdat2, out4)
+ll_ratio(mdat2, out4)
+
+# plot each individual's probability of choosing phone A1
+myplot(mdat1, out4, "A1")
+
+# Let's look at how histograms of choice probabilities for A1 change when phone 
+# discounts change.
+
+# This homogeneous demand model shows no correspondence between customers' predicted
+# choice shares and discount response. This will change shortly.
+
+# Let's enrich this model to add heterogeneity 
+# We'll start out by adding individual heterogeneity by customer attributes
+#     via a price*minutes interaction
+
+
+# Add heterogeneity via a price*minutes interaction
+
+# We may hypothesize that customers that use their phones more are people who are 
+# willing to pay more for their phone. To test this, we include the interaction
+# of "price" and "total minutes" in the model. We expect to see a positive 
+# estimated coefficient for this interaction
+
+out5 <- mlogit(choice ~ phone_id + price + price:total_minutes | 0, data=mdat1)
+
+summary(out5)
+
+brand_hit_rate(mdat1, out5)
+product_hit_rate(mdat1, out5)
+ll_ratio(mdat1, out5)
+
+# plot each individual's probability of choosing phone A1
+myplot(mdat1, out5, "A1")
+
+# We see that different consumers have different probabilities of purchasing
+# the same phone, even for consumers facing the same discount. This is because
+# we have included the interaction term in the model. But what does it mean to
+# include the interaction?  It means the effect of price on utility is a function
+# of the consumer's usage behavior.  We can re-write part of model from:
+#
+# ... (beta_price * price) + (beta_int * price * totalminutes) ...
+# 
+# to this
+# 
+# ... (beta_price + beta_int*totalminutes) * price
+# 
+# which makes it clear that when beta_int is positive, consumers that use
+# their phones more have a lower (in magnitude) "combined" coefficient on price,
+# and are thus less price sensitive (because beta_price is negative so the sum
+# of beta_price and the second term is now closer to zero).
+
+# Let's take a deep dive into the data to see how this heterogeneous model 
+# predicts choice behavior.
+
+# grab the data for 2 consumers
+x1 <- sub1 |> filter(customer_id == 9) |> 
+  mutate(A2 = phone_id == "A2", 
+         S1 = phone_id == "S1", 
+         S2 = phone_id == "S2", 
+         H1 = phone_id == "H1", 
+         H2 = phone_id == "H2",
+         ptm = price * total_minutes) |> 
+  select(A2, H1, H2, S1, S2, price, ptm) |> 
+  as.matrix()
+
+x2 <- sub1 |> filter(customer_id == 13) |> 
+  mutate(A2 = phone_id == "A2", 
+         S1 = phone_id == "S1", 
+         S2 = phone_id == "S2", 
+         H1 = phone_id == "H1", 
+         H2 = phone_id == "H2",
+         ptm = price * total_minutes) |> 
+  select(A2, S1, S2, H1, H2, price, ptm) |> 
+  as.matrix()
+
+# notice how the interaction variable (ptm) is different for the two consumers
+x1
+x2
+
+# This is almost entirely driven by the variation in total minutes for the two consumers.
+cust_dat |> slice(9,13) |> select(total_minutes)
+
+# calculate probabilities of purchase for the six phones for each of the two consumers
+beta_hat <- coef(out5)
+
+xb1 <- t(x1 %*% beta_hat)
+xb2 <- t(x2 %*% beta_hat)
+
+example_shares <- rbind(
+  round(exp(xb1) / rowSums(exp(xb1)), 3),
+  round(exp(xb2) / rowSums(exp(xb2)), 3)
+)
+
+colnames(example_shares) <- c("A1", "A2", "S1", "S2", "H1", "H2")
+example_shares
+
+# Notice that the probabilities vary across phones. 
+# The first consumer has an estimated 30.5% probability of purchasing the small 
+# Apple phone (A1), whereas this probability is 17.7% for the second consumer.
+# Conversely consumer 2 has a 47.0% probability of purchasing the small Huawei
+# phone (H1), whereas consumer 1 only has a n 8.9% probability of purchasing it.
+
+# Consumer 2 uses their phone much less than consumer 1 and, as a result, is
+# predicted by this model to be much more sensitive to price, leading consumer 2
+# to prefer the cheaper H1 phone over the more expensive A1 phone.
+
+# Now back to modeling...
+
+
+# Add heterogeneity via a segment interactions
+
+# compare brand-dummy only model before/after adding segments
+
+out1 <- mlogit(choice ~ apple + samsung | 0, data=mdat1)
+summary(out1)
+brand_hit_rate(mdat1, out1)
+ll_ratio(mdat1, out1)
+
+out6 <- mlogit(choice ~ apple:segment + samsung:segment | 0, data=mdat1)
+summary(out6)
+brand_hit_rate(mdat1, out6)
+ll_ratio(mdat1, out6)
+
+# Let's focus on the comparison of coefficients between models 1 and 6.
+# In model 1, the apple coefficient was 0.197.  When we interact apple with
+# the segment dummies, we get -0.065, 0.007, and 0.495. The initial 0.197 value
+# is like a weighted average of these segment-specific coefficients. But now 
+# we have more granular information. We see that relative to the baseline Huawei
+# phones, segment 1 consumers like Apple phones less whereas segment 2 consumers
+# like Apple phones a little more, and segment 3 consumers like Apple a lot more.
+
+# compare brand-dummy + price model before/after adding segments 
+
+out2 <- mlogit(choice ~ apple + samsung + price | 0, data=mdat1)
+summary(out2)
+product_hit_rate(mdat1, out2)
+brand_hit_rate(mdat1, out2)
+ll_ratio(mdat1, out2)
+
+out7 <-  mlogit(choice ~ apple:segment + samsung:segment + price:segment | 0, data=mdat1)
+summary(out7)
+brand_hit_rate(mdat1, out7)
+product_hit_rate(mdat1, out7)
+ll_ratio(mdat1, out7)
+
+# Let's focus on price sensitivity. Adding segment-specific price variables to the 
+# model enables us to estimate separate price sensitivities for each segment. 
+# Here we see that segment 1 is more price sensitive while segment 2 is less so.
+
+# compare brand-dummy + price + size model before/after adding segments 
+
+out3 <- mlogit(choice ~ apple + samsung + price + screen_size| 0, data=mdat1)
+summary(out3)
+product_hit_rate(mdat1, out3)
+brand_hit_rate(mdat1, out3)
+ll_ratio(mdat1, out3)
+
+out8 <-  mlogit(choice ~ apple:segment + samsung:segment + price:segment + screen_size:segment | 0, data=mdat1)
+summary(out8)
+brand_hit_rate(mdat1, out8)
+product_hit_rate(mdat1, out8)
+ll_ratio(mdat1, out8)
+
+# As we saw last week, adding screen size to a model that already includes brand and price
+# does not improve the model by much, which we can see from the lack of statistical significance
+# on the screen size coefficients and the very marginal changes in hit rates and likelihood ratios.
+
+# Let's construct a model with both segment-specific and individual-specific heterogeneity
+
+out9 <- mlogit(choice ~ apple:segment + samsung:segment + 
+                 price:segment + screen_size:segment + 
+                 price:total_minutes:segment | 0, data=mdat1)
+
+summary(out9)
+brand_hit_rate(mdat1, out9)
+product_hit_rate(mdat1, out9)
+ll_ratio(mdat1, out9)
+
+# plot each individual's probability of choosing phone A1 or S2
+myplot(mdat1, out9, "A1")
+myplot(mdat1, out9, "S2")
+
+
+# Which models predict better? 
+
+# We might worry about overfitting, which would reduce our predictive accuracy
+# Let's choose a model based on 10-fold cross validation
+# Note that the abbreviation mspe = 'mean square (prediction) error'
+
+cv_mspe <- function(model, data, k=10, seed=4321) {
+  # control psuedo random numbers
+  set.seed(seed)
+  
+  # randomly assign each customer (J rows) to one of k folds
+  N <- length(unique(data$customer_id))   # number of customers
+  J <- length(unique(data$phone_id))      # number of products
+  fold <- rep((1:N) %% k + 1, each=J)    # rep replicates list elements
+  
+  # %% is a modulus element, so what we're doing here is computing the remainder when
+  # dividing 1:N by (k+1). So mod(customer_id,10)+1 is always an integer between 1
+  # and 10. We repeat that 6 times for each customer, to match the mdat1 observations
+  
+  # preallocate the prediction storage
+  preds <- vector(length=nrow(data))     
+  
+  # loop over folds 
+  for(i in 1:k) {
+    
+    # create row indices for training & prediction observations      
+    row_ids_train <- fold != i     # which rows to keep in for training
+    row_ids_test  <- !row_ids_train  # which rows to hold out for prediction
+    
+    # fit/train model on training data
+    out  <- mlogit(formula(model), data=data[row_ids_train,])
+    
+    # predict choice probabilities for prediction data
+    yhat <- predict(model, newdata = data[row_ids_test,])
+    
+    # store yhat values for prediction data
+    preds[row_ids_test] <- as.vector(t(yhat))
+  }
+  
+  # calculate prediction mse
+  mspe <- mean((data$choice - preds)^2)
+  return(mspe)
+}
+
+# calculate the MSE's for each model
+mspe <- vector(length=3)
+mspe[1] <- cv_mspe(out2, mdat2)
+mspe[2] <- cv_mspe(out, mdat2)
+mspe[3] <- cv_mspe(out_f, mdat2)
+mspe[4] <- cv_mspe(out4, mdat1)
+mspe[5] <- cv_mspe(out5, mdat1)
+mspe[6] <- cv_mspe(out6, mdat1)
+mspe[7] <- cv_mspe(out7, mdat1)
+mspe[8] <- cv_mspe(out8, mdat1)
+mspe[9] <- cv_mspe(out9, mdat1)
+
+# plot the MSE's to compare them
+tibble(mod_id=1:3, mspe=mspe) |> 
+  ggplot(aes(x=mod_id, y=mspe)) +
+  geom_point() + 
+  geom_line() 
+ylim(c(0, .14))  # adjustment to show the abs differences
+# that adjustment helps to show why mspe is only 1 factor among several when 
+#    choosing a model specification
+
+# which model has the lowest cross-validated mean-squared-error?
+which.min(mspe)
+
+
+# This model (out9) performs best on our metrics of hit rate and log-likelihood ratio index.
+# It also incorporates segment-level heterogeneity
+# We'll use this model specification for the next 2 weeks of this course.
+
+
+
+
+
+# Summary of R commands introduced
+
+# only one key coding thing we want you to learn:
+
+# mlogit(y ~ x1:x2 | 0, data=yourdata)  # use colons to do interactions
+
+
+# other commands
+
+# ... many! ...
+# don't worry too much about them
+# the point is how the models work and how to interpret results
+# the point is not all the extra coding to demonstrate it
+

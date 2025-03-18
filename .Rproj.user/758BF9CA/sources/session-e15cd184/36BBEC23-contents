@@ -1,0 +1,55 @@
+---
+title: "Sreyashi Bhattacharya"
+subtitle: "Data Analysis | Data Visualization | Statistical Modelling | Economics"
+image: "images/Big smile.jpg"
+image-shape: round
+about:
+  id: About
+  template: trestles
+  links: 
+    - icon: envelope
+      text: "Email"
+      href: mailto:sreyashibets1997@gmail.com
+    - icon: linkedin
+      text: "LinkedIn"
+      href: https://www.linkedin.com/in/sreyashi-bhattacharya/
+    - icon: github
+      text: "GitHub"
+      href: https://github.com/rsm-srbhattacharya/Work-portfolio
+    - icon: phone
+      text: "+1 (858) 333-0204"
+      href: "tel:+18583330204"
+---
+
+:::{#About}
+# A Little Bit About Me  
+
+I thrive on turning complex data into clear, actionable insights that drive real results.  
+
+With a background in Economics and an MS in Business Analytics from UCSD, I bring 3+ years of experience in data science & analytics, working on:  
+
+*Predictive modeling & Bayesian statistics* 
+*A/B testing & experimentation*  
+*Building interactive dashboards* 
+*Data storytelling & business intelligence*
+
+My passion lies in using data to solve real-world problems and drive business growth.
+
+:::
+
+## **Outside of Work**  
+
+### **Placed 3rd Globally**  
+*Sustainable Investing & Wealth Management*  
+
+[I want to add an image here]
+
+### **Indian Classical Dance**  
+*Bharatanatyam Performance – Blending Art & Culture*  
+[image here too]
+
+---
+
+### **Let’s Connect!**  
+If you're looking for someone who can dive deep into data and extract actionable insights, let’s connect!  
+ 

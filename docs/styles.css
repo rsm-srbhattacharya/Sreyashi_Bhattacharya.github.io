@@ -1,0 +1,159 @@
+/* UCSD Colors */
+$ucsd-blue: #182B49;
+$ucsd-gold: #FFCD00;
+
+/* Jadavpur University Colors */
+$ju-maroon: #880808;
+$ju-beige: #F4E1C6;
+
+/* Additional Theme Colors */
+$dark-text: #2C3E50;
+$light-gray: #D3D3D3;
+$gray-text: #6C757D;
+
+/* -- Typography -- */
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: $dark-text;
+    background-color: #F9F9F9;
+    text-rendering: optimizeLegibility;
+    margin: 0 auto;
+    max-width: 900px; /* Centers content */
+    padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    color: $ju-maroon;
+}
+
+/* -- Navbar -- */
+.navbar {
+    background-color: $ucsd-blue;
+    padding: 12px 20px;
+    border-bottom: 2px solid $ucsd-gold;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: bold;
+    color: $ucsd-gold !important;
+}
+
+.navbar-nav a {
+    font-size: 16px;
+    color: $ju-beige !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 15px;
+}
+
+.navbar-nav a:hover {
+    color: $ucsd-gold !important;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+/* -- Links & Buttons -- */
+a {
+    color: $ju-maroon;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: $ucsd-gold;
+    text-decoration: underline;
+}
+
+button, .btn {
+    background-color: $ucsd-blue;
+    color: $ucsd-gold;
+    border-radius: 6px;
+    padding: 8px 14px;
+    border: none;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+button:hover, .btn:hover {
+    background-color: $ju-maroon;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* -- Sidebar Styling -- */
+.sidebar {
+    background: white;
+    padding: 15px;
+    border-left: 4px solid $ucsd-blue;
+}
+
+.sidebar h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: $ucsd-blue;
+    margin-top: 10px;
+}
+
+.sidebar a {
+    font-size: 14px;
+    color: $ju-maroon;
+}
+
+.sidebar a:hover {
+    color: $ucsd-gold;
+}
+
+/* -- Section Titles -- */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: $ju-maroon;
+    margin-bottom: 15px;
+    border-bottom: 2px solid $ucsd-gold;
+    padding-bottom: 5px;
+}
+
+/* -- Code Blocks -- */
+code {
+    background: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+/* -- Tables -- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid $light-gray;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: $ucsd-blue;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* -- Footer -- */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: $ucsd-blue;
+    color: $ju-beige;
+    font-size: 14px;
+}

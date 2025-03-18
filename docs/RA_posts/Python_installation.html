@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.506">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sreyashi Bhattacharya - Understanding Python Installation: A Beginner’s Guide</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Sreyashi Bhattacharya</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-person-circle" role="img">
+</i> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resume.html"> <i class="bi bi-file-earmark-check" role="img">
+</i> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../data-analysis.html"> <i class="bi bi-bar-chart" role="img">
+</i> 
+<span class="menu-text">Data Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../statistics.html"> <i class="bi bi-calculator" role="img">
+</i> 
+<span class="menu-text">Statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../RA_post.html"> <i class="bi bi-graph-up" role="img">
+</i> 
+<span class="menu-text">Research Assistantship</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#what-is-python" id="toc-what-is-python" class="nav-link" data-scroll-target="#what-is-python">1. What is Python?</a></li>
+  <li><a href="#why-do-we-need-to-install-python" id="toc-why-do-we-need-to-install-python" class="nav-link" data-scroll-target="#why-do-we-need-to-install-python">2. Why Do We Need to Install Python?</a></li>
+  <li><a href="#steps-to-install-python-on-your-computer" id="toc-steps-to-install-python-on-your-computer" class="nav-link" data-scroll-target="#steps-to-install-python-on-your-computer">3. Steps to Install Python on Your Computer</a>
+  <ul class="collapse">
+  <li><a href="#step-1-download-python" id="toc-step-1-download-python" class="nav-link" data-scroll-target="#step-1-download-python">Step 1: Download Python</a></li>
+  <li><a href="#step-2-install-python" id="toc-step-2-install-python" class="nav-link" data-scroll-target="#step-2-install-python">Step 2: Install Python</a></li>
+  </ul></li>
+  <li><a href="#understanding-the-installation-process" id="toc-understanding-the-installation-process" class="nav-link" data-scroll-target="#understanding-the-installation-process">4. Understanding the Installation Process</a>
+  <ul class="collapse">
+  <li><a href="#what-is-path-and-why-do-we-add-python-to-it" id="toc-what-is-path-and-why-do-we-add-python-to-it" class="nav-link" data-scroll-target="#what-is-path-and-why-do-we-add-python-to-it">What is PATH and Why Do We Add Python to It?</a></li>
+  <li><a href="#what-is-pip" id="toc-what-is-pip" class="nav-link" data-scroll-target="#what-is-pip">What is PIP?</a></li>
+  </ul></li>
+  <li><a href="#how-to-check-if-python-is-installed-correctly" id="toc-how-to-check-if-python-is-installed-correctly" class="nav-link" data-scroll-target="#how-to-check-if-python-is-installed-correctly">5. How to Check if Python is Installed Correctly?</a></li>
+  <li><a href="#running-your-first-python-program" id="toc-running-your-first-python-program" class="nav-link" data-scroll-target="#running-your-first-python-program">6. Running Your First Python Program</a></li>
+  <li><a href="#where-is-python-installed-on-my-computer" id="toc-where-is-python-installed-on-my-computer" class="nav-link" data-scroll-target="#where-is-python-installed-on-my-computer">7. Where is Python Installed on My Computer?</a></li>
+  <li><a href="#updating-and-uninstalling-python" id="toc-updating-and-uninstalling-python" class="nav-link" data-scroll-target="#updating-and-uninstalling-python">8. Updating and Uninstalling Python</a>
+  <ul class="collapse">
+  <li><a href="#updating-python" id="toc-updating-python" class="nav-link" data-scroll-target="#updating-python">Updating Python</a></li>
+  <li><a href="#uninstalling-python" id="toc-uninstalling-python" class="nav-link" data-scroll-target="#uninstalling-python">Uninstalling Python</a></li>
+  </ul></li>
+  <li><a href="#understanding-virtual-environments-venv" id="toc-understanding-virtual-environments-venv" class="nav-link" data-scroll-target="#understanding-virtual-environments-venv">9. Understanding Virtual Environments (venv)</a>
+  <ul class="collapse">
+  <li><a href="#creating-and-activating-a-virtual-environment" id="toc-creating-and-activating-a-virtual-environment" class="nav-link" data-scroll-target="#creating-and-activating-a-virtual-environment">Creating and Activating a Virtual Environment</a></li>
+  </ul></li>
+  <li><a href="#keeping-python-code-consistent-across-devices" id="toc-keeping-python-code-consistent-across-devices" class="nav-link" data-scroll-target="#keeping-python-code-consistent-across-devices">10. Keeping Python Code Consistent Across Devices</a>
+  <ul class="collapse">
+  <li><a href="#using-requirements.txt-for-dependency-management" id="toc-using-requirements.txt-for-dependency-management" class="nav-link" data-scroll-target="#using-requirements.txt-for-dependency-management">Using <code>requirements.txt</code> for Dependency Management</a></li>
+  <li><a href="#using-cloud-based-ides" id="toc-using-cloud-based-ides" class="nav-link" data-scroll-target="#using-cloud-based-ides">Using Cloud-Based IDEs</a></li>
+  </ul></li>
+  <li><a href="#pythons-object-oriented-nature" id="toc-pythons-object-oriented-nature" class="nav-link" data-scroll-target="#pythons-object-oriented-nature">11. Python’s Object-Oriented Nature</a>
+  <ul class="collapse">
+  <li><a href="#example-of-a-class-in-python" id="toc-example-of-a-class-in-python" class="nav-link" data-scroll-target="#example-of-a-class-in-python">Example of a Class in Python:</a></li>
+  </ul></li>
+  <li><a href="#debugging-and-error-handling" id="toc-debugging-and-error-handling" class="nav-link" data-scroll-target="#debugging-and-error-handling">12. Debugging and Error Handling</a></li>
+  <li><a href="#python-standard-library-built-in-modules" id="toc-python-standard-library-built-in-modules" class="nav-link" data-scroll-target="#python-standard-library-built-in-modules">13. Python Standard Library: Built-in Modules</a></li>
+  <li><a href="#installing-third-party-libraries" id="toc-installing-third-party-libraries" class="nav-link" data-scroll-target="#installing-third-party-libraries">14. Installing Third-Party Libraries</a>
+  <ul class="collapse">
+  <li><a href="#popular-libraries-and-their-uses" id="toc-popular-libraries-and-their-uses" class="nav-link" data-scroll-target="#popular-libraries-and-their-uses">Popular Libraries and Their Uses</a></li>
+  </ul></li>
+  <li><a href="#library---purpose" id="toc-library---purpose" class="nav-link" data-scroll-target="#library---purpose">Library - Purpose</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Understanding Python Installation: A Beginner’s Guide</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Python is one of the most popular programming languages used for web development, data science, automation, and more. But before we start coding, we need to install Python on our computer. This guide will explain everything about Python installation in a way that is easy to understand.</p>
+<section id="what-is-python" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-python">1. What is Python?</h2>
+<p>Python is a programming language that allows you to give instructions to a computer. It is widely used because it is easy to read and understand. Python can be used to create programs, analyze data, automate tasks, and even develop artificial intelligence models.</p>
+</section>
+<section id="why-do-we-need-to-install-python" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-need-to-install-python">2. Why Do We Need to Install Python?</h2>
+<p>When you buy a new computer, it does not usually come with Python installed. Since Python is not a built-in part of most operating systems (except for some versions of Linux and macOS), we need to install it separately. Installing Python ensures that our computer can understand and execute Python programs.</p>
+</section>
+<section id="steps-to-install-python-on-your-computer" class="level2">
+<h2 class="anchored" data-anchor-id="steps-to-install-python-on-your-computer">3. Steps to Install Python on Your Computer</h2>
+<section id="step-1-download-python" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-download-python">Step 1: Download Python</h3>
+<ul>
+<li>Go to the official Python website: <a href="https://www.python.org">Python.org</a></li>
+<li>Click on <strong>Downloads</strong> and choose the latest version of Python suitable for your operating system (Windows, macOS, or Linux).</li>
+<li>Download the installer file (it usually has a name like <code>python-3.x.x.exe</code> for Windows or <code>python-3.x.x.pkg</code> for macOS).</li>
+</ul>
+</section>
+<section id="step-2-install-python" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-install-python">Step 2: Install Python</h3>
+<section id="for-windows-users" class="level4">
+<h4 class="anchored" data-anchor-id="for-windows-users">For Windows Users:</h4>
+<ol type="1">
+<li>Double-click the downloaded <code>.exe</code> file to start the installation.</li>
+<li>Check the box that says <strong>“Add Python to PATH”</strong> (this is very important for running Python from the command line).</li>
+<li>Click on <strong>“Install Now”</strong> and wait for the installation to complete.</li>
+<li>Once done, click <strong>Close</strong>.</li>
+</ol>
+</section>
+<section id="for-macos-users" class="level4">
+<h4 class="anchored" data-anchor-id="for-macos-users">For macOS Users:</h4>
+<ol type="1">
+<li>Double-click the <code>.pkg</code> file you downloaded.</li>
+<li>Follow the instructions and click <strong>Continue</strong> until you reach the <strong>Install</strong> button.</li>
+<li>Wait for the installation to finish and then click <strong>Close</strong>.</li>
+</ol>
+</section>
+<section id="for-linux-users" class="level4">
+<h4 class="anchored" data-anchor-id="for-linux-users">For Linux Users:</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Enter your password if required and wait for the installation to finish.</p>
+</section>
+</section>
+</section>
+<section id="understanding-the-installation-process" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-installation-process">4. Understanding the Installation Process</h2>
+<section id="what-is-path-and-why-do-we-add-python-to-it" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-path-and-why-do-we-add-python-to-it">What is PATH and Why Do We Add Python to It?</h3>
+<p>PATH is a system variable that tells the operating system where to find programs. If Python is added to the PATH, we can run Python from anywhere on the computer using the command line.</p>
+</section>
+<section id="what-is-pip" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-pip">What is PIP?</h3>
+<p>PIP is a tool that allows us to install additional Python packages (like NumPy for data science or Flask for web development). It works like an <strong>app store</strong> for Python libraries. To check if PIP is installed, open the command line and type:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="how-to-check-if-python-is-installed-correctly" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-check-if-python-is-installed-correctly">5. How to Check if Python is Installed Correctly?</h2>
+<section id="for-windows-users-1" class="level4">
+<h4 class="anchored" data-anchor-id="for-windows-users-1">For Windows Users:</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If Python is installed correctly, you will see something like:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Python</span> 3.x.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="for-macos-and-linux-users" class="level4">
+<h4 class="anchored" data-anchor-id="for-macos-and-linux-users">For macOS and Linux Users:</h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="running-your-first-python-program" class="level2">
+<h2 class="anchored" data-anchor-id="running-your-first-python-program">6. Running Your First Python Program</h2>
+<p>After successful installation, let’s run a simple Python program:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, World!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To exit Python, type <code>exit()</code> and press Enter.</p>
+</section>
+<section id="where-is-python-installed-on-my-computer" class="level2">
+<h2 class="anchored" data-anchor-id="where-is-python-installed-on-my-computer">7. Where is Python Installed on My Computer?</h2>
+<section id="windows" class="level4">
+<h4 class="anchored" data-anchor-id="windows">Windows:</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">where</span> python</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="maclinux" class="level4">
+<h4 class="anchored" data-anchor-id="maclinux">Mac/Linux:</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> python3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="updating-and-uninstalling-python" class="level2">
+<h2 class="anchored" data-anchor-id="updating-and-uninstalling-python">8. Updating and Uninstalling Python</h2>
+<section id="updating-python" class="level3">
+<h3 class="anchored" data-anchor-id="updating-python">Updating Python</h3>
+<p>To update Python, download the latest version from the <a href="https://www.python.org">official website</a> and install it again.</p>
+</section>
+<section id="uninstalling-python" class="level3">
+<h3 class="anchored" data-anchor-id="uninstalling-python">Uninstalling Python</h3>
+<section id="windows-1" class="level4">
+<h4 class="anchored" data-anchor-id="windows-1">Windows:</h4>
+<ul>
+<li>Go to <strong>Control Panel &gt; Programs &gt; Uninstall a Program</strong>, find Python, and click <strong>Uninstall</strong>.</li>
+</ul>
+</section>
+<section id="macos" class="level4">
+<h4 class="anchored" data-anchor-id="macos">macOS:</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> /Library/Frameworks/Python.framework</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> /usr/local/bin/python3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="linux" class="level4">
+<h4 class="anchored" data-anchor-id="linux">Linux:</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove python3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="understanding-virtual-environments-venv" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-virtual-environments-venv">9. Understanding Virtual Environments (venv)</h2>
+<p>A <strong>virtual environment</strong> is used to create an isolated workspace for Python projects, ensuring that different projects do not interfere with each other.</p>
+<section id="creating-and-activating-a-virtual-environment" class="level3">
+<h3 class="anchored" data-anchor-id="creating-and-activating-a-virtual-environment">Creating and Activating a Virtual Environment</h3>
+<section id="windows-2" class="level4">
+<h4 class="anchored" data-anchor-id="windows-2">Windows:</h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv myenv</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">myenv\Scripts\activate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="macoslinux" class="level4">
+<h4 class="anchored" data-anchor-id="macoslinux">macOS/Linux:</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv myenv</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> myenv/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To deactivate the virtual environment, type:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">deactivate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</section>
+<section id="keeping-python-code-consistent-across-devices" class="level2">
+<h2 class="anchored" data-anchor-id="keeping-python-code-consistent-across-devices">10. Keeping Python Code Consistent Across Devices</h2>
+<section id="using-requirements.txt-for-dependency-management" class="level3">
+<h3 class="anchored" data-anchor-id="using-requirements.txt-for-dependency-management">Using <code>requirements.txt</code> for Dependency Management</h3>
+<p>To export installed packages:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> freeze <span class="op">&gt;</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To install the same packages on another computer:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="using-cloud-based-ides" class="level3">
+<h3 class="anchored" data-anchor-id="using-cloud-based-ides">Using Cloud-Based IDEs</h3>
+<ul>
+<li><strong>Google Colab</strong> → <a href="https://colab.research.google.com">Google Colab</a></li>
+<li><strong>Replit</strong> → <a href="https://replit.com">Replit</a></li>
+</ul>
+</section>
+</section>
+<section id="pythons-object-oriented-nature" class="level2">
+<h2 class="anchored" data-anchor-id="pythons-object-oriented-nature">11. Python’s Object-Oriented Nature</h2>
+<p>Python supports Object-Oriented Programming (OOP), meaning everything in Python is an <strong>object</strong>.</p>
+<section id="example-of-a-class-in-python" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-class-in-python">Example of a Class in Python:</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Car:</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, brand):</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.brand <span class="op">=</span> brand</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> drive(<span class="va">self</span>):</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>brand<span class="sc">}</span><span class="ss"> is driving"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>my_car <span class="op">=</span> Car(<span class="st">"Tesla"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>my_car.drive()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="debugging-and-error-handling" class="level2">
+<h2 class="anchored" data-anchor-id="debugging-and-error-handling">12. Debugging and Error Handling</h2>
+<p>Python provides tools to catch errors:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">10</span> <span class="op">/</span> <span class="dv">0</span>  <span class="co"># This will cause an error</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"You can't divide by zero!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="python-standard-library-built-in-modules" class="level2">
+<h2 class="anchored" data-anchor-id="python-standard-library-built-in-modules">13. Python Standard Library: Built-in Modules</h2>
+<p>Python comes with built-in modules like:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>math</code></td>
+<td>Math operations</td>
+</tr>
+<tr class="even">
+<td><code>datetime</code></td>
+<td>Date and time handling</td>
+</tr>
+<tr class="odd">
+<td><code>random</code></td>
+<td>Generating random numbers</td>
+</tr>
+<tr class="even">
+<td><code>os</code></td>
+<td>Interacting with the operating system</td>
+</tr>
+<tr class="odd">
+<td><code>sys</code></td>
+<td>System-specific parameters</td>
+</tr>
+<tr class="even">
+<td><code>json</code></td>
+<td>Working with JSON data</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(math.sqrt(<span class="dv">16</span>))  <span class="co"># Output: 4.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="installing-third-party-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="installing-third-party-libraries">14. Installing Third-Party Libraries</h2>
+<p>Python has thousands of third-party libraries available on PyPI.</p>
+<section id="popular-libraries-and-their-uses" class="level3">
+<h3 class="anchored" data-anchor-id="popular-libraries-and-their-uses">Popular Libraries and Their Uses</h3>
+</section>
+</section>
+<section id="library---purpose" class="level2">
+<h2 class="anchored" data-anchor-id="library---purpose">Library - Purpose</h2>
+<p><code>NumPy</code> - Numerical computing <code>Pandas</code>- Data manipulation <code>Matplotlib</code> - Data visualization <code>Scikit-learn</code> - Machine learning <code>Flask</code> -Web development</p>
+<p>To install a library:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Python installation is just the beginning of your programming journey. Once installed, you can explore various tools, libraries, and best practices to enhance your coding skills!</p>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

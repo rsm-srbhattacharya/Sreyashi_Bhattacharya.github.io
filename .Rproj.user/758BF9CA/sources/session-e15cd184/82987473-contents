@@ -1,0 +1,99 @@
+/* UCSD Colors */
+$ucsd-blue: #182B49;
+$ucsd-gold: #FFCD00;
+
+/* Jadavpur University Colors */
+$ju-maroon: #880808;
+$ju-beige: #F4E1C6;
+
+/* Additional Theme Colors */
+$dark-text: #2C3E50;
+$light-gray: #D3D3D3;
+$gray-text: #6C757D;
+
+/*-- Typography --*/
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: $dark-text;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+}
+
+/*-- Navbar --*/
+.navbar {
+    background-color: $ucsd-blue;
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: bold;
+    color: $ucsd-gold;
+}
+
+.navbar-nav a {
+    font-size: 16px;
+    color: $ju-beige !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.navbar-nav a:hover {
+    color: $ucsd-gold !important;
+    transform: scale(1.05);
+}
+
+/*-- Links & Buttons --*/
+a {
+    color: $ju-maroon;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: $ucsd-gold;
+    text-decoration: underline;
+}
+
+button, .btn {
+    background-color: $ucsd-blue;
+    color: $ucsd-gold;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+button:hover, .btn:hover {
+    background-color: $ju-maroon;
+    color: white;
+    transform: scale(1.05);
+}
+
+/*-- Sidebar Styling --*/
+.sidebar h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: $ucsd-blue;
+    margin-top: 15px;
+}
+
+.sidebar a {
+    font-size: 14px;
+    color: $ju-maroon;
+}
+
+.sidebar a:hover {
+    color: $ucsd-gold;
+}
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: $ju-maroon;
+    margin-bottom: 10px;
+}
+

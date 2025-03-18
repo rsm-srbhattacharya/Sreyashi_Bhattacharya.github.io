@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.506">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sreyashi Bhattacharya - Gumbel and Logistic Distributions: Exploring Extremes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Sreyashi Bhattacharya</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-person-circle" role="img">
+</i> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resume.html"> <i class="bi bi-file-earmark-check" role="img">
+</i> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../data-analysis.html"> <i class="bi bi-bar-chart" role="img">
+</i> 
+<span class="menu-text">Data Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../statistics.html"> <i class="bi bi-calculator" role="img">
+</i> 
+<span class="menu-text">Statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../RA_post.html"> <i class="bi bi-graph-up" role="img">
+</i> 
+<span class="menu-text">Research Assistantship</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-gumbel-distribution" id="toc-the-gumbel-distribution" class="nav-link" data-scroll-target="#the-gumbel-distribution">The Gumbel Distribution</a>
+  <ul class="collapse">
+  <li><a href="#probability-density-function-pdf" id="toc-probability-density-function-pdf" class="nav-link" data-scroll-target="#probability-density-function-pdf">Probability Density Function (PDF)</a></li>
+  <li><a href="#cumulative-distribution-function-cdf" id="toc-cumulative-distribution-function-cdf" class="nav-link" data-scroll-target="#cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</a></li>
+  <li><a href="#understanding-and-in-the-gumbel-distribution" id="toc-understanding-and-in-the-gumbel-distribution" class="nav-link" data-scroll-target="#understanding-and-in-the-gumbel-distribution">Understanding and in the Gumbel Distribution</a></li>
+  <li><a href="#real-life-example" id="toc-real-life-example" class="nav-link" data-scroll-target="#real-life-example">Real-Life Example</a></li>
+  </ul></li>
+  <li><a href="#the-logistic-distribution" id="toc-the-logistic-distribution" class="nav-link" data-scroll-target="#the-logistic-distribution">The Logistic Distribution</a>
+  <ul class="collapse">
+  <li><a href="#probability-density-function-pdf-1" id="toc-probability-density-function-pdf-1" class="nav-link" data-scroll-target="#probability-density-function-pdf-1">Probability Density Function (PDF)</a></li>
+  <li><a href="#cumulative-distribution-function-cdf-1" id="toc-cumulative-distribution-function-cdf-1" class="nav-link" data-scroll-target="#cumulative-distribution-function-cdf-1">Cumulative Distribution Function (CDF)</a></li>
+  <li><a href="#understanding-and-s-in-the-logistic-distribution" id="toc-understanding-and-s-in-the-logistic-distribution" class="nav-link" data-scroll-target="#understanding-and-s-in-the-logistic-distribution">Understanding ( ) and ( s ) in the Logistic Distribution</a></li>
+  <li><a href="#real-life-example-1" id="toc-real-life-example-1" class="nav-link" data-scroll-target="#real-life-example-1">Real-Life Example</a></li>
+  </ul></li>
+  <li><a href="#mathematical-relationship-difference-of-two-gumbel-variables" id="toc-mathematical-relationship-difference-of-two-gumbel-variables" class="nav-link" data-scroll-target="#mathematical-relationship-difference-of-two-gumbel-variables">Mathematical Relationship: Difference of Two Gumbel Variables</a>
+  <ul class="collapse">
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition">Definition</a></li>
+  <li><a href="#deep-dive" id="toc-deep-dive" class="nav-link" data-scroll-target="#deep-dive">Deep dive</a></li>
+  </ul></li>
+  <li><a href="#python-simulation" id="toc-python-simulation" class="nav-link" data-scroll-target="#python-simulation">Python Simulation</a></li>
+  <li><a href="#generalized-forms-of-gumbel-and-logistic-distributions" id="toc-generalized-forms-of-gumbel-and-logistic-distributions" class="nav-link" data-scroll-target="#generalized-forms-of-gumbel-and-logistic-distributions">Generalized Forms of Gumbel and Logistic Distributions</a>
+  <ul class="collapse">
+  <li><a href="#why-is-this-important" id="toc-why-is-this-important" class="nav-link" data-scroll-target="#why-is-this-important">Why is this Important?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Gumbel and Logistic Distributions: Exploring Extremes</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">statistics</div>
+    <div class="quarto-category">probability</div>
+    <div class="quarto-category">python</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Probability distributions help us model real-world phenomena, from predicting extreme weather events to binary classification problems in machine learning. Two closely related but distinct distributions—the <strong>Gumbel distribution</strong> and the <strong>Logistic distribution</strong>—have interesting properties that make them useful in different scenarios.</p>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This post will:<br>
+- Explain the Gumbel and Logistic distributions<br>
+- Discuss their real-world applications<br>
+- Explore their mathematical connection<br>
+- Introduce generalized forms of these distributions based on recent research<br>
+- Visualize the distributions using Python</p>
+</section>
+<section id="the-gumbel-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-gumbel-distribution">The Gumbel Distribution</h2>
+<p>The <strong>Gumbel distribution</strong> is an <strong>Extreme Value Distribution</strong> that models the probability of extreme values occurring in a dataset. It is particularly useful for predicting extreme events such as floods, heatwaves, and stock market crashes.</p>
+<section id="probability-density-function-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="probability-density-function-pdf">Probability Density Function (PDF)</h3>
+<p>The Gumbel distribution is defined by the probability density function:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\beta} e^{- \left( \frac{x - \mu}{\beta} + e^{- \frac{x - \mu}{\beta}} \right)}
+\]</span></p>
+<p>where: - ( ) (location parameter) determines where the peak of the distribution occurs. - ( ) (scale parameter) controls the spread of the distribution.</p>
+</section>
+<section id="cumulative-distribution-function-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-distribution-function-cdf">Cumulative Distribution Function (CDF)</h3>
+<p>The cumulative distribution function (CDF) of a Gumbel-distributed variable is:</p>
+<p><span class="math display">\[
+F(x) = e^{-e^{-(x-\mu)/\beta}}
+\]</span></p>
+<p>which describes the probability that ( X ) takes on a value less than or equal to ( x ).</p>
+<div id="bc99929e" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define parameters</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mu, beta <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span>  <span class="co"># Gumbel distribution parameters</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate x values</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">1000</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute PDFs and CDFs</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>gumbel_pdf <span class="op">=</span> gumbel_r.pdf(x, loc<span class="op">=</span>mu, scale<span class="op">=</span>beta)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>gumbel_cdf <span class="op">=</span> gumbel_r.cdf(x, loc<span class="op">=</span>mu, scale<span class="op">=</span>beta)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Gumbel PDF</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x, gumbel_pdf, label<span class="op">=</span><span class="st">"Gumbel PDF"</span>, linestyle<span class="op">=</span><span class="st">"dashed"</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Gumbel Distribution - Probability Density Function"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Gumbel CDF</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.plot(x, gumbel_cdf, label<span class="op">=</span><span class="st">"Gumbel CDF"</span>, linestyle<span class="op">=</span><span class="st">"dashed"</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Gumbel Distribution - Cumulative Distribution Function"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Cumulative Probability"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GumbelandLogistic_files/figure-html/cell-3-output-1.png" width="672" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GumbelandLogistic_files/figure-html/cell-3-output-2.png" width="663" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="understanding-and-in-the-gumbel-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-and-in-the-gumbel-distribution">Understanding and in the Gumbel Distribution</h3>
+<ul>
+<li><p>shifts the distribution left or right.</p></li>
+<li><p>controls how spread out or concentrated the distribution is.</p></li>
+<li><p>The mode (most probable value) is exactly at .</p></li>
+<li><p>The mean is given by:</p>
+<p><span class="math display">\[
+E[X] = \mu + \beta \gamma
+\]</span></p>
+<p>where ( ) is the <strong>Euler-Mascheroni constant</strong>.</p></li>
+</ul>
+<p>To estimate these parameters from data: - ( ) is estimated as ( {x} - ). - ( ) is estimated using the sample standard deviation:</p>
+<p><span class="math display">\[
+  \beta \approx \frac{s}{\pi / \sqrt{6}}
+  \]</span></p>
+</section>
+<section id="real-life-example" class="level3">
+<h3 class="anchored" data-anchor-id="real-life-example">Real-Life Example</h3>
+<p>Imagine a climate scientist predicting the <strong>maximum annual temperature</strong> in a city over the next 50 years. Since the interest is in <strong>extreme temperatures</strong>, a distribution that focuses on the right tail of the data—like the Gumbel distribution—is needed.</p>
+</section>
+</section>
+<section id="the-logistic-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-logistic-distribution">The Logistic Distribution</h2>
+<p>The <strong>Logistic distribution</strong> is similar to the normal distribution but has <strong>heavier tails</strong>, meaning that extreme values occur more frequently than they would in a normal distribution.</p>
+<section id="probability-density-function-pdf-1" class="level3">
+<h3 class="anchored" data-anchor-id="probability-density-function-pdf-1">Probability Density Function (PDF)</h3>
+<p>The logistic distribution is given by:</p>
+<p><span class="math display">\[
+f(x) = \frac{e^{- \frac{x - \mu}{s}}}{s \left(1 + e^{- \frac{x - \mu}{s}}\right)^2}
+\]</span></p>
+<p>where: - ( ) (location parameter) determines the center of the distribution. - ( s ) (scale parameter) controls the spread.</p>
+</section>
+<section id="cumulative-distribution-function-cdf-1" class="level3">
+<h3 class="anchored" data-anchor-id="cumulative-distribution-function-cdf-1">Cumulative Distribution Function (CDF)</h3>
+<p>The cumulative distribution function (CDF) is:</p>
+<p><span class="math display">\[
+F(x) = \frac{1}{1 + e^{-(x - \mu)/s}}
+\]</span></p>
+<p>which resembles the <strong>sigmoid function</strong> commonly used in logistic regression.</p>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mu,s <span class="op">=</span> <span class="dv">0</span>,<span class="dv">1</span>  <span class="co"># Logistic distribution parameters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>logistic_pdf <span class="op">=</span> logistic.pdf(x, loc<span class="op">=</span>mu, scale<span class="op">=</span>s)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>logistic_cdf <span class="op">=</span> logistic.cdf(x, loc<span class="op">=</span>mu, scale<span class="op">=</span>s)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Logistic PDF</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x, logistic_pdf, label<span class="op">=</span><span class="st">"Logistic PDF"</span>, linestyle<span class="op">=</span><span class="st">"solid"</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Logistic Distribution - Probability Density Function"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Logistic CDF</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.plot(x, logistic_cdf, label<span class="op">=</span><span class="st">"Logistic CDF"</span>, linestyle<span class="op">=</span><span class="st">"solid"</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Logistic Distribution - Cumulative Distribution Function"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Cumulative Probability"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d3b53f03" class="cell quarto-layout-panel" data-layout-ncol="2" data-execution_count="3">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="GumbelandLogistic_files/figure-html/cell-4-output-1.png" width="672" height="449"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="GumbelandLogistic_files/figure-html/cell-4-output-2.png" width="663" height="449"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="understanding-and-s-in-the-logistic-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-and-s-in-the-logistic-distribution">Understanding ( ) and ( s ) in the Logistic Distribution</h3>
+<ul>
+<li><p>( ) shifts the entire distribution left or right.</p></li>
+<li><p>( s ) determines how spread out the distribution is.</p></li>
+<li><p>The mean and median are both equal to ( ).</p></li>
+<li><p>The standard deviation is:</p>
+<p><span class="math display">\[
+\sigma = \frac{s\pi}{\sqrt{3}}
+\]</span></p></li>
+</ul>
+<p>To estimate these parameters from data: - ( ) is simply the <strong>sample mean</strong> ( {x} ). - ( s ) is estimated using:</p>
+<p><span class="math display">\[
+  s \approx \frac{s_X \sqrt{3}}{\pi}
+  \]</span></p>
+</section>
+<section id="real-life-example-1" class="level3">
+<h3 class="anchored" data-anchor-id="real-life-example-1">Real-Life Example</h3>
+<p>One key application of the logistic distribution is in <strong>logistic regression</strong>, which is used in medical research to model the probability of diseases, such as heart disease, based on risk factors.</p>
+</section>
+</section>
+<section id="mathematical-relationship-difference-of-two-gumbel-variables" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-relationship-difference-of-two-gumbel-variables">Mathematical Relationship: Difference of Two Gumbel Variables</h2>
+<section id="definition" class="level3">
+<h3 class="anchored" data-anchor-id="definition">Definition</h3>
+<p>It turns out that the <strong>difference of two independent Gumbel-distributed variables</strong> follows a <strong>Logistic distribution</strong>:</p>
+<p>[ D = X_1 - X_2 (_1 - _2, ) ]</p>
+<p>where:</p>
+<p><span class="math display">\[
+X_1 \sim \text{Gumbel}(\mu_1, \beta), \quad X_2 \sim \text{Gumbel}(\mu_2, \beta)
+\]</span></p>
+</section>
+<section id="deep-dive" class="level3">
+<h3 class="anchored" data-anchor-id="deep-dive">Deep dive</h3>
+<ol type="1">
+<li><p>Express the two Gumbel-distributed variables:</p>
+<p><span class="math display">\[
+X_1 = \mu_1 + \beta Z_1, \quad X_2 = \mu_2 + \beta Z_2
+\]</span></p>
+<p>where <span class="math inline">\(Z_1\)</span> and <span class="math inline">\(Z_2\)</span> are <strong>i.i.d. standard Gumbel-distributed variables</strong>.</p></li>
+<li><p>Compute the difference:</p>
+<p><span class="math display">\[
+D = X_1 - X_2
+\]</span></p>
+<p>Expanding:</p>
+<p><span class="math display">\[
+D = (\mu_1 + \beta Z_1) - (\mu_2 + \beta Z_2)
+\]</span></p>
+<p>Simplifying:</p>
+<p><span class="math display">\[
+D = (\mu_1 - \mu_2) + \beta (Z_1 - Z_2)
+\]</span></p></li>
+<li><p>Since **_1 - Z_2 follows a standard Logistic(0,1) distribution**, we conclude:</p>
+<p><span class="math display">\[
+D \sim \text{Logistic}(\mu_1 - \mu_2, \beta)
+\]</span></p></li>
+</ol>
+</section>
+</section>
+<section id="python-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="python-simulation">Python Simulation</h2>
+<p>Let’s verify this numerically:</p>
+<div id="e194d27a" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> logistic</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define parameters</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>mu1, mu2 <span class="op">=</span> <span class="dv">10</span>, <span class="dv">5</span>  </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="dv">2</span>  </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> <span class="dv">100000</span>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate two independent Gumbel-distributed variables</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> np.random.gumbel(mu1, beta, size)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> np.random.gumbel(mu2, beta, size)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the difference</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> X1 <span class="op">-</span> X2</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a logistic distribution to the data</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>loc, scale <span class="op">=</span> logistic.fit(D)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate values for plotting</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(D), <span class="bu">max</span>(D), <span class="dv">1000</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>pdf_logistic <span class="op">=</span> logistic.pdf(x, loc<span class="op">=</span>loc, scale<span class="op">=</span>scale)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram and logistic fit</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.hist(D, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"Empirical Difference Distribution"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.plot(x, pdf_logistic, <span class="st">'r-'</span>, label<span class="op">=</span><span class="ss">f"Fitted Logistic Distribution</span><span class="ch">\n</span><span class="ss">(μ=</span><span class="sc">{</span>loc<span class="sc">:.2f}</span><span class="ss">, β=</span><span class="sc">{</span>scale<span class="sc">:.2f}</span><span class="ss">)"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Difference (X1 - X2)"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Difference of Two Independent Gumbel-Distributed Variables"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="GumbelandLogistic_files/figure-html/cell-5-output-1.png" width="821" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The <strong>Gumbel distribution</strong> is used to model <strong>extreme events</strong> (e.g., highest temperature in a year).</li>
+<li>If we have <strong>two such extreme events from different locations or sources</strong>, their <strong>difference</strong> behaves like a <strong>logistic distribution</strong>.</li>
+</ul>
+<p>Imagine two cities, City A and City B, where we record the hottest temperature each year. If we <strong>subtract</strong> the maximum temperatures of City A from City B, the result is a logistic distribution.</p>
+</section>
+<section id="generalized-forms-of-gumbel-and-logistic-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="generalized-forms-of-gumbel-and-logistic-distributions">Generalized Forms of Gumbel and Logistic Distributions</h2>
+<p>Recent research by <strong>Aljarrah, Famoye, and Lee (2020)</strong> introduced a <strong>Generalized Logistic Distribution</strong> that combines properties of both logistic and Gumbel distributions. <a href="https://jsdajournal.springeropen.com/articles/10.1186/s40488-020-00107-8">Read the full paper here</a></p>
+<section id="why-is-this-important" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-this-important">Why is this Important?</h3>
+<ol type="1">
+<li>The generalized logistic distribution can model <strong>both symmetric and skewed data</strong>.</li>
+<li>It provides better fits for real-world skewed datasets compared to standard logistic or Gumbel distributions.</li>
+<li>The research extends this into a <strong>Generalized Logistic Regression Model</strong>, which includes:
+<ul>
+<li><strong>Logistic-log-logistic regression</strong></li>
+<li><strong>Weibull-extreme value regression</strong></li>
+<li><strong>Log-Fréchet regression</strong></li>
+</ul></li>
+</ol>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
