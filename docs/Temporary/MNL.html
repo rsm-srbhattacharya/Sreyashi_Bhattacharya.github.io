@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<head>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.506">
 
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.4.506" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<meta name="dcterms.date" content="2025-03-01">
 
-<meta name="dcterms.date" content="2025-03-01" />
-
-<title>Sreyashi Bhattacharya – From Logistic Regression to Bayesian Multinomial Logistic Regression: A Comprehensive Overview</title>
+<title>Sreyashi Bhattacharya - Clustering Methods for Categorical and Continuous Data: A Comprehensive Guide</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,9 +21,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
-<!-- htmldependencies:E3FAD763 -->
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -56,65 +104,48 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body>
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="/index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Sreyashi Bhattacharya</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="/index.html"> <i 
-  class="bi bi-person-circle" 
-  role="img" 
->
+    <a class="nav-link" href="../index.html"> <i class="bi bi-person-circle" role="img">
 </i> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/resume.html"> <i 
-  class="bi bi-file-earmark-check" 
-  role="img" 
->
+    <a class="nav-link" href="../resume.html"> <i class="bi bi-file-earmark-check" role="img">
 </i> 
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/data-analysis.html"> <i 
-  class="bi bi-bar-chart" 
-  role="img" 
->
+    <a class="nav-link" href="../data-analysis.html"> <i class="bi bi-bar-chart" role="img">
 </i> 
 <span class="menu-text">Data Analysis</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/statistics.html"> <i 
-  class="bi bi-calculator" 
-  role="img" 
->
+    <a class="nav-link" href="../statistics.html"> <i class="bi bi-calculator" role="img">
 </i> 
 <span class="menu-text">Statistics</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/RA_post.html"> <i 
-  class="bi bi-graph-up" 
-  role="img" 
->
+    <a class="nav-link" href="../RA_post.html"> <i class="bi bi-graph-up" role="img">
 </i> 
 <span class="menu-text">Research Assistantship</span></a>
   </li>  
@@ -130,14 +161,42 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <div id="quarto-toc-target"></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-clustering" id="toc-introduction-to-clustering" class="nav-link active" data-scroll-target="#introduction-to-clustering">Introduction to Clustering</a></li>
+  <li><a href="#categories-of-clustering-methods" id="toc-categories-of-clustering-methods" class="nav-link" data-scroll-target="#categories-of-clustering-methods">Categories of Clustering Methods</a></li>
+  <li><a href="#clustering-methods-for-continuous-data" id="toc-clustering-methods-for-continuous-data" class="nav-link" data-scroll-target="#clustering-methods-for-continuous-data">Clustering Methods for Continuous Data</a>
+  <ul class="collapse">
+  <li><a href="#model-based-gaussian-mixture-models-gmm" id="toc-model-based-gaussian-mixture-models-gmm" class="nav-link" data-scroll-target="#model-based-gaussian-mixture-models-gmm">Model-Based: Gaussian Mixture Models (GMM)</a></li>
+  <li><a href="#hierarchical-agnes-and-diana" id="toc-hierarchical-agnes-and-diana" class="nav-link" data-scroll-target="#hierarchical-agnes-and-diana">Hierarchical: AGNES and DIANA</a></li>
+  <li><a href="#distance-based-k-means" id="toc-distance-based-k-means" class="nav-link" data-scroll-target="#distance-based-k-means">Distance-Based: K-Means</a></li>
+  </ul></li>
+  <li><a href="#clustering-methods-for-categorical-data" id="toc-clustering-methods-for-categorical-data" class="nav-link" data-scroll-target="#clustering-methods-for-categorical-data">Clustering Methods for Categorical Data</a>
+  <ul class="collapse">
+  <li><a href="#model-based-latent-class-analysis-lca" id="toc-model-based-latent-class-analysis-lca" class="nav-link" data-scroll-target="#model-based-latent-class-analysis-lca">Model-Based: Latent Class Analysis (LCA)</a></li>
+  <li><a href="#model-based-bayesian-dirichlet-process-mixture-models-dpmm" id="toc-model-based-bayesian-dirichlet-process-mixture-models-dpmm" class="nav-link" data-scroll-target="#model-based-bayesian-dirichlet-process-mixture-models-dpmm">Model-Based (Bayesian): Dirichlet Process Mixture Models (DPMM)</a></li>
+  <li><a href="#hierarchical-rock-and-gowers-distance" id="toc-hierarchical-rock-and-gowers-distance" class="nav-link" data-scroll-target="#hierarchical-rock-and-gowers-distance">Hierarchical: ROCK and Gower’s Distance</a></li>
+  <li><a href="#distance-based-k-modes" id="toc-distance-based-k-modes" class="nav-link" data-scroll-target="#distance-based-k-modes">Distance-Based: K-Modes</a></li>
+  <li><a href="#distance-based-for-mixed-data-k-prototypes" id="toc-distance-based-for-mixed-data-k-prototypes" class="nav-link" data-scroll-target="#distance-based-for-mixed-data-k-prototypes">Distance-Based for Mixed Data: K-Prototypes</a></li>
+  </ul></li>
+  <li><a href="#comparison-table" id="toc-comparison-table" class="nav-link" data-scroll-target="#comparison-table">Comparison Table</a></li>
+  <li><a href="#clustering-evaluation-metrics" id="toc-clustering-evaluation-metrics" class="nav-link" data-scroll-target="#clustering-evaluation-metrics">Clustering Evaluation Metrics</a>
+  <ul class="collapse">
+  <li><a href="#internal-metrics-no-ground-truth-needed" id="toc-internal-metrics-no-ground-truth-needed" class="nav-link" data-scroll-target="#internal-metrics-no-ground-truth-needed">Internal Metrics (No Ground Truth Needed)</a></li>
+  <li><a href="#external-metrics-need-ground-truth-labels" id="toc-external-metrics-need-ground-truth-labels" class="nav-link" data-scroll-target="#external-metrics-need-ground-truth-labels">External Metrics (Need Ground Truth Labels)</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">From Logistic Regression to Bayesian Multinomial Logistic Regression: A Comprehensive Overview</h1>
+<h1 class="title">Clustering Methods for Categorical and Continuous Data: A Comprehensive Guide</h1>
 </div>
 
 
@@ -159,256 +218,383 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression"><span class="header-section-number">2</span> Logistic Regression</a>
-  <ul>
-  <li><a href="#binary-logistic-regression" id="toc-binary-logistic-regression"><span class="header-section-number">2.1</span> Binary Logistic Regression</a>
-  <ul>
-  <li><a href="#example-predicting-loan-approval" id="toc-example-predicting-loan-approval"><span class="header-section-number">2.1.1</span> Example: Predicting Loan Approval</a></li>
-  </ul></li>
-  <li><a href="#limitations-of-binary-logistic-regression" id="toc-limitations-of-binary-logistic-regression"><span class="header-section-number">2.2</span> Limitations of Binary Logistic Regression</a></li>
-  </ul></li>
-  <li><a href="#multinomial-logistic-regression-mnl" id="toc-multinomial-logistic-regression-mnl"><span class="header-section-number">3</span> Multinomial Logistic Regression (MNL)</a>
-  <ul>
-  <li><a href="#example-predicting-transport-mode-choice" id="toc-example-predicting-transport-mode-choice"><span class="header-section-number">3.0.1</span> Example: Predicting Transport Mode Choice</a></li>
-  <li><a href="#assumptions-of-mnl" id="toc-assumptions-of-mnl"><span class="header-section-number">3.0.2</span> Assumptions of MNL</a></li>
-  </ul></li>
-  <li><a href="#bayesian-multinomial-logistic-regression-bmlr" id="toc-bayesian-multinomial-logistic-regression-bmlr"><span class="header-section-number">4</span> Bayesian Multinomial Logistic Regression (BMLR)</a>
-  <ul>
-  <li><a href="#bayesian-framework" id="toc-bayesian-framework"><span class="header-section-number">4.1</span> Bayesian Framework</a>
-  <ul>
-  <li><a href="#likelihood-function" id="toc-likelihood-function"><span class="header-section-number">4.1.1</span> Likelihood Function</a></li>
-  </ul></li>
-  <li><a href="#common-priors-for" id="toc-common-priors-for"><span class="header-section-number">4.2</span> Common Priors for ( )</a>
-  <ul>
-  <li><a href="#normal-prior-gaussian" id="toc-normal-prior-gaussian"><span class="header-section-number">4.2.1</span> 1. <strong>Normal Prior (Gaussian)</strong></a></li>
-  <li><a href="#laplace-prior-lasso" id="toc-laplace-prior-lasso"><span class="header-section-number">4.2.2</span> 2. <strong>Laplace Prior (Lasso)</strong></a></li>
-  <li><a href="#horseshoe-prior-global-local-shrinkage" id="toc-horseshoe-prior-global-local-shrinkage"><span class="header-section-number">4.2.3</span> 3. <strong>Horseshoe Prior (Global-Local Shrinkage)</strong></a></li>
-  </ul></li>
-  <li><a href="#computational-methods-for-bayesian-mnl" id="toc-computational-methods-for-bayesian-mnl"><span class="header-section-number">4.3</span> Computational Methods for Bayesian MNL</a>
-  <ul>
-  <li><a href="#markov-chain-monte-carlo-mcmc" id="toc-markov-chain-monte-carlo-mcmc"><span class="header-section-number">4.3.1</span> 1. <strong>Markov Chain Monte Carlo (MCMC)</strong></a></li>
-  <li><a href="#polya-gamma-data-augmentation" id="toc-polya-gamma-data-augmentation"><span class="header-section-number">4.3.2</span> 2. <strong>Polya-Gamma Data Augmentation</strong></a></li>
-  <li><a href="#variational-inference-vi" id="toc-variational-inference-vi"><span class="header-section-number">4.3.3</span> 3. <strong>Variational Inference (VI)</strong></a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#applications-of-bayesian-mnl" id="toc-applications-of-bayesian-mnl"><span class="header-section-number">5</span> Applications of Bayesian MNL</a></li>
-  <li><a href="#conclusion" id="toc-conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
-  </ul>
-</nav>
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>Logistic regression is a fundamental statistical method used to model categorical response variables. It plays a crucial role in various fields, including <strong>economics, medicine, and social sciences</strong>. The method estimates the probability of a binary outcome given a set of predictors. However, when the response variable contains <strong>more than two categories</strong>, a natural extension is <strong>Multinomial Logistic Regression (MNL)</strong>.</p>
-<p>While <strong>frequentist approaches</strong> using Maximum Likelihood Estimation (MLE) provide a standard method for estimating MNL parameters, they suffer from limitations, such as:</p>
-<ul>
-<li>Sensitivity to <strong>multicollinearity</strong></li>
-<li>Lack of <strong>uncertainty quantification</strong></li>
-<li>Inability to incorporate <strong>prior knowledge</strong></li>
-</ul>
-<p>To address these challenges, <strong>Bayesian Multinomial Logistic Regression (BMLR)</strong> incorporates <strong>prior distributions</strong> and <strong>posterior inference</strong> to enhance model estimation, making it more flexible and robust, especially for <strong>small sample sizes</strong> and <strong>high-dimensional data</strong>.</p>
-<p>This paper systematically explores the progression from <strong>binary logistic regression</strong> to <strong>multinomial logistic regression</strong>, culminating in <strong>Bayesian MNL</strong>, covering:</p>
+
+<section id="introduction-to-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-clustering">Introduction to Clustering</h2>
+<p>Clustering is a foundational technique in unsupervised machine learning. It helps us find natural groupings in data without having pre-labeled categories. Whether we’re analyzing customers, genes, images, or survey responses, clustering lets us identify patterns and structure in our data. This makes it a critical tool in data science, especially for exploratory data analysis and pattern discovery.</p>
+<p>Why is clustering so useful? Because it simplifies complex datasets. Imagine trying to make sense of thousands of customer records. Clustering can help group them based on behavior or preferences, making it easier to target marketing strategies or identify needs.</p>
+<hr>
+</section>
+<section id="categories-of-clustering-methods" class="level2">
+<h2 class="anchored" data-anchor-id="categories-of-clustering-methods">Categories of Clustering Methods</h2>
+<p>Clustering methods generally fall into three main categories:</p>
 <ol type="1">
-<li>Theoretical foundations<br />
-</li>
-<li>Estimation techniques<br />
-</li>
-<li>Computational challenges<br />
-</li>
-<li>Recent advancements, including <strong>data augmentation methods</strong>, <strong>hierarchical modeling</strong>, and <strong>variational inference</strong></li>
+<li><strong>Model-Based Clustering</strong>: Assumes the data is generated by a mixture of underlying statistical distributions (like Gaussians or multinomials). Examples: Gaussian Mixture Models (GMM), Latent Class Analysis (LCA), Dirichlet Process Mixture Models (DPMM).</li>
+<li><strong>Hierarchical Clustering</strong>: Builds a tree of clusters either by merging (agglomerative) or splitting (divisive) data points. Examples: AGNES, DIANA.</li>
+<li><strong>Distance-Based Clustering</strong>: Forms clusters based on a chosen distance metric. Examples: K-Means, K-Modes, K-Prototypes, DBSCAN.</li>
 </ol>
+<hr>
 </section>
-<section id="logistic-regression" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Logistic Regression</h1>
-<section id="binary-logistic-regression" class="level2" data-number="2.1">
-<h2 data-number="2.1"><span class="header-section-number">2.1</span> Binary Logistic Regression</h2>
-<p>Binary logistic regression is a statistical model that estimates the probability of a binary outcome:</p>
-<p>[ P(Y = 1 | X) = ]</p>
-<p>where: - ( X_1, X_2, , X_p ) are predictor variables, - ( _0, _1, , _p ) are coefficients estimated using <strong>Maximum Likelihood Estimation (MLE)</strong>.</p>
-<section id="example-predicting-loan-approval" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1"><span class="header-section-number">2.1.1</span> Example: Predicting Loan Approval</h3>
-<p>Consider a dataset where we want to predict whether a <strong>loan application is approved</strong> (( Y = 1 )) or <strong>denied</strong> (( Y = 0 )) based on <strong>credit score</strong> (( X_1 )) and <strong>income level</strong> (( X_2 )):</p>
-<p>[ ( ) = _0 + _1 () + _2 () ]</p>
-<p>The coefficients (( _1, _2 )) indicate how credit score and income affect the odds of approval.</p>
-</section>
-</section>
-<section id="limitations-of-binary-logistic-regression" class="level2" data-number="2.2">
-<h2 data-number="2.2"><span class="header-section-number">2.2</span> Limitations of Binary Logistic Regression</h2>
+<section id="clustering-methods-for-continuous-data" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-methods-for-continuous-data">Clustering Methods for Continuous Data</h2>
+<p>When your dataset is made up of numerical values- like age, income, temperature, coordinates, or test scores- you’re working with continuous data.</p>
+<p>The good news? -Most classic clustering algorithms are designed for continuous data! Why? Because it’s easy to calculate distances between numerical points using measures like Euclidean distance (the straight-line distance between two points).</p>
+<p>Let’s break down the main types of clustering that work well with continuous data:</p>
+<section id="model-based-gaussian-mixture-models-gmm" class="level3">
+<h3 class="anchored" data-anchor-id="model-based-gaussian-mixture-models-gmm">Model-Based: Gaussian Mixture Models (GMM)</h3>
+<p>Imagine your data comes from a mix of several bell curves (aka Gaussian distributions). Each cluster is one of those bell curves, and the overall dataset is their mixture.</p>
+<p>GMM says:</p>
+<p><em>“Let’s model the data using a bunch of Gaussians and figure out which point most likely came from which one.”</em></p>
+<p>This is called a probabilistic model-instead of assigning each point to one cluster definitively, it gives probabilities (soft assignments).</p>
+<section id="how-it-works" class="level4">
+<h4 class="anchored" data-anchor-id="how-it-works">How it works:</h4>
 <ul>
-<li><strong>Restrictive Binary Outcome</strong>: Can only model two categories.</li>
-<li><strong>Linearity Assumption</strong>: Assumes a <strong>linear</strong> relationship between log-odds and predictors.</li>
-<li><strong>Independence Assumption</strong>: Each observation is assumed to be <strong>independent</strong> of others.</li>
-</ul>
-<p>To overcome these, we extend <strong>logistic regression</strong> to handle multiple categories.</p>
-</section>
-</section>
-<section id="multinomial-logistic-regression-mnl" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Multinomial Logistic Regression (MNL)</h1>
-<p>Multinomial logistic regression is used when the response variable has <strong>three or more unordered categories</strong>. It generalizes binary logistic regression by modeling the probability of each category.</p>
-<p>For an observation ( i ) with outcome ( j ):</p>
-<p>[ P(Y_i = j | X_i) = ]</p>
-<p>where: - ( J ) is the total number of categories. - One category (e.g., the last category) is used as the <strong>reference category</strong> with ( _J = 0 ).</p>
-<section id="example-predicting-transport-mode-choice" class="level3" data-number="3.0.1">
-<h3 data-number="3.0.1"><span class="header-section-number">3.0.1</span> Example: Predicting Transport Mode Choice</h3>
-<p>Suppose we want to model a person’s choice of <strong>transportation mode</strong> (( Y )) based on income and distance traveled. The possible choices are:</p>
+<li>Starts with a guess about how many Gaussians (clusters) there are.</li>
+<li>Uses an algorithm called <strong>EM (Expectation-Maximization)</strong> to:
 <ul>
-<li><strong>Car</strong> (( Y = 1 ))</li>
-<li><strong>Bus</strong> (( Y = 2 ))</li>
-<li><strong>Bicycle</strong> (( Y = 3 ))</li>
-</ul>
-<p>The MNL model can be written as:</p>
-<p>[ ( ) = _0 + _1 () + _2 () ]</p>
-<p>[ ( ) = _0 + _1 () + _2 () ]</p>
-</section>
-<section id="assumptions-of-mnl" class="level3" data-number="3.0.2">
-<h3 data-number="3.0.2"><span class="header-section-number">3.0.2</span> Assumptions of MNL</h3>
-<ul>
-<li><strong>Independence of Irrelevant Alternatives (IIA)</strong>: Adding a new category should not affect the relative odds between existing choices.</li>
-<li><strong>Absence of Multicollinearity</strong>: Predictor variables should not be highly correlated.</li>
-<li><strong>Large Sample Size Requirement</strong>: MLE requires <strong>large samples</strong> to provide stable estimates.</li>
-</ul>
-<p>While <strong>frequentist approaches</strong> using <strong>Maximum Likelihood Estimation (MLE)</strong> provide a standard method for estimating MNL parameters, they suffer from limitations, such as:</p>
-<ul>
-<li><strong>Sensitivity to multicollinearity</strong><br />
-</li>
-<li><strong>Lack of uncertainty quantification</strong><br />
-</li>
-<li><strong>Inability to incorporate prior knowledge</strong><br />
-</li>
-<li><strong>Computational inefficiencies in high-dimensional settings</strong></li>
-</ul>
-<p>Bayesian Multinomial Logistic Regression (BMLR) addresses these challenges by introducing <strong>prior distributions</strong> over parameters and estimating posterior distributions using <strong>Bayes’ theorem</strong>. This approach allows for:</p>
-<ol type="1">
-<li><strong>Better uncertainty quantification</strong> through posterior distributions.<br />
-</li>
-<li><strong>Regularization</strong> via informative or shrinkage priors.<br />
-</li>
-<li><strong>Improved inference in small-sample and high-dimensional settings</strong>.<br />
-</li>
-<li><strong>Flexibility to incorporate hierarchical structures</strong> and domain expertise.</li>
-</ol>
-<p>In this paper, we will explore: - <strong>Theoretical foundations</strong> of Bayesian inference in MNL. - <strong>Common prior distributions</strong> for Bayesian MNL. - <strong>Computational challenges</strong> and solutions. - <strong>Recent advancements</strong>, including <strong>data augmentation, Markov Chain Monte Carlo (MCMC), and variational inference</strong>.</p>
-</section>
-</section>
-<section id="bayesian-multinomial-logistic-regression-bmlr" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Bayesian Multinomial Logistic Regression (BMLR)</h1>
-<section id="bayesian-framework" class="level2" data-number="4.1">
-<h2 data-number="4.1"><span class="header-section-number">4.1</span> Bayesian Framework</h2>
-<p>Bayesian inference updates our belief about the model parameters ( ) given observed data ( (X, Y) ). This is done through <strong>Bayes’ theorem</strong>:</p>
-<p>[ P(| X, Y) P(Y | X, ) P() ]</p>
-<p>where:<br />
-- ( P(Y | X, ) ) is the <strong>likelihood function</strong>, which represents the probability of observing the data given parameters ( ).<br />
-- ( P() ) is the <strong>prior distribution</strong>, which encodes prior beliefs about the parameter values.</p>
-<section id="likelihood-function" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1"><span class="header-section-number">4.1.1</span> Likelihood Function</h3>
-<p>For multinomial logistic regression, the probability of an observation ( i ) falling into category ( j ) is:</p>
-<p>[ P(Y_i = j | X_i) = ]</p>
-<p>where: - ( J ) is the number of categories. - ( _j ) represents the coefficient vector for category ( j ). - One category (e.g., ( J )) is set as the <strong>reference category</strong>, and its coefficient vector is constrained to ( 0 ) for identifiability.</p>
-<p>Using the likelihood function for a dataset with ( n ) observations, the joint likelihood is:</p>
-<p>[ L() = <em>{i=1}^{n} </em>{j=1}^{J} P(Y_i = j | X_i)^{I(Y_i = j)} ]</p>
-<p>where ( I(Y_i = j) ) is an indicator function that equals 1 if observation ( i ) falls into category ( j ).</p>
-</section>
-</section>
-<section id="common-priors-for" class="level2" data-number="4.2">
-<h2 data-number="4.2"><span class="header-section-number">4.2</span> Common Priors for ( )</h2>
-<p>Selecting an appropriate <strong>prior distribution</strong> for ( ) is crucial in Bayesian analysis. Common choices include:</p>
-<section id="normal-prior-gaussian" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1"><span class="header-section-number">4.2.1</span> 1. <strong>Normal Prior (Gaussian)</strong></h3>
-<p>A common choice is the <strong>Gaussian prior</strong>, which assumes:</p>
-<p>[ _j N(0, ^2 I) ]</p>
-<p>where: - ( I ) is the identity matrix. - ( ^2 ) controls the <strong>spread</strong> of the prior distribution.</p>
-<p><strong>Advantages:</strong> - Ensures numerical stability. - Regularizes estimates by shrinking large coefficients.</p>
-<p><strong>Disadvantages:</strong> - Does not enforce sparsity (i.e., all coefficients remain nonzero).</p>
-</section>
-<section id="laplace-prior-lasso" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2"><span class="header-section-number">4.2.2</span> 2. <strong>Laplace Prior (Lasso)</strong></h3>
-<p>A <strong>Laplace (double-exponential) prior</strong> induces sparsity:</p>
-<p>[ _j (0, b) ]</p>
-<p>which encourages many coefficients to be exactly <strong>zero</strong>, making it useful for <strong>high-dimensional settings</strong>.</p>
-<p><strong>Advantages:</strong> - Performs <strong>automatic variable selection</strong>. - Helps prevent <strong>overfitting</strong>.</p>
-<p><strong>Disadvantages:</strong> - Computationally expensive to sample in some cases.</p>
-</section>
-<section id="horseshoe-prior-global-local-shrinkage" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3"><span class="header-section-number">4.2.3</span> 3. <strong>Horseshoe Prior (Global-Local Shrinkage)</strong></h3>
-<p>For <strong>high-dimensional problems</strong>, the <strong>horseshoe prior</strong> is often preferred:</p>
-<p>[ _j N(0, _j^2 ^2) ]</p>
-<p>where: - ( _j ) is a <strong>local shrinkage parameter</strong>. - ( ) is a <strong>global shrinkage parameter</strong>.</p>
-<p><strong>Advantages:</strong> - Strongly shrinks <strong>irrelevant features</strong> while preserving <strong>large coefficients</strong>. - Suitable for <strong>high-dimensional Bayesian modeling</strong>.</p>
-<p><strong>Disadvantages:</strong> - More complex to implement than standard priors.</p>
-</section>
-</section>
-<section id="computational-methods-for-bayesian-mnl" class="level2" data-number="4.3">
-<h2 data-number="4.3"><span class="header-section-number">4.3</span> Computational Methods for Bayesian MNL</h2>
-<p>Unlike frequentist MNL, Bayesian MNL does not have a closed-form solution. <strong>Posterior inference</strong> is computationally challenging and requires <strong>sampling-based or optimization-based approximations</strong>.</p>
-<section id="markov-chain-monte-carlo-mcmc" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1"><span class="header-section-number">4.3.1</span> 1. <strong>Markov Chain Monte Carlo (MCMC)</strong></h3>
-<p>MCMC is a class of algorithms used to sample from the posterior distribution. Common MCMC techniques include:</p>
-<ul>
-<li><strong>Metropolis-Hastings</strong>: A general-purpose method, but inefficient for high-dimensional problems.</li>
-<li><strong>Gibbs Sampling</strong>: Sequentially samples parameters from their conditional distributions.</li>
-<li><strong>Hamiltonian Monte Carlo (HMC)</strong>: Uses gradient-based sampling to improve efficiency.</li>
-</ul>
-<p><strong>Example:</strong><br />
-Suppose we have a dataset with three classes: <strong>Low, Medium, High Income</strong>. The MCMC algorithm will iteratively sample posterior distributions for ( ) based on the observed data and priors.</p>
-</section>
-<section id="polya-gamma-data-augmentation" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2"><span class="header-section-number">4.3.2</span> 2. <strong>Polya-Gamma Data Augmentation</strong></h3>
-<p><strong>Polya-Gamma augmentation</strong> (Polson et al., 2013) simplifies Bayesian logistic regression by introducing <strong>latent variables</strong>. It transforms the <strong>logistic likelihood</strong> into a conditionally Gaussian form, allowing for <strong>efficient Gibbs sampling</strong>.</p>
-<p><strong>Key Benefits:</strong> - <strong>Simplifies posterior sampling.</strong> - <strong>Improves mixing in MCMC methods.</strong> - <strong>Computationally efficient for large datasets.</strong></p>
-</section>
-<section id="variational-inference-vi" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3"><span class="header-section-number">4.3.3</span> 3. <strong>Variational Inference (VI)</strong></h3>
-<p>Variational inference (VI) approximates the posterior by finding a simpler distribution ( q() ) that minimizes the <strong>Kullback-Leibler (KL) divergence</strong>:</p>
-<p>[ q() P(| X, Y) ]</p>
-<p><strong>Advantages of VI:</strong> - <strong>Faster than MCMC.</strong> - <strong>Scalable to large datasets.</strong> - <strong>Works well in high-dimensional settings.</strong></p>
-<p><strong>Disadvantages:</strong> - Provides <strong>approximations</strong> rather than exact posterior samples. - Requires careful selection of <strong>variational families</strong>.</p>
-</section>
-</section>
-</section>
-<section id="applications-of-bayesian-mnl" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Applications of Bayesian MNL</h1>
-<ol type="1">
-<li><strong>Customer Choice Modeling</strong>
-<ul>
-<li>Understanding <strong>consumer preferences</strong> in marketing.<br />
-</li>
-<li>Predicting <strong>product purchases</strong> across multiple categories.</li>
+<li>Estimate the probability each point came from each cluster.</li>
+<li>Update the cluster shapes and centers based on those probabilities.</li>
 </ul></li>
-<li><strong>Healthcare &amp; Epidemiology</strong>
+<li>Repeats until everything stabilizes.</li>
+</ul>
+<p>GMM assumes data is generated from a mix of multiple Gaussian distributions. Each cluster has its own mean and covariance. The Expectation-Maximization (EM) algorithm estimates which Gaussian most likely generated each point. This allows for <strong>soft clustering</strong>, where a point belongs to multiple clusters with different probabilities.</p>
 <ul>
-<li><strong>Predicting disease risk</strong> across multiple conditions.<br />
-</li>
-<li>Classifying <strong>patient outcomes</strong> based on medical data.</li>
-</ul></li>
-<li><strong>Natural Language Processing (NLP)</strong>
-<ul>
-<li><strong>Text classification</strong> (e.g., sentiment analysis).<br />
-</li>
-<li><strong>Topic modeling</strong> for categorizing documents.</li>
-</ul></li>
-</ol>
+<li><strong>Strengths</strong>: Models elliptical clusters, handles soft assignments, supports statistical criteria like BIC for choosing the number of clusters.</li>
+<li><strong>Limitations</strong>: Assumes Gaussian shape, sensitive to initialization, can overfit.</li>
+<li><strong>Evaluation</strong>: BIC (for choosing cluster count), Silhouette score (based on likelihood or distance), ARI/NMI if ground truth is available.</li>
+</ul>
+<div id="a96a8bb9" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X, _ <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">300</span>, centers<span class="op">=</span><span class="dv">4</span>, cluster_std<span class="op">=</span><span class="fl">0.6</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>gmm <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">4</span>).fit(X)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> gmm.predict(X)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> gmm.predict_proba(X)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>probs.<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>), cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'GMM Clustering (Soft Assignments)'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">'Cluster Confidence'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="MNL_files/figure-html/cell-2-output-1.png" width="556" height="431" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="conclusion" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
-<p>Bayesian Multinomial Logistic Regression (BMLR) <strong>improves upon frequentist MNL</strong> by: - <strong>Providing uncertainty quantification</strong> via posterior distributions. - <strong>Enhancing regularization</strong> through priors. - <strong>Handling high-dimensional and hierarchical data efficiently</strong>.</p>
-<p>While Bayesian MNL poses <strong>computational challenges</strong>, recent advancements in <strong>MCMC, Polya-Gamma augmentation, and variational inference</strong> have made it increasingly practical for modern statistical modeling.</p>
-<hr />
-<div id="quarto-book-math" class="hidden">
-<p><span class="hidden" data-render-id="quarto-enable-math-inline"><span class="math inline">\(e = mC^2\)</span></span></p>
+</section>
+<section id="hierarchical-agnes-and-diana" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-agnes-and-diana">Hierarchical: AGNES and DIANA</h3>
+<p>Hierarchical clustering doesn’t just give you clusters- it builds a tree (called a dendrogram) showing how clusters form or split. You don’t have to decide on the number of clusters up front!</p>
+<p>There are two main styles:</p>
+<section id="agnes-agglomerative-nesting" class="level4">
+<h4 class="anchored" data-anchor-id="agnes-agglomerative-nesting">AGNES (Agglomerative Nesting)</h4>
+<p><em>Bottom-up approach.</em></p>
+<p>-Start with each point as its own cluster.</p>
+<p>-Merge the two closest clusters, step by step, until everything is one big cluster.</p>
+<p>-Result: a dendrogram you can “cut” at any level to get your desired number of clusters.</p>
+</section>
+<section id="diana-divisive-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="diana-divisive-analysis">DIANA (Divisive Analysis)</h4>
+<p><em>Top-down approach.</em></p>
+<p>-Start with all points in one cluster.</p>
+<p>-Split the cluster that’s most different inside itself.</p>
+<p>-Keep splitting until each point is alone (or you stop earlier).</p>
+<p><em>Single linkage:</em> join the closest pair of points. <em>Complete linkage:</em> join based on the furthest points. <em>Ward’s method:</em> join clusters to minimize variance (often works best for compact clusters).</p>
+<ul>
+<li><p><strong>AGNES (Agglomerative)</strong> starts with each point as its own cluster and merges them iteratively based on linkage criteria (single, complete, average, or Ward’s).</p></li>
+<li><p><strong>DIANA (Divisive)</strong> starts with all data in one cluster and splits recursively.</p></li>
+<li><p><strong>Strengths</strong>: No need to pre-specify the number of clusters, provides dendrograms for visualization.</p></li>
+<li><p><strong>Limitations</strong>: Computationally expensive (O(n^2)), greedy – early mistakes can’t be corrected.</p></li>
+<li><p><strong>Evaluation</strong>: Dendrogram inspection, Silhouette score (with Euclidean distance).</p></li>
+</ul>
+</section>
+</section>
+<section id="distance-based-k-means" class="level3">
+<h3 class="anchored" data-anchor-id="distance-based-k-means">Distance-Based: K-Means</h3>
+<p>This is one of the most famous and widely used clustering methods.</p>
+<p>K-means says:</p>
+<p><em>“Let’s group the data into K clusters so that the points in each group are close to each other (based on average distance from the center).”</em></p>
+<section id="how-it-works-1" class="level4">
+<h4 class="anchored" data-anchor-id="how-it-works-1">How it works:</h4>
+<p>-Pick K cluster centers (called centroids) to start- can be random. -Assign each data point to the nearest centroid. -Recalculate centroids as the average of all points assigned to them. -Repeat steps 2–3 until nothing changes.</p>
+<p>It’s like playing tug-of-war- points shift between clusters as centroids move, until everyone’s happy.</p>
+<p>K-means minimizes the within-cluster sum of squared distances. It uses centroids and Euclidean distance to assign points.</p>
+<ul>
+<li><strong>Strengths</strong>: Fast, scalable, interpretable.</li>
+<li><strong>Limitations</strong>: Requires specifying K, sensitive to outliers and initialization, assumes spherical clusters.</li>
+<li><strong>Evaluation</strong>: Elbow method, Silhouette score, Davies-Bouldin Index, Calinski-Harabasz Index.</li>
+</ul>
+<div id="37974a5b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y_kmeans <span class="op">=</span> kmeans.fit_predict(X)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>y_kmeans, cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.scatter(kmeans.cluster_centers_[:, <span class="dv">0</span>], kmeans.cluster_centers_[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">300</span>, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'X'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'K-Means Clustering'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Silhouette Score:"</span>, silhouette_score(X, y_kmeans))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/opt/conda/lib/python3.11/site-packages/sklearn/cluster/_kmeans.py:1416: FutureWarning:
+
+The default value of `n_init` will change from 10 to 'auto' in 1.4. Set the value of `n_init` explicitly to suppress the warning
+</code></pre>
 </div>
-<div id="quarto-navigation-envelope" class="hidden">
-<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Sreyashi Bhattacharya</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Sreyashi Bhattacharya</span> <span class="hidden" data-render-id="quarto-int-navbar:About">About</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Resume">Resume</span> <span class="hidden" data-render-id="quarto-int-navbar:/resume.html">/resume.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Data Analysis">Data Analysis</span> <span class="hidden" data-render-id="quarto-int-navbar:/data-analysis.html">/data-analysis.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Statistics">Statistics</span> <span class="hidden" data-render-id="quarto-int-navbar:/statistics.html">/statistics.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Research Assistantship">Research Assistantship</span> <span class="hidden" data-render-id="quarto-int-navbar:/RA_post.html">/RA_post.html</span></p>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="MNL_files/figure-html/cell-3-output-2.png" width="558" height="431" class="figure-img"></p>
+</figure>
 </div>
-<div id="quarto-meta-markdown" class="hidden">
-<p><span class="hidden" data-render-id="quarto-metatitle">Sreyashi Bhattacharya - From Logistic Regression to Bayesian Multinomial Logistic Regression: A Comprehensive Overview</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Sreyashi Bhattacharya - From Logistic Regression to Bayesian Multinomial Logistic Regression: A Comprehensive Overview</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Sreyashi Bhattacharya - From Logistic Regression to Bayesian Multinomial Logistic Regression: A Comprehensive Overview</span> <span class="hidden" data-render-id="quarto-metasitename">Sreyashi Bhattacharya</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Silhouette Score: 0.6819938690643478</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="clustering-methods-for-categorical-data" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-methods-for-categorical-data">Clustering Methods for Categorical Data</h2>
+<p>Clustering categorical data is a bit trickier than clustering numerical data. Why? Because many clustering algorithms (like k-means) rely on computing distances between data points—using things like Euclidean distance, which only make sense for numbers.</p>
+<p>But categorical data—like “red”, “blue”, “yes”, “no”, “urban”, “rural”—can’t be directly averaged or subtracted. So we need methods that understand how to measure similarity without relying on numbers.</p>
+<section id="model-based-latent-class-analysis-lca" class="level3">
+<h3 class="anchored" data-anchor-id="model-based-latent-class-analysis-lca">Model-Based: Latent Class Analysis (LCA)</h3>
+<p>What is it? Latent Class Analysis is like saying: “Let’s assume people (or data points) belong to hidden groups (called latent classes), and their answers to survey questions (or their attribute values) depend on which group they belong to.”</p>
+<p>For example, in a survey:</p>
+<p>People in Class A might often answer “Yes” to Q1 and Q2, and “No” to Q3.</p>
+<p>People in Class B might answer the opposite.</p>
+<p><em>How it works:</em> LCA uses probabilities to model this. It says:</p>
+<p>Each class has a profile (e.g., 80% chance of answering “Yes” to Q1).</p>
+<p>Each person belongs to a class with a certain probability. Then it fits the best model using an algorithm called EM (Expectation Maximization).</p>
+<ul>
+<li><strong>Strengths</strong>: Handles multivariate categorical data, gives probabilities, supports statistical testing.</li>
+<li><strong>Limitations</strong>: Assumes conditional independence, slow for large data, risk of overfitting.</li>
+<li><strong>Evaluation</strong>: BIC (for model selection), ARI/NMI (if ground truth exists).</li>
+</ul>
+</section>
+<section id="model-based-bayesian-dirichlet-process-mixture-models-dpmm" class="level3">
+<h3 class="anchored" data-anchor-id="model-based-bayesian-dirichlet-process-mixture-models-dpmm">Model-Based (Bayesian): Dirichlet Process Mixture Models (DPMM)</h3>
+<p>This is like LCA’s more flexible, Bayesian cousin. Instead of deciding beforehand how many clusters you want (like “K = 3”), it lets the data tell you!</p>
+<p><em>The big idea:</em></p>
+<p>Imagine a restaurant where each new customer either joins an existing table (cluster) or starts a new one.</p>
+<p>Whether they start a new table depends on how many people are already sitting and a concentration parameter (α).</p>
+<p>This is called the Chinese Restaurant Process, and it’s the intuition behind DPMM.</p>
+<ul>
+<li><strong>Strengths</strong>: Automatically determines the number of clusters, flexible, supports soft clustering.</li>
+<li><strong>Limitations</strong>: Computationally intensive, requires setting/tuning hyperparameters.</li>
+<li><strong>Evaluation</strong>: Posterior probabilities, Predictive log-likelihood, ARI/NMI for known labels.</li>
+</ul>
+<div id="955c89be" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> BayesianGaussianMixture</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit DPMM (upper bound on number of components, but fewer are used)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>dpgmm <span class="op">=</span> BayesianGaussianMixture(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    n_components<span class="op">=</span><span class="dv">10</span>,       <span class="co"># maximum number of components</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    covariance_type<span class="op">=</span><span class="st">'full'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    weight_concentration_prior_type<span class="op">=</span><span class="st">'dirichlet_process'</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    weight_concentration_prior<span class="op">=</span><span class="fl">0.5</span>,  <span class="co"># lower value → more clusters</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>dpgmm.fit(X)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> dpgmm.predict(X)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> dpgmm.predict_proba(X)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot results</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>labels, cmap<span class="op">=</span><span class="st">'Set2'</span>, s<span class="op">=</span><span class="dv">40</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Dirichlet Process Gaussian Mixture Model (DPMM)'</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="MNL_files/figure-html/cell-4-output-1.png" width="558" height="431" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="whats-happening" class="level4">
+<h4 class="anchored" data-anchor-id="whats-happening">What’s Happening?</h4>
+<ul>
+<li><p>n_components=10: This sets the maximum number of clusters-not the actual number.</p></li>
+<li><p>weight_concentration_prior: Lower values allow more small clusters. It’s like tuning α in the Chinese Restaurant Process.</p></li>
+</ul>
+</section>
+</section>
+<section id="hierarchical-rock-and-gowers-distance" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-rock-and-gowers-distance">Hierarchical: ROCK and Gower’s Distance</h3>
+<p>When clustering categorical data, we can’t use standard distances like Euclidean. So we need creative alternatives.</p>
+<p>ROCK (Robust Clustering using Links) What makes ROCK special? It’s designed specifically for categorical or binary data. Instead of relying just on similarity between two points, it looks at how many common neighbors they have.</p>
+<p>Imagine:</p>
+<p>Person A is similar to B and C.</p>
+<p>Person D is also similar to B and C. Then A and D should probably be in the same group—even if they’re not directly that similar!</p>
+<p>It’s like friend-of-a-friend logic. This method merges clusters that are strongly interconnected.</p>
+<ul>
+<li><strong>ROCK</strong> merges clusters based on the number of common neighbors above a similarity threshold.</li>
+</ul>
+<p>What is Gower’s Distance? It’s a way to calculate distance that works on mixed data- numerical, categorical, and even ordinal.</p>
+<p>For each variable:</p>
+<section id="if-its-numeric-take-the-normalized-difference." class="level5">
+<h5 class="anchored" data-anchor-id="if-its-numeric-take-the-normalized-difference.">If it’s numeric: take the normalized difference.</h5>
+</section>
+<section id="if-its-categorical-0-if-they-match-1-if-they-dont." class="level5">
+<h5 class="anchored" data-anchor-id="if-its-categorical-0-if-they-match-1-if-they-dont.">If it’s categorical: 0 if they match, 1 if they don’t.</h5>
+</section>
+<section id="then-average-the-distances.-this-gives-a-similarity-that-respects-data-types" class="level5">
+<h5 class="anchored" data-anchor-id="then-average-the-distances.-this-gives-a-similarity-that-respects-data-types">Then, average the distances. This gives a similarity that respects data types!</h5>
+<p>How it helps: Once you compute the distance matrix using Gower, you can use any hierarchical clustering method, like AGNES, and plot a dendrogram.</p>
+<ul>
+<li><p><strong>Gower + Hierarchical</strong>: Use Gower’s distance (handles mixed types) with standard hierarchical clustering.</p></li>
+<li><p><strong>Strengths</strong>: ROCK is robust to noise; Gower allows mixed-type clustering.</p></li>
+<li><p><strong>Limitations</strong>: Requires threshold tuning (ROCK), slow for large datasets, not commonly implemented.</p></li>
+<li><p><strong>Evaluation</strong>: Silhouette with Gower/Hamming distance, visual inspection via dendrogram.</p></li>
+</ul>
+</section>
+</section>
+<section id="distance-based-k-modes" class="level3">
+<h3 class="anchored" data-anchor-id="distance-based-k-modes">Distance-Based: K-Modes</h3>
+<p>An extension of K-Means for categorical data. It uses the mode (most common value) instead of the mean and mismatch count (Hamming distance) as the distance. Why not k-means? Because k-means computes centroids using averages, which doesn’t work for categories like “dog” or “banana.”</p>
+<section id="k-modes-to-the-rescue" class="level4">
+<h4 class="anchored" data-anchor-id="k-modes-to-the-rescue">K-Modes to the rescue:</h4>
+<p>It uses the mode (most frequent category) instead of the mean.</p>
+<p>It measures distance by counting how many categories don’t match (like Hamming distance).</p>
+<p>Example: If A = [“red”, “large”, “yes”] and B = [“blue”, “large”, “no”] Then they differ in 2 out of 3 features → distance = 2</p>
+<ul>
+<li><strong>Strengths</strong>: Fast, interpretable, handles large categorical datasets.</li>
+<li><strong>Limitations</strong>: Needs K upfront, sensitive to initialization, can be affected by high-cardinality categories.</li>
+<li><strong>Evaluation</strong>: Cost function (total mismatches), Silhouette (with Hamming distance), ARI/NMI.</li>
+</ul>
+</section>
+</section>
+<section id="distance-based-for-mixed-data-k-prototypes" class="level3">
+<h3 class="anchored" data-anchor-id="distance-based-for-mixed-data-k-prototypes">Distance-Based for Mixed Data: K-Prototypes</h3>
+<p>The real world isn’t just numbers or categories—it’s both. Enter K-Prototypes, which combines:</p>
+<p>K-means (for numerical features)</p>
+<p>K-modes (for categorical features)</p>
+<p>How it works:</p>
+<p>Calculates numerical distance (Euclidean) and categorical mismatch.</p>
+<p>Adds them together using a weight factor (γ) to balance them.</p>
+<p>Combines K-Means and K-Modes to handle both numeric and categorical data. Uses Euclidean distance for numerics, Hamming distance for categoricals.</p>
+<ul>
+<li><strong>Strengths</strong>: Handles mixed data, interpretable clusters.</li>
+<li><strong>Limitations</strong>: Requires tuning the weight parameter (gamma), needs K upfront.</li>
+<li><strong>Evaluation</strong>: Silhouette (with combined distance), ARI/NMI.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="comparison-table" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-table">Comparison Table</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Algorithm</th>
+<th>Category</th>
+<th>Suitable Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GMM (e.g., Mclust)</td>
+<td>Model-Based</td>
+<td>Continuous</td>
+</tr>
+<tr class="even">
+<td>AGNES (Agglomerative)</td>
+<td>Hierarchical</td>
+<td>Continuous</td>
+</tr>
+<tr class="odd">
+<td>DIANA (Divisive)</td>
+<td>Hierarchical</td>
+<td>Continuous</td>
+</tr>
+<tr class="even">
+<td>K-Means</td>
+<td>Distance-Based</td>
+<td>Continuous</td>
+</tr>
+<tr class="odd">
+<td>LCA</td>
+<td>Model-Based</td>
+<td>Categorical</td>
+</tr>
+<tr class="even">
+<td>DPMM</td>
+<td>Model-Based</td>
+<td>Categorical / Continuous</td>
+</tr>
+<tr class="odd">
+<td>ROCK</td>
+<td>Hierarchical</td>
+<td>Categorical</td>
+</tr>
+<tr class="even">
+<td>Gower + Hierarchical</td>
+<td>Hierarchical</td>
+<td>Mixed / Categorical</td>
+</tr>
+<tr class="odd">
+<td>K-Modes</td>
+<td>Distance-Based</td>
+<td>Categorical</td>
+</tr>
+<tr class="even">
+<td>K-Prototypes</td>
+<td>Distance-Based</td>
+<td>Mixed</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="clustering-evaluation-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-evaluation-metrics">Clustering Evaluation Metrics</h2>
+<section id="internal-metrics-no-ground-truth-needed" class="level3">
+<h3 class="anchored" data-anchor-id="internal-metrics-no-ground-truth-needed">Internal Metrics (No Ground Truth Needed)</h3>
+<ul>
+<li><strong>Silhouette Score</strong>: Measures how well a point fits within its cluster. Ranges from -1 (bad) to +1 (good). Works with Euclidean, Hamming, or Gower distance.</li>
+<li><strong>Dunn Index</strong>: Ratio of minimum inter-cluster distance to maximum intra-cluster diameter. Higher is better.</li>
+<li><strong>Davies-Bouldin Index (DBI)</strong>: Measures average similarity between clusters. Lower is better.</li>
+<li><strong>Calinski-Harabasz Index (CH)</strong>: Ratio of between-cluster dispersion to within-cluster dispersion. Higher is better.</li>
+<li><strong>Elbow Method</strong>: Plot of total within-cluster sum of squares vs K. Look for an elbow point.</li>
+<li><strong>BIC (Bayesian Information Criterion)</strong>: Used in model-based clustering to balance model fit and complexity.</li>
+</ul>
+</section>
+<section id="external-metrics-need-ground-truth-labels" class="level3">
+<h3 class="anchored" data-anchor-id="external-metrics-need-ground-truth-labels">External Metrics (Need Ground Truth Labels)</h3>
+<ul>
+<li><strong>Adjusted Rand Index (ARI)</strong>: Compares cluster assignments with true labels. Ranges from -1 to 1.</li>
+<li><strong>Normalized Mutual Information (NMI)</strong>: Measures mutual dependence between predicted clusters and true labels. Ranges from 0 to 1.</li>
+<li><strong>Purity</strong>: Fraction of dominant class members in each cluster. Simple but biased toward more clusters.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Clustering is a powerful tool for uncovering hidden patterns in data. Different methods are suited to different data types: - Use <strong>K-Means</strong>, <strong>GMM</strong>, or <strong>Hierarchical clustering</strong> with Euclidean distance for continuous data. - Use <strong>K-Modes</strong>, <strong>LCA</strong>, <strong>ROCK</strong>, or <strong>Gower-based methods</strong> for categorical data. - Use <strong>K-Prototypes</strong> or <strong>Gower</strong> for mixed datasets.</p>
+<p>Evaluation is key. Use <strong>internal metrics</strong> like silhouette or BIC when ground truth isn’t available. Use <strong>external metrics</strong> like ARI and NMI when it is. Understanding both your data type and the assumptions of each algorithm is critical to choosing the right clustering technique.</p>
+<hr>
+
+
+
 </section>
 
 </main> <!-- /main -->
-<script id = "quarto-html-after-body" type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -807,6 +993,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
-</body>
 
-</html>
+
+
+</body></html>
