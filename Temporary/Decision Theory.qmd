@@ -1,0 +1,183 @@
+---
+title: "Statistical Decision Theory: Classical and Bayesian Frameworks"
+author: "Sreyashi Bhattacharya"
+date: "2025-04-10"
+format: html
+toc: true
+number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Introduction
+Statistical decision theory provides a rigorous framework for making decisions under uncertainty using probability models and loss functions to quantify the cost of errors. In the 20th century, Abraham Wald formalized this framework by showing that classical problems like estimation and hypothesis testing are special cases of a general decision problem
+. In Wald’s paradigm, each possible state of nature (parameter value) and action (decision) incurs a loss, and one seeks decision rules that perform optimally with respect to this loss.
+
+*Two major schools emerged:*
+Classical (Frequentist) Decision Theory: Treats the unknown parameter as fixed (though unknown) and seeks decisions with good frequentist properties (e.g. low risk for all or worst-case parameter values).
+Bayesian Decision Theory: Treats the unknown parameter as random with a prior distribution, and seeks decisions that minimize Bayes risk (expected loss averaged over the prior).
+Both frameworks share core concepts—loss functions, risk functions, and optimal decision rules—but differ in how they quantify uncertainty about parameters. This post reviews key ideas from each approach, including notions of minimax and Bayes rules, and provides examples with Python demonstrations. We will use graduate-level statistics context, citing foundational works (e.g. Wald 1939, Berger 1985) and illustrating concepts with practical examples and code.
+
+# Classical Decision Theory
+In statistical decision theory, we think of **decisions as actions** we take based on data, and we evaluate how “good” or “bad” those actions are using **loss functions**. 
+
+A **loss function**, denoted $L(θ, a)$, quantifies the cost of choosing action $a$ when the true (but unknown) state of nature is $θ$. For example, if you're estimating a parameter and guess too high or too low, the loss function penalizes you accordingly — perhaps proportionally to the square of the error.
+
+But since we don’t know the true value $θ$, we can’t directly compute the loss — so instead, we consider the **expected loss**, averaged over the possible data outcomes we might observe. This gives us the **risk function**, $R(θ, δ)$, which measures how well a decision rule $δ$ performs if the true state is $θ$.
+
+Let’s now formalize this setup.
+
+*Setup*: We have data $X$ with distribution depending on an unknown parameter $θ$ (often called the “state of nature”). We must choose an action $a$ from an action space $𝒜$ ((e.g. a real number if we are estimating θ, or a classification decision between two hypotheses or states). A loss function $L(θ,a)$ quantifies the penalty for taking action $a$ when the true parameter is $θ$. The statistician uses a decision rule $δ(X)$ that maps observed data to an action. The quality of $δ$ is measured by its risk function $R(θ, δ) = \mathbb{E}_θ[L(θ, δ(X))]$, the expected loss under true parameter $θ$
+
+Intuitively, $R(θ, δ)$ is the average loss we’d incur if $θ$ were the true state and we used rule $δ$. For example, if $L$ is squared error loss and $a(X)$ is an estimator of $θ$, then $R(θ, δ)$ is the mean squared error (MSE) of that estimator at $θ$. Formally, for a given $θ$:
+$$
+R(θ,δ)=∫L(θ,δ(x))dP_θ(x),
+$$
+where $P_θ$ is the probability distribution of $X$ when the parameter is $θ$​
+
+A decision rule $δ_1$ is said to dominate another rule $δ_2$ if $R(θ, δ_1) \le R(θ, δ_2)$ for all $θ$, and for some $θ$ the inequality is strict​
+
+. A rule that is not dominated by any other is called admissible​
+. Goals: Since $θ$ is unknown, we cannot minimize $R(θ, δ)$ for a specific $θ$ without more information. Classical decision theory considers several optimality criteria:
+
+## Minimax Criterion
+
+Choose the decision rule that minimizes the maximum risk across all $θ$. In other words, find $δ^{*} = \arg\min_{δ} \max_{θ} R(θ,δ)$
+. This criterion is conservative, treating nature as an adversary: it guarantees the smallest worst-case loss. Wald championed the minimax approach in early decision theory development​
+. For example, a minimax estimator is one that has the lowest possible worst-case MSE among all estimators.
+
+## Admissibility
+
+As mentioned, an admissible rule is one that is not dominated by any other. An inadmissible rule is suboptimal since there exists another decision rule that performs at least as well for all $θ$ and better for some $θ$. A fundamental result is that minimax rules (under mild conditions) are often admissible, but not all admissible rules are minimax.
+Other criteria and methods (such as the Neyman–Pearson lemma in hypothesis testing or invariance principles) also fit into the decision theory framework, but minimax is the canonical classical criterion. To illustrate, consider estimating a parameter $θ$ with squared error loss. The risk $R(θ, δ)$ is the MSE. A minimax estimator would focus on controlling the worst-case MSE over all $θ$, while an admissible estimator simply needs to avoid being uniformly worse than another estimator. One famous result connecting to Bayesian methods is the complete class theorem, which states that under general conditions, any admissible decision rule is either a Bayes rule (minimizes Bayes risk for some prior) or a limit of Bayes rules​
+. In other words, if a rule is not (approximately) Bayesian, one can find another rule that dominates it​
+. This bridges the gap between paradigms: from a frequentist perspective it justifies considering Bayes rules, since non-Bayes rules can often be improved.
+
+# Bayesian Decision Theory
+
+Bayesian decision theory incorporates prior beliefs about $θ$ into the decision-making process. We assume a prior distribution $π(θ)$ on the parameter. Upon observing data $x$, Bayes’ theorem gives the posterior $π(θ|x) ∝ π(θ)·f(x|θ)$, where $f(x|θ)$ is the likelihood. The Bayesian analyst then chooses an action $a$ to minimize the posterior expected loss (also called posterior risk). Equivalently, Bayes’ rule $δ^{*}(x)$ is defined to minimize the Bayes risk, which is the expectation of the loss with respect to both the data and the prior for $θ$​
+. Concretely, the Bayes risk of a rule $δ$ is:
+$$
+ρ(π,δ)=∫_Θ R(θ,δ) π(θ) dθ = E_{θ ∼ π} [R(θ,δ)]
+$$
+the average risk under the prior. The Bayes optimal decision rule $δ^{}$ is the one that minimizes this quantity (often computed by minimizing posterior expected loss for each observed $x$)​
+. Equivalently, for each data outcome $x$, $δ^{}(x)$ chooses the action $a$ that minimizes $\mathbb{E}[L(θ,a) \mid X=x]$ – the loss averaged over the posterior for $θ$ given $X=x$​
+. This rule is called the Bayes rule for prior $π$. By design, it achieves the lowest prior-weighted average loss (the Bayes risk) among all decision rules.
+
+## Interpretation
+
+The Bayesian approach yields a decision rule that is optimal on average according to the prior. One key consequence is that the Bayes rule is conditionally optimal for each realized dataset (since it picks the best action for the observed $x$), which can simplify decision derivation​
+. For example, a well-known result is that under 0–1 loss (classifying or deciding correctly vs incorrectly), the Bayes rule is to choose the hypothesis or class with highest posterior probability. This minimizes the probability of error. Another example: under squared error loss, the Bayes rule is to choose the posterior mean $E[θ \mid X=x]$ as the estimator​
+, which minimizes the posterior expected squared error. (If the prior is flat/non-informative, the posterior mean often coincides with the classical unbiased estimator, bridging the approaches.)
+
+## Practical aspects
+
+Bayesian decision theory requires specifying a prior $π(θ)$, which can be based on past data or subjective belief. The choice of prior can influence the decision heavily, especially with limited data. However, as sample size grows, the influence of even a moderate prior diminishes (posterior concentrates around the true value by Bayes consistency). Bayesian methods shine in sequential or complex decision problems and naturally handle nuisance parameters by marginalizing them out via the prior/posterior. They also offer a straightforward way to incorporate asymmetric losses or multiple objectives by encoding them in $L(θ,a)$.
+
+## Admissibility connection
+
+Any Bayes rule with a proper prior is typically **admissible** — meaning no other rule performs strictly better across all parameter values. This is a powerful property: under broad conditions, using a Bayes rule automatically gives us a rule that cannot be uniformly improved upon.
+
+This connects directly to a foundational result in decision theory known as the **complete class theorem**. The theorem states that — under general conditions — *every admissible rule is either a Bayes rule (for some prior), or the limit of a sequence of Bayes rules*. In other words, if you only consider Bayes rules, you’re not missing out on any admissible rules. This justifies focusing on Bayes rules even from a frequentist perspective: any rule that isn’t Bayesian (or close to it) can often be improved.
+
+Interestingly, the connection goes both ways. While Bayes rules minimize **average** risk under a prior, many **minimax rules** — which minimize **worst-case** risk — can also be interpreted as Bayes rules under a specially chosen prior. This prior is called a **least favorable prior** because it maximizes the Bayes risk among all priors. 
+
+So in practice, a minimax estimator or test can sometimes be **derived by imagining nature as an adversary**: we choose the worst-case prior (the one that leads to the highest risk), and then find the Bayes rule for that prior. The resulting rule ends up being minimax — that is, safest against the worst-case scenario.
+
+Thus, while Bayesian and frequentist frameworks differ philosophically, their optimal decision rules often **intersect** when well-chosen priors are used.
+
+
+.
+
+# Examples
+
+## Example 1: Binary Classification (0–1 loss)\
+In this example, we simulate a **binary classification** problem under **0–1 loss**, which penalizes misclassification equally regardless of the direction or severity of the error.
+
+We assume that:
+- Class 0 observations are drawn from a normal distribution centered at 0.
+- Class 1 observations are drawn from a normal distribution centered at 2.
+
+Since both classes are equally likely and have the same variance, the **Bayes classifier** assigns a new observation to class 1 if its value is greater than or equal to 1 — the midpoint between the two means. This decision rule minimizes the probability of error.
+
+
+```{python}
+import numpy as np
+
+# simulate data from each class
+np.random.seed(0)
+N = 10000
+X0 = np.random.normal(0, 1, N)   # class 0 samples
+X1 = np.random.normal(2, 1, N)   # class 1 samples
+
+# Apply Bayes classifier: predict class 1 if x >= 1, else class 0
+pred0_errors = np.sum(X0 >= 1)   # class 0 points misclassified as 1
+pred1_errors = np.sum(X1 < 1)    # class 1 points misclassified as 0
+error_rate = (pred0_errors + pred1_errors) / (2*N)
+print(f"Overall classification error rate: {error_rate:.3f}")
+```
+## Example 2: Squared Error Risk – Minimax vs Bayes
+
+This example demonstrates how **risk functions** under **squared error loss** can be used to compare decision rules — in this case, two estimators for an unknown parameter $θ$:
+
+- The **sample mean**, which is an unbiased estimator and also the **Bayes estimator under a flat (non-informative) prior**.
+- A **biased estimator** that always overestimates the sample mean by 0.5.
+
+To evaluate performance, we simulate data from normal distributions centered at various true values of $θ$, compute the squared error for each estimator, and average over many simulations. This gives us the **risk function** $R(θ, δ)$ for each estimator, plotted over a range of $θ$ values.
+
+The result shows that:
+- The sample mean generally has lower risk across all $θ$.
+- The biased estimator incurs consistently higher risk, especially when the bias pushes it further away from the true value.
+
+This example reinforces the idea that **introducing bias can increase risk**, and also illustrates how **risk functions** are central to comparing estimators under both minimax and Bayes decision-theoretic criteria.
+
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# True theta values to evaluate over
+theta_vals = np.linspace(-2, 2, 100)
+sample_size = 20
+biased_shift = 0.5
+
+# Define two estimators: unbiased sample mean vs biased estimator
+def sample_mean(X): return np.mean(X)
+def biased_estimator(X): return np.mean(X) + biased_shift
+
+# Risk is MSE: average over many simulations
+def compute_risk(estimator, theta_vals, n=sample_size, sims=5000):
+    risks = []
+    for theta in theta_vals:
+        losses = []
+        for _ in range(sims):
+            X = np.random.normal(theta, 1, n)
+            est = estimator(X)
+            losses.append((theta - est)**2)
+        risks.append(np.mean(losses))
+    return risks
+
+risk_mean = compute_risk(sample_mean, theta_vals)
+risk_biased = compute_risk(biased_estimator, theta_vals)
+
+# Plot
+plt.figure(figsize=(8, 5))
+plt.plot(theta_vals, risk_mean, label='Sample Mean (Bayes under flat prior)')
+plt.plot(theta_vals, risk_biased, label='Biased Estimator (+0.5)', linestyle='--')
+plt.xlabel("True θ")
+plt.ylabel("Risk (MSE)")
+plt.title("Risk Functions of Two Estimators")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+## Conclusion
+
+Statistical decision theory unifies estimation, testing, and prediction under a common framework of decisions and losses. The classical approach focuses on guarantees and performance for all possible parameter values, leading to methods like minimax rules that safeguard against the worst-case . The Bayesian approach incorporates prior information to optimize performance on average according to that prior, yielding intuitively appealing rules like “pick the most probable hypothesis”. In practice, these approaches are often complementary: Bayesian methods provide a flexible way to include prior knowledge and handle complex problems, while frequentist criteria ensure robustness and avoid reliance on subjective inputs. Modern statistical practice often blends the two—for example, using Bayesian-inspired techniques with carefully chosen priors that yield frequentist guarantees. 
+
+
+
+For further reading, a comprehensive reference on decision theory is James Berger’s *Statistical Decision Theory and Bayesian Analysis (1985)* , which covers both classical and Bayesian perspectives in depth. Another classic text is Morris DeGroot’s *Optimal Statistical Decisions (1970)* , which provides a thorough treatment of decision theory concepts and criteria. These works, building on Wald’s , demonstrate how principles of loss and risk inform much of modern statistical methodology—from designing estimators and tests to understanding machine learning algorithms as loss-minimization decision rules. By understanding both the classical and Bayesian decision frameworks, one gains a deeper insight into why statistical procedures are formulated the way they are, and how to choose or tailor them for specific decision problems in research and applications.

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.506">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sreyashi Bhattacharya">
+<meta name="dcterms.date" content="2025-04-10">
+
+<title>Sreyashi Bhattacharya - Statistical Decision Theory: Classical and Bayesian Frameworks</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Sreyashi Bhattacharya</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-person-circle" role="img">
+</i> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resume.html"> <i class="bi bi-file-earmark-check" role="img">
+</i> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../data-analysis.html"> <i class="bi bi-bar-chart" role="img">
+</i> 
+<span class="menu-text">Data Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../statistics.html"> <i class="bi bi-calculator" role="img">
+</i> 
+<span class="menu-text">Statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../RA_post.html"> <i class="bi bi-graph-up" role="img">
+</i> 
+<span class="menu-text">Research Assistantship</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#classical-decision-theory" id="toc-classical-decision-theory" class="nav-link" data-scroll-target="#classical-decision-theory"><span class="header-section-number">2</span> Classical Decision Theory</a>
+  <ul class="collapse">
+  <li><a href="#minimax-criterion" id="toc-minimax-criterion" class="nav-link" data-scroll-target="#minimax-criterion"><span class="header-section-number">2.1</span> Minimax Criterion</a></li>
+  <li><a href="#admissibility" id="toc-admissibility" class="nav-link" data-scroll-target="#admissibility"><span class="header-section-number">2.2</span> Admissibility</a></li>
+  </ul></li>
+  <li><a href="#bayesian-decision-theory" id="toc-bayesian-decision-theory" class="nav-link" data-scroll-target="#bayesian-decision-theory"><span class="header-section-number">3</span> Bayesian Decision Theory</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">3.1</span> Interpretation</a></li>
+  <li><a href="#practical-aspects" id="toc-practical-aspects" class="nav-link" data-scroll-target="#practical-aspects"><span class="header-section-number">3.2</span> Practical aspects</a></li>
+  <li><a href="#admissibility-connection" id="toc-admissibility-connection" class="nav-link" data-scroll-target="#admissibility-connection"><span class="header-section-number">3.3</span> Admissibility connection</a></li>
+  </ul></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">4</span> Examples</a>
+  <ul class="collapse">
+  <li><a href="#example-1-binary-classification-01-loss" id="toc-example-1-binary-classification-01-loss" class="nav-link" data-scroll-target="#example-1-binary-classification-01-loss"><span class="header-section-number">4.1</span> Example 1: Binary Classification (0–1 loss)<br>
+  </a></li>
+  <li><a href="#example-2-squared-error-risk-minimax-vs-bayes" id="toc-example-2-squared-error-risk-minimax-vs-bayes" class="nav-link" data-scroll-target="#example-2-squared-error-risk-minimax-vs-bayes"><span class="header-section-number">4.2</span> Example 2: Squared Error Risk – Minimax vs Bayes</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.3</span> Conclusion</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Statistical Decision Theory: Classical and Bayesian Frameworks</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sreyashi Bhattacharya </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Statistical decision theory provides a rigorous framework for making decisions under uncertainty using probability models and loss functions to quantify the cost of errors. In the 20th century, Abraham Wald formalized this framework by showing that classical problems like estimation and hypothesis testing are special cases of a general decision problem . In Wald’s paradigm, each possible state of nature (parameter value) and action (decision) incurs a loss, and one seeks decision rules that perform optimally with respect to this loss.</p>
+<p><em>Two major schools emerged:</em> Classical (Frequentist) Decision Theory: Treats the unknown parameter as fixed (though unknown) and seeks decisions with good frequentist properties (e.g.&nbsp;low risk for all or worst-case parameter values). Bayesian Decision Theory: Treats the unknown parameter as random with a prior distribution, and seeks decisions that minimize Bayes risk (expected loss averaged over the prior). Both frameworks share core concepts—loss functions, risk functions, and optimal decision rules—but differ in how they quantify uncertainty about parameters. This post reviews key ideas from each approach, including notions of minimax and Bayes rules, and provides examples with Python demonstrations. We will use graduate-level statistics context, citing foundational works (e.g.&nbsp;Wald&nbsp;1939, Berger&nbsp;1985) and illustrating concepts with practical examples and code.</p>
+</section>
+<section id="classical-decision-theory" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Classical Decision Theory</h1>
+<p>In statistical decision theory, we think of <strong>decisions as actions</strong> we take based on data, and we evaluate how “good” or “bad” those actions are using <strong>loss functions</strong>.</p>
+<p>A <strong>loss function</strong>, denoted <span class="math inline">\(L(θ, a)\)</span>, quantifies the cost of choosing action <span class="math inline">\(a\)</span> when the true (but unknown) state of nature is <span class="math inline">\(θ\)</span>. For example, if you’re estimating a parameter and guess too high or too low, the loss function penalizes you accordingly — perhaps proportionally to the square of the error.</p>
+<p>But since we don’t know the true value <span class="math inline">\(θ\)</span>, we can’t directly compute the loss — so instead, we consider the <strong>expected loss</strong>, averaged over the possible data outcomes we might observe. This gives us the <strong>risk function</strong>, <span class="math inline">\(R(θ, δ)\)</span>, which measures how well a decision rule <span class="math inline">\(δ\)</span> performs if the true state is <span class="math inline">\(θ\)</span>.</p>
+<p>Let’s now formalize this setup.</p>
+<p><em>Setup</em>: We have data <span class="math inline">\(X\)</span> with distribution depending on an unknown parameter <span class="math inline">\(θ\)</span> (often called the “state of nature”). We must choose an action <span class="math inline">\(a\)</span> from an action space <span class="math inline">\(𝒜\)</span> ((e.g.&nbsp;a real number if we are estimating θ, or a classification decision between two hypotheses or states). A loss function <span class="math inline">\(L(θ,a)\)</span> quantifies the penalty for taking action <span class="math inline">\(a\)</span> when the true parameter is <span class="math inline">\(θ\)</span>. The statistician uses a decision rule <span class="math inline">\(δ(X)\)</span> that maps observed data to an action. The quality of <span class="math inline">\(δ\)</span> is measured by its risk function <span class="math inline">\(R(θ, δ) = \mathbb{E}_θ[L(θ, δ(X))]\)</span>, the expected loss under true parameter <span class="math inline">\(θ\)</span></p>
+<p>Intuitively, <span class="math inline">\(R(θ, δ)\)</span> is the average loss we’d incur if <span class="math inline">\(θ\)</span> were the true state and we used rule <span class="math inline">\(δ\)</span>. For example, if <span class="math inline">\(L\)</span> is squared error loss and <span class="math inline">\(a(X)\)</span> is an estimator of <span class="math inline">\(θ\)</span>, then <span class="math inline">\(R(θ, δ)\)</span> is the mean squared error (MSE) of that estimator at <span class="math inline">\(θ\)</span>. Formally, for a given <span class="math inline">\(θ\)</span>: <span class="math display">\[
+R(θ,δ)=∫L(θ,δ(x))dP_θ(x),
+\]</span> where <span class="math inline">\(P_θ\)</span> is the probability distribution of <span class="math inline">\(X\)</span> when the parameter is <span class="math inline">\(θ\)</span>​</p>
+<p>A decision rule <span class="math inline">\(δ_1\)</span> is said to dominate another rule <span class="math inline">\(δ_2\)</span> if <span class="math inline">\(R(θ, δ_1) \le R(θ, δ_2)\)</span> for all <span class="math inline">\(θ\)</span>, and for some <span class="math inline">\(θ\)</span> the inequality is strict​</p>
+<p>. A rule that is not dominated by any other is called admissible​ . Goals: Since <span class="math inline">\(θ\)</span> is unknown, we cannot minimize <span class="math inline">\(R(θ, δ)\)</span> for a specific <span class="math inline">\(θ\)</span> without more information. Classical decision theory considers several optimality criteria:</p>
+<section id="minimax-criterion" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="minimax-criterion"><span class="header-section-number">2.1</span> Minimax Criterion</h2>
+<p>Choose the decision rule that minimizes the maximum risk across all <span class="math inline">\(θ\)</span>. In other words, find <span class="math inline">\(δ^{*} = \arg\min_{δ} \max_{θ} R(θ,δ)\)</span> . This criterion is conservative, treating nature as an adversary: it guarantees the smallest worst-case loss. Wald championed the minimax approach in early decision theory development​ . For example, a minimax estimator is one that has the lowest possible worst-case MSE among all estimators.</p>
+</section>
+<section id="admissibility" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="admissibility"><span class="header-section-number">2.2</span> Admissibility</h2>
+<p>As mentioned, an admissible rule is one that is not dominated by any other. An inadmissible rule is suboptimal since there exists another decision rule that performs at least as well for all <span class="math inline">\(θ\)</span> and better for some <span class="math inline">\(θ\)</span>. A fundamental result is that minimax rules (under mild conditions) are often admissible, but not all admissible rules are minimax. Other criteria and methods (such as the Neyman–Pearson lemma in hypothesis testing or invariance principles) also fit into the decision theory framework, but minimax is the canonical classical criterion. To illustrate, consider estimating a parameter <span class="math inline">\(θ\)</span> with squared error loss. The risk <span class="math inline">\(R(θ, δ)\)</span> is the MSE. A minimax estimator would focus on controlling the worst-case MSE over all <span class="math inline">\(θ\)</span>, while an admissible estimator simply needs to avoid being uniformly worse than another estimator. One famous result connecting to Bayesian methods is the complete class theorem, which states that under general conditions, any admissible decision rule is either a Bayes rule (minimizes Bayes risk for some prior) or a limit of Bayes rules​ . In other words, if a rule is not (approximately) Bayesian, one can find another rule that dominates it​ . This bridges the gap between paradigms: from a frequentist perspective it justifies considering Bayes rules, since non-Bayes rules can often be improved.</p>
+</section>
+</section>
+<section id="bayesian-decision-theory" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Bayesian Decision Theory</h1>
+<p>Bayesian decision theory incorporates prior beliefs about <span class="math inline">\(θ\)</span> into the decision-making process. We assume a prior distribution <span class="math inline">\(π(θ)\)</span> on the parameter. Upon observing data <span class="math inline">\(x\)</span>, Bayes’ theorem gives the posterior <span class="math inline">\(π(θ|x) ∝ π(θ)·f(x|θ)\)</span>, where <span class="math inline">\(f(x|θ)\)</span> is the likelihood. The Bayesian analyst then chooses an action <span class="math inline">\(a\)</span> to minimize the posterior expected loss (also called posterior risk). Equivalently, Bayes’ rule <span class="math inline">\(δ^{*}(x)\)</span> is defined to minimize the Bayes risk, which is the expectation of the loss with respect to both the data and the prior for <span class="math inline">\(θ\)</span>​ . Concretely, the Bayes risk of a rule <span class="math inline">\(δ\)</span> is: <span class="math display">\[
+ρ(π,δ)=∫_Θ R(θ,δ) π(θ) dθ = E_{θ ∼ π} [R(θ,δ)]
+\]</span> the average risk under the prior. The Bayes optimal decision rule <span class="math inline">\(δ^{}\)</span> is the one that minimizes this quantity (often computed by minimizing posterior expected loss for each observed <span class="math inline">\(x\)</span>)​ . Equivalently, for each data outcome <span class="math inline">\(x\)</span>, <span class="math inline">\(δ^{}(x)\)</span> chooses the action <span class="math inline">\(a\)</span> that minimizes <span class="math inline">\(\mathbb{E}[L(θ,a) \mid X=x]\)</span> – the loss averaged over the posterior for <span class="math inline">\(θ\)</span> given <span class="math inline">\(X=x\)</span>​ . This rule is called the Bayes rule for prior <span class="math inline">\(π\)</span>. By design, it achieves the lowest prior-weighted average loss (the Bayes risk) among all decision rules.</p>
+<section id="interpretation" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">3.1</span> Interpretation</h2>
+<p>The Bayesian approach yields a decision rule that is optimal on average according to the prior. One key consequence is that the Bayes rule is conditionally optimal for each realized dataset (since it picks the best action for the observed <span class="math inline">\(x\)</span>), which can simplify decision derivation​ . For example, a well-known result is that under 0–1 loss (classifying or deciding correctly vs incorrectly), the Bayes rule is to choose the hypothesis or class with highest posterior probability. This minimizes the probability of error. Another example: under squared error loss, the Bayes rule is to choose the posterior mean <span class="math inline">\(E[θ \mid X=x]\)</span> as the estimator​ , which minimizes the posterior expected squared error. (If the prior is flat/non-informative, the posterior mean often coincides with the classical unbiased estimator, bridging the approaches.)</p>
+</section>
+<section id="practical-aspects" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="practical-aspects"><span class="header-section-number">3.2</span> Practical aspects</h2>
+<p>Bayesian decision theory requires specifying a prior <span class="math inline">\(π(θ)\)</span>, which can be based on past data or subjective belief. The choice of prior can influence the decision heavily, especially with limited data. However, as sample size grows, the influence of even a moderate prior diminishes (posterior concentrates around the true value by Bayes consistency). Bayesian methods shine in sequential or complex decision problems and naturally handle nuisance parameters by marginalizing them out via the prior/posterior. They also offer a straightforward way to incorporate asymmetric losses or multiple objectives by encoding them in <span class="math inline">\(L(θ,a)\)</span>.</p>
+</section>
+<section id="admissibility-connection" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="admissibility-connection"><span class="header-section-number">3.3</span> Admissibility connection</h2>
+<p>Any Bayes rule with a proper prior is typically <strong>admissible</strong> — meaning no other rule performs strictly better across all parameter values. This is a powerful property: under broad conditions, using a Bayes rule automatically gives us a rule that cannot be uniformly improved upon.</p>
+<p>This connects directly to a foundational result in decision theory known as the <strong>complete class theorem</strong>. The theorem states that — under general conditions — <em>every admissible rule is either a Bayes rule (for some prior), or the limit of a sequence of Bayes rules</em>. In other words, if you only consider Bayes rules, you’re not missing out on any admissible rules. This justifies focusing on Bayes rules even from a frequentist perspective: any rule that isn’t Bayesian (or close to it) can often be improved.</p>
+<p>Interestingly, the connection goes both ways. While Bayes rules minimize <strong>average</strong> risk under a prior, many <strong>minimax rules</strong> — which minimize <strong>worst-case</strong> risk — can also be interpreted as Bayes rules under a specially chosen prior. This prior is called a <strong>least favorable prior</strong> because it maximizes the Bayes risk among all priors.</p>
+<p>So in practice, a minimax estimator or test can sometimes be <strong>derived by imagining nature as an adversary</strong>: we choose the worst-case prior (the one that leads to the highest risk), and then find the Bayes rule for that prior. The resulting rule ends up being minimax — that is, safest against the worst-case scenario.</p>
+<p>Thus, while Bayesian and frequentist frameworks differ philosophically, their optimal decision rules often <strong>intersect</strong> when well-chosen priors are used.</p>
+<p>.</p>
+</section>
+</section>
+<section id="examples" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Examples</h1>
+<section id="example-1-binary-classification-01-loss" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="example-1-binary-classification-01-loss"><span class="header-section-number">4.1</span> Example 1: Binary Classification (0–1 loss)<br>
+</h2>
+<p>In this example, we simulate a <strong>binary classification</strong> problem under <strong>0–1 loss</strong>, which penalizes misclassification equally regardless of the direction or severity of the error.</p>
+<p>We assume that: - Class 0 observations are drawn from a normal distribution centered at 0. - Class 1 observations are drawn from a normal distribution centered at 2.</p>
+<p>Since both classes are equally likely and have the same variance, the <strong>Bayes classifier</strong> assigns a new observation to class 1 if its value is greater than or equal to 1 — the midpoint between the two means. This decision rule minimizes the probability of error.</p>
+<div id="a07caede" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate data from each class</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X0 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, N)   <span class="co"># class 0 samples</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> np.random.normal(<span class="dv">2</span>, <span class="dv">1</span>, N)   <span class="co"># class 1 samples</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply Bayes classifier: predict class 1 if x &gt;= 1, else class 0</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pred0_errors <span class="op">=</span> np.<span class="bu">sum</span>(X0 <span class="op">&gt;=</span> <span class="dv">1</span>)   <span class="co"># class 0 points misclassified as 1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>pred1_errors <span class="op">=</span> np.<span class="bu">sum</span>(X1 <span class="op">&lt;</span> <span class="dv">1</span>)    <span class="co"># class 1 points misclassified as 0</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>error_rate <span class="op">=</span> (pred0_errors <span class="op">+</span> pred1_errors) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>N)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Overall classification error rate: </span><span class="sc">{</span>error_rate<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Overall classification error rate: 0.152</code></pre>
+</div>
+</div>
+</section>
+<section id="example-2-squared-error-risk-minimax-vs-bayes" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="example-2-squared-error-risk-minimax-vs-bayes"><span class="header-section-number">4.2</span> Example 2: Squared Error Risk – Minimax vs Bayes</h2>
+<p>This example demonstrates how <strong>risk functions</strong> under <strong>squared error loss</strong> can be used to compare decision rules — in this case, two estimators for an unknown parameter <span class="math inline">\(θ\)</span>:</p>
+<ul>
+<li>The <strong>sample mean</strong>, which is an unbiased estimator and also the <strong>Bayes estimator under a flat (non-informative) prior</strong>.</li>
+<li>A <strong>biased estimator</strong> that always overestimates the sample mean by 0.5.</li>
+</ul>
+<p>To evaluate performance, we simulate data from normal distributions centered at various true values of <span class="math inline">\(θ\)</span>, compute the squared error for each estimator, and average over many simulations. This gives us the <strong>risk function</strong> <span class="math inline">\(R(θ, δ)\)</span> for each estimator, plotted over a range of <span class="math inline">\(θ\)</span> values.</p>
+<p>The result shows that: - The sample mean generally has lower risk across all <span class="math inline">\(θ\)</span>. - The biased estimator incurs consistently higher risk, especially when the bias pushes it further away from the true value.</p>
+<p>This example reinforces the idea that <strong>introducing bias can increase risk</strong>, and also illustrates how <strong>risk functions</strong> are central to comparing estimators under both minimax and Bayes decision-theoretic criteria.</p>
+<div id="074aed0d" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># True theta values to evaluate over</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>theta_vals <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>biased_shift <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define two estimators: unbiased sample mean vs biased estimator</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_mean(X): <span class="cf">return</span> np.mean(X)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> biased_estimator(X): <span class="cf">return</span> np.mean(X) <span class="op">+</span> biased_shift</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Risk is MSE: average over many simulations</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_risk(estimator, theta_vals, n<span class="op">=</span>sample_size, sims<span class="op">=</span><span class="dv">5000</span>):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    risks <span class="op">=</span> []</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> theta <span class="kw">in</span> theta_vals:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        losses <span class="op">=</span> []</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(sims):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            X <span class="op">=</span> np.random.normal(theta, <span class="dv">1</span>, n)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            est <span class="op">=</span> estimator(X)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            losses.append((theta <span class="op">-</span> est)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        risks.append(np.mean(losses))</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> risks</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>risk_mean <span class="op">=</span> compute_risk(sample_mean, theta_vals)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>risk_biased <span class="op">=</span> compute_risk(biased_estimator, theta_vals)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>plt.plot(theta_vals, risk_mean, label<span class="op">=</span><span class="st">'Sample Mean (Bayes under flat prior)'</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>plt.plot(theta_vals, risk_biased, label<span class="op">=</span><span class="st">'Biased Estimator (+0.5)'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"True θ"</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Risk (MSE)"</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Risk Functions of Two Estimators"</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Decision Theory_files/figure-html/cell-3-output-1.png" width="757" height="468" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.3</span> Conclusion</h2>
+<p>Statistical decision theory unifies estimation, testing, and prediction under a common framework of decisions and losses. The classical approach focuses on guarantees and performance for all possible parameter values, leading to methods like minimax rules that safeguard against the worst-case . The Bayesian approach incorporates prior information to optimize performance on average according to that prior, yielding intuitively appealing rules like “pick the most probable hypothesis”. In practice, these approaches are often complementary: Bayesian methods provide a flexible way to include prior knowledge and handle complex problems, while frequentist criteria ensure robustness and avoid reliance on subjective inputs. Modern statistical practice often blends the two—for example, using Bayesian-inspired techniques with carefully chosen priors that yield frequentist guarantees.</p>
+<p>For further reading, a comprehensive reference on decision theory is James Berger’s <em>Statistical Decision Theory and Bayesian Analysis (1985)</em> , which covers both classical and Bayesian perspectives in depth. Another classic text is Morris DeGroot’s <em>Optimal Statistical Decisions (1970)</em> , which provides a thorough treatment of decision theory concepts and criteria. These works, building on Wald’s , demonstrate how principles of loss and risk inform much of modern statistical methodology—from designing estimators and tests to understanding machine learning algorithms as loss-minimization decision rules. By understanding both the classical and Bayesian decision frameworks, one gains a deeper insight into why statistical procedures are formulated the way they are, and how to choose or tailor them for specific decision problems in research and applications.</p>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

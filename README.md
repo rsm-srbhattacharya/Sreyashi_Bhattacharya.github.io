@@ -3,4 +3,4 @@
 
 This repository contains the code and files that build my website using Quarto.
 
-My linkedin :[linkedin](https://www.linkedin.com/in/sreyashi-bhattacharya/) 
+My linkedin: [linkedin](https://www.linkedin.com/in/sreyashi-bhattacharya/) 
